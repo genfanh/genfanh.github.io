@@ -3,7 +3,7 @@ languageCode = "zh-ch"
 theme = "hugo-theme-stack"
 paginate = 5
 title = "genfanh Blog"
-disqusShortname = "genfanh"            # Change it to your Disqus shortname before using
+# disqusShortname = "genfanh"            # Change it to your Disqus shortname before using
 DefaultContentLanguage = "zh-ch"                   # Theme i18n support
 
 [permalinks]
@@ -31,8 +31,8 @@ DefaultContentLanguage = "zh-ch"                   # Theme i18n support
             default = "Licensed under CC BY-NC-SA 4.0"
             
     [params.comments]
-        enabled = true
-        provider = "disqus"         # Available: disqus, utterances    
+        enabled = false
+        provider = "utterances"         # Available: disqus, utterances    
         [params.comments.utterances]
             repo = ""
             issueTerm = "pathname"

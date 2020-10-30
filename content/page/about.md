@@ -1,5 +1,5 @@
 ---
-title: "个人简介"
+title: "about"
 date: 2020-10-31T01:55:11+08:00
 draft: false
 comments: false
