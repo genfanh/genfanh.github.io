@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on genfanh Blog</title>
-    <link>https://genfanh.github.io/post/</link>
-    <description>Recent content in Posts on genfanh Blog</description>
+    <title>博客 on genfanh Blog</title>
+    <link>https://genfanh.github.io/categories/%E5%8D%9A%E5%AE%A2/</link>
+    <description>Recent content in 博客 on genfanh Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-ch</language>
-    <lastBuildDate>Fri, 30 Oct 2020 21:52:31 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Oct 2020 21:52:31 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/categories/%E5%8D%9A%E5%AE%A2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HelloWorld</title>
       <link>https://genfanh.github.io/p/test-post/</link>

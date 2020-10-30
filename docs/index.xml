@@ -6,13 +6,14 @@
         <description>Recent content on genfanh Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-ch</language>
-        <lastBuildDate>Fri, 30 Oct 2020 21:52:31 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 31 Oct 2020 01:55:11 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>HelloWorld</title>
-        <link>https://genfanh.github.io/p/helloworld/</link>
+        <link>https://genfanh.github.io/p/test-post/</link>
         <pubDate>Fri, 30 Oct 2020 21:52:31 +0800</pubDate>
         
-        <guid>https://genfanh.github.io/p/helloworld/</guid>
-        <description></description>
+        <guid>https://genfanh.github.io/p/test-post/</guid>
+        <description>&lt;img src="https://genfanh.github.io/p/test-post/cover.jpg" alt="Featured image of post HelloWorld" /&gt;&lt;h1 id=&#34;hello-world&#34;&gt;Hello World~&lt;/h1&gt;
+</description>
         </item>
         
     </channel>

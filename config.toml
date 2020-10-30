@@ -3,7 +3,7 @@ languageCode = "zh-ch"
 theme = "hugo-theme-stack"
 paginate = 5
 title = "genfanh Blog"
-disqusShortname = "hugo-theme-stack"            # Change it to your Disqus shortname before using
+disqusShortname = "genfanh"            # Change it to your Disqus shortname before using
 DefaultContentLanguage = "zh-ch"                   # Theme i18n support
 
 [permalinks]
