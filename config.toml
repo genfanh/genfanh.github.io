@@ -40,8 +40,8 @@ googleAnalytics = "G-FX29Q4RR92"
             label = ""             # Optional
             theme = "preferred-color-scheme"
         [params.comments.valine]
-            appId = '4AuL1qOzRefwBOLT5xE3PeuP-9Nh9j0Va'
-            appKey = 'id9LjYFMJR5ePfQLgHRfm2dF'
+            appId = 'IBQOzRWMnNNe0iMr5YiXQ9oD-MdYXbMMI'
+            appKey = 'Wf6ROG9SvmzvuFEANW7NmNiX'
             avatar = 'retro'
             placeholder = '说点什么吧...'
             visitor = true
