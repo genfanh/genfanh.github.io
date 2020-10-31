@@ -1,0 +1,21 @@
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FX29Q4RR92"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FX29Q4RR92');
+</script>
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments',
+      appId: '{{ .Site.Params.comments.valine.appId }}',
+      appKey: '{{ .Site.Params.comments.valine.appKey }}',
+      avatar: '{{ .Site.Params.comments.valine.avatar }}', 
+      placeholder: '{{ .Site.Params.comments.valine.placeholder }}',
+      visitor: '{{ .Site.Params.comments.valine.visitor }}',
+      requiredFields: ['nick', 'mail']
+  });
+</script>

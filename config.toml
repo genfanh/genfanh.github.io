@@ -1,10 +1,11 @@
 baseurl = "https://genfanh.github.io"
-languageCode = "zh-ch"
+languageCode = "zh-CN"
 theme = "hugo-theme-stack"
 paginate = 5
 title = "genfanh Blog"
 # disqusShortname = "genfanh"            # Change it to your Disqus shortname before using
-DefaultContentLanguage = "zh-ch"                   # Theme i18n support
+DefaultContentLanguage = "zh-cn"                   # Theme i18n support
+googleAnalytics = "G-FX29Q4RR92"
 
 [permalinks]
     post = "/p/:slug/"
@@ -20,7 +21,7 @@ DefaultContentLanguage = "zh-ch"                   # Theme i18n support
         lastUpdated = "Jan 02, 2006 15:04 MST"
         
     [params.sidebar]
-        emoji = "🍥"
+        emoji = "🍉"
         avatar = "img/avatar.png"
         subtitle = "暂时没想好填啥."
         
@@ -31,14 +32,20 @@ DefaultContentLanguage = "zh-ch"                   # Theme i18n support
             default = "Licensed under CC BY-NC-SA 4.0"
             
     [params.comments]
-        enabled = false
-        provider = "utterances"         # Available: disqus, utterances    
+        enabled = true
+        provider = "valine"         # Available: disqus, utterances    
         [params.comments.utterances]
             repo = ""
             issueTerm = "pathname"
             label = ""             # Optional
             theme = "preferred-color-scheme"
-            
+        [params.comments.valine]
+            appId = '4AuL1qOzRefwBOLT5xE3PeuP-9Nh9j0Va'
+            appKey = 'id9LjYFMJR5ePfQLgHRfm2dF'
+            avatar = 'retro'
+            placeholder = '说点什么吧...'
+            visitor = true
+
     [params.widgets]
         enabled = ['archives', 'tag-cloud']
         [params.widgets.archives]

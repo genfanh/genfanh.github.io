@@ -1,7 +1,9 @@
 ---
-title: "about"
+title: "About"
 date: 2020-10-31T01:55:11+08:00
+lastmod: 2020-10-31T22:29:11+08:00
 draft: false
+slug: "about"
 comments: false
 ---
 
@@ -9,7 +11,11 @@ comments: false
 
 ## 我
 
-云原生爱好者，FPS游戏爱好者，了解JAVA，学习Golang中
+云原生爱好者
+
+FPS游戏爱好者
+
+JAVA/Golang学习中
 
 ## 联系方式
 
