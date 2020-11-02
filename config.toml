@@ -33,7 +33,7 @@ googleAnalytics = "G-FX29Q4RR92"
             
     [params.comments]
         enabled = true
-        provider = "utterances"         # Available: disqus, utterances    
+        provider = "valine"         # Available: disqus, utterances    
         [params.comments.utterances]
             repo = ""
             issueTerm = "pathname"
