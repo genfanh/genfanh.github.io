@@ -6,13 +6,118 @@
         <description>Recent content on genfanh Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-CN</language>
-        <lastBuildDate>Sat, 31 Oct 2020 01:55:11 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>HelloWorld</title>
-        <link>https://genfanh.github.io/p/test-post/</link>
-        <pubDate>Fri, 30 Oct 2020 21:52:31 +0800</pubDate>
+        <lastBuildDate>Mon, 02 Nov 2020 15:51:01 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>使用 Hugo &#43; Github Page 搭建个人博客</title>
+        <link>https://genfanh.github.io/p/create-hugo-tutorial/</link>
+        <pubDate>Mon, 02 Nov 2020 15:51:01 +0800</pubDate>
         
-        <guid>https://genfanh.github.io/p/test-post/</guid>
-        <description>&lt;img src="https://genfanh.github.io/p/test-post/cover.jpg" alt="Featured image of post HelloWorld" /&gt;&lt;h1 id=&#34;hello-world&#34;&gt;Hello World~&lt;/h1&gt;
+        <guid>https://genfanh.github.io/p/create-hugo-tutorial/</guid>
+        <description>&lt;p&gt;今天主要记录用hugo搭建个人博客的过程，避免下次搭建流程遗失。&lt;/p&gt;
+&lt;h2 id=&#34;一安装hugo&#34;&gt;一、安装Hugo&lt;/h2&gt;
+&lt;p&gt;本人使用的是&lt;strong&gt;Windows系统&lt;/strong&gt;，所以选择scoop安装方式。具体步骤如下：&lt;/p&gt;
+&lt;h3 id=&#34;1安装scoop&#34;&gt;1、安装scoop&lt;/h3&gt;
+&lt;p&gt;参考 github &lt;a class=&#34;link&#34; href=&#34;https://github.com/lukesampson/scoop&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;scoop&lt;/a&gt; 网站安装&lt;/p&gt;
+&lt;h3 id=&#34;2使用scoop安装hugo&#34;&gt;2、使用scoop安装hugo&lt;/h3&gt;
+&lt;p&gt;安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;scoop install hugo-extended
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;若不喜欢使用拓展版本，可以使用以下指令安装基础版本&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;scoop install hugo
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;3验证hugo安装&#34;&gt;3、验证hugo安装&lt;/h3&gt;
+&lt;p&gt;打开CMD，输入&lt;code&gt;hugo version&lt;/code&gt;，若版本正确输出则安装成功&lt;/p&gt;
+&lt;p&gt;其他平台可参考官网安装教程 &lt;a class=&#34;link&#34; href=&#34;https://gohugo.io/getting-started/installing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Install Hugo&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;二使用hugo创建博客&#34;&gt;二、使用hugo创建博客&lt;/h2&gt;
+&lt;h3 id=&#34;1创建网站&#34;&gt;1、创建网站&lt;/h3&gt;
+&lt;p&gt;在创建前，请进入工作目录&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 执行创建指令
+# 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹
+# 所有网站文件都在blog目录下
+hugo new site blog
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2添加hugo主题&#34;&gt;2、添加hugo主题&lt;/h3&gt;
+&lt;p&gt;hugo有很多第三方开源的主题，可以在官网的&lt;a class=&#34;link&#34; href=&#34;https://themes.gohugo.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;themes&lt;/a&gt;下自行选择。本人选&lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Stack主题&lt;/a&gt;作为博客的主题。&lt;/p&gt;
+&lt;p&gt;主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd blog
+git init
+git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;注：记得提前安装git&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;3修改configtoml配置文件&#34;&gt;3、修改config.toml配置文件&lt;/h3&gt;
+&lt;p&gt;正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;4创建第一篇文章&#34;&gt;4、创建第一篇文章&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;hugo new posts/HelloWorld.md
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;5启动hugo服务器&#34;&gt;5、启动hugo服务器&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;hugo server -D
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;三把hugo部署到github-pages上&#34;&gt;三、把Hugo部署到Github Pages上&lt;/h2&gt;
+&lt;h3 id=&#34;1创建一个github仓库&#34;&gt;1、创建一个Github仓库&lt;/h3&gt;
+&lt;p&gt;在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.github.io&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo.PNG&#34; data-size=&#34;233x208&#34;&gt;
+			&lt;img srcset=&#34;https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_1024x0_resize_box_2.PNG 1024w&#34;
+				src=&#34;https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo.PNG&#34; width=&#34;233&#34; height=&#34;208&#34; loading=&#34;lazy&#34;
+				alt=&#34;git_create_repo&#34;&gt;
+		&lt;/a&gt;
+		
+		&lt;figcaption&gt;git_create_repo&lt;/figcaption&gt;
+		
+	&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2把仓库clone到本地&#34;&gt;2、把仓库clone到本地&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;git clone &amp;lt;REPO_URL&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;3创建hugo项目&#34;&gt;3、创建hugo项目&lt;/h3&gt;
+&lt;p&gt;参照第二步，在仓库目录下创建一个Hugo项目，同时保证hugo项目能在本地运行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hugo server -D
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;4创建新文章&#34;&gt;4、创建新文章&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;hugo new post/HelloWorld.md
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;通过指令创建的markdown文章会自动生成如下模板头：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;---
+title: &amp;#34;HelloWorld&amp;#34;
+date: 2020-10-30T21:52:31+08:00
+draft: true
+---
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;注：需要把 &lt;strong&gt;draft: true&lt;/strong&gt; 改为 &lt;strong&gt;draft: false&lt;/strong&gt; 才可以上传该篇文章&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;5修改repo配置&#34;&gt;5、修改repo配置&lt;/h3&gt;
+&lt;p&gt;进入刚刚创建的 Repository 的 Setting 界面， 把 GitHub Page 配置下的 Source 配置为Branch:master/docs。这意味着通过URL访问博客时，会从该仓库 master 分支下的 docs 文件夹下读取静态资源。具体如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/create-hugo-tutorial/repo_settings.png&#34; data-size=&#34;958x386&#34;&gt;
+			&lt;img srcset=&#34;https://genfanh.github.io/p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_1024x0_resize_box_2.png 1024w&#34;
+				src=&#34;https://genfanh.github.io/p/create-hugo-tutorial/repo_settings.png&#34; width=&#34;958&#34; height=&#34;386&#34; loading=&#34;lazy&#34;
+				alt=&#34;repo_settings&#34;&gt;
+		&lt;/a&gt;
+		
+		&lt;figcaption&gt;repo_settings&lt;/figcaption&gt;
+		
+	&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;6修改-configtoml&#34;&gt;6、修改 config.toml&lt;/h3&gt;
+&lt;p&gt;从第5点得到 GitHub Page 的 URL，把该 URL 替换到 config.toml 配置文件的 baseURL 配置值中&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;baseURL = &amp;quot;https://genfanh.github.io/&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;7打包网站到-docs-文件夹下&#34;&gt;7、打包网站到 /docs 文件夹下&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;hugo -d docs
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;8把项目-push-到-github-仓库下&#34;&gt;8、把项目 push 到 github 仓库下&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;git commit -m &amp;quot;上传hugo&amp;quot;
+git push origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;9查看成果&#34;&gt;9、查看成果&lt;/h3&gt;
+&lt;p&gt;登录https://genfanh.github.io/查看是否部署成功&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/create-hugo-tutorial/result.png&#34; data-size=&#34;1552x502&#34;&gt;
+			&lt;img srcset=&#34;https://genfanh.github.io/p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_1024x0_resize_box_2.png 1024w&#34;
+				src=&#34;https://genfanh.github.io/p/create-hugo-tutorial/result.png&#34; width=&#34;1552&#34; height=&#34;502&#34; loading=&#34;lazy&#34;
+				alt=&#34;result&#34;&gt;
+		&lt;/a&gt;
+		
+		&lt;figcaption&gt;result&lt;/figcaption&gt;
+		
+	&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;四参考资料&#34;&gt;四、参考资料&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/105021100?utm_source=weibo&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;使用 Hugo + Github 搭建个人博客 - 知乎 (zhihu.com)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://gohugo.io/getting-started/installing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Install Hugo | Hugo&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>
         

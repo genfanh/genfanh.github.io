@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='今天主要记录用hugo搭建个人博客的过程，避免下次搭建流程遗失。
+一、安装Hugo 本人使用的是Windows系统，所以选择scoop安装方式。具体步骤如下：
+1、安装scoop 参考 github scoop 网站安装
+2、使用scoop安装hugo 安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本
+scoop install hugo-extended 若不喜欢使用拓展版本，可以使用以下指令安装基础版本
+scoop install hugo 3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
+其他平台可参考官网安装教程 Install Hugo
+二、使用hugo创建博客 1、创建网站 在创建前，请进入工作目录
+# 执行创建指令 # 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹 # 所有网站文件都在blog目录下 hugo new site blog 2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
+主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。
+cd blog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git  注：记得提前安装git
+ 3、修改config.toml配置文件 正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可
+echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml 4、创建第一篇文章 hugo new posts/HelloWorld.md 5、启动hugo服务器 hugo server -D 三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.'><title>使用 Hugo &#43; Github Page 搭建个人博客</title>
+    
+    <link rel='canonical' href='https://genfanh.github.io/p/create-hugo-tutorial/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='使用 Hugo &#43; Github Page 搭建个人博客'>
+<meta property='og:description' content='今天主要记录用hugo搭建个人博客的过程，避免下次搭建流程遗失。
+一、安装Hugo 本人使用的是Windows系统，所以选择scoop安装方式。具体步骤如下：
+1、安装scoop 参考 github scoop 网站安装
+2、使用scoop安装hugo 安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本
+scoop install hugo-extended 若不喜欢使用拓展版本，可以使用以下指令安装基础版本
+scoop install hugo 3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
+其他平台可参考官网安装教程 Install Hugo
+二、使用hugo创建博客 1、创建网站 在创建前，请进入工作目录
+# 执行创建指令 # 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹 # 所有网站文件都在blog目录下 hugo new site blog 2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
+主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。
+cd blog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git  注：记得提前安装git
+ 3、修改config.toml配置文件 正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可
+echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml 4、创建第一篇文章 hugo new posts/HelloWorld.md 5、启动hugo服务器 hugo server -D 三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.'>
+<meta property='og:url' content='https://genfanh.github.io/p/create-hugo-tutorial/'>
+<meta property='og:site_name' content='genfanh Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Hugo' /><meta property='article:published_time' content='2020-11-02T15:51:01&#43;08:00'/><meta property='article:modified_time' content='2020-11-02T15:51:01&#43;08:00'/>
+<meta name="twitter:title" content="使用 Hugo &#43; Github Page 搭建个人博客">
+<meta name="twitter:description" content="今天主要记录用hugo搭建个人博客的过程，避免下次搭建流程遗失。
+一、安装Hugo 本人使用的是Windows系统，所以选择scoop安装方式。具体步骤如下：
+1、安装scoop 参考 github scoop 网站安装
+2、使用scoop安装hugo 安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本
+scoop install hugo-extended 若不喜欢使用拓展版本，可以使用以下指令安装基础版本
+scoop install hugo 3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
+其他平台可参考官网安装教程 Install Hugo
+二、使用hugo创建博客 1、创建网站 在创建前，请进入工作目录
+# 执行创建指令 # 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹 # 所有网站文件都在blog目录下 hugo new site blog 2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
+主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。
+cd blog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git  注：记得提前安装git
+ 3、修改config.toml配置文件 正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可
+echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml 4、创建第一篇文章 hugo new posts/HelloWorld.md 5、启动hugo服务器 hugo server -D 三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;."><link rel="shortcut icon" href="/img/favicon.ico">
+<link rel="icon" href="/img/favicon.ico"> </head><body class="">
+        <div class="container flex on-phone--column align-items--flex-start extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+
+                
+                    
+                    <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x300_resize_box_2.png" width="300"
+                        height="300" class="site-logo" loading="lazy" alt="Avatar">
+                
+
+                <span class="emoji">🍉</span>
+            </figure>
+        
+        <h1 class="site-name"><a href="https://genfanh.github.io">genfanh Blog</a></h1>
+        <h2 class="site-description">暂时没想好填啥.</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='https://genfanh.github.io/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='https://genfanh.github.io/about'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='https://genfanh.github.io/archives'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+    </ol>
+</aside>
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://genfanh.github.io" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            
+                <a href="https://genfanh.github.io/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+            
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="https://genfanh.github.io/p/create-hugo-tutorial/">使用 Hugo &#43; Github Page 搭建个人博客</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Nov 02, 2020</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <p>今天主要记录用hugo搭建个人博客的过程，避免下次搭建流程遗失。</p>
+<h2 id="一安装hugo">一、安装Hugo</h2>
+<p>本人使用的是<strong>Windows系统</strong>，所以选择scoop安装方式。具体步骤如下：</p>
+<h3 id="1安装scoop">1、安装scoop</h3>
+<p>参考 github <a class="link" href="https://github.com/lukesampson/scoop"  target="_blank" rel="noopener"
+    >scoop</a> 网站安装</p>
+<h3 id="2使用scoop安装hugo">2、使用scoop安装hugo</h3>
+<p>安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本</p>
+<pre><code>scoop install hugo-extended
+</code></pre><p>若不喜欢使用拓展版本，可以使用以下指令安装基础版本</p>
+<pre><code>scoop install hugo
+</code></pre><h3 id="3验证hugo安装">3、验证hugo安装</h3>
+<p>打开CMD，输入<code>hugo version</code>，若版本正确输出则安装成功</p>
+<p>其他平台可参考官网安装教程 <a class="link" href="https://gohugo.io/getting-started/installing/"  target="_blank" rel="noopener"
+    >Install Hugo</a></p>
+<h2 id="二使用hugo创建博客">二、使用hugo创建博客</h2>
+<h3 id="1创建网站">1、创建网站</h3>
+<p>在创建前，请进入工作目录</p>
+<pre><code># 执行创建指令
+# 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹
+# 所有网站文件都在blog目录下
+hugo new site blog
+</code></pre><h3 id="2添加hugo主题">2、添加hugo主题</h3>
+<p>hugo有很多第三方开源的主题，可以在官网的<a class="link" href="https://themes.gohugo.io/"  target="_blank" rel="noopener"
+    >themes</a>下自行选择。本人选<a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack"  target="_blank" rel="noopener"
+    >Stack主题</a>作为博客的主题。</p>
+<p>主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。</p>
+<pre><code>cd blog
+git init
+git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git
+</code></pre><blockquote>
+<p>注：记得提前安装git</p>
+</blockquote>
+<h3 id="3修改configtoml配置文件">3、修改config.toml配置文件</h3>
+<p>正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可</p>
+<pre><code>echo 'theme = &quot;hugo-theme-stack&quot;' &gt;&gt; config.toml
+</code></pre><h3 id="4创建第一篇文章">4、创建第一篇文章</h3>
+<pre><code>hugo new posts/HelloWorld.md
+</code></pre><h3 id="5启动hugo服务器">5、启动hugo服务器</h3>
+<pre><code>hugo server -D
+</code></pre><h2 id="三把hugo部署到github-pages上">三、把Hugo部署到Github Pages上</h2>
+<h3 id="1创建一个github仓库">1、创建一个Github仓库</h3>
+<p>在github上创建一个仓库，名称一般为&lt;gihub名称&gt;.github.io</p>
+<p><figure>
+		<a href="/p/create-hugo-tutorial/git_create_repo.PNG" data-size="233x208">
+			<img srcset="/p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_480x0_resize_box_2.PNG 480w, /p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_1024x0_resize_box_2.PNG 1024w"
+				src="/p/create-hugo-tutorial/git_create_repo.PNG" width="233" height="208" loading="lazy"
+				alt="git_create_repo">
+		</a>
+		
+		<figcaption>git_create_repo</figcaption>
+		
+	</figure></p>
+<h3 id="2把仓库clone到本地">2、把仓库clone到本地</h3>
+<pre><code>git clone &lt;REPO_URL&gt;
+</code></pre><h3 id="3创建hugo项目">3、创建hugo项目</h3>
+<p>参照第二步，在仓库目录下创建一个Hugo项目，同时保证hugo项目能在本地运行</p>
+<pre><code>hugo server -D
+</code></pre><h3 id="4创建新文章">4、创建新文章</h3>
+<pre><code>hugo new post/HelloWorld.md
+</code></pre><p>通过指令创建的markdown文章会自动生成如下模板头：</p>
+<div class="highlight"><pre class="chroma"><code class="language-markdown" data-lang="markdown">---
+title: &#34;HelloWorld&#34;
+date: 2020-10-30T21:52:31+08:00
+draft: true
+---
+</code></pre></div><blockquote>
+<p>注：需要把 <strong>draft: true</strong> 改为 <strong>draft: false</strong> 才可以上传该篇文章</p>
+</blockquote>
+<h3 id="5修改repo配置">5、修改repo配置</h3>
+<p>进入刚刚创建的 Repository 的 Setting 界面， 把 GitHub Page 配置下的 Source 配置为Branch:master/docs。这意味着通过URL访问博客时，会从该仓库 master 分支下的 docs 文件夹下读取静态资源。具体如下图所示：</p>
+<p><figure>
+		<a href="/p/create-hugo-tutorial/repo_settings.png" data-size="958x386">
+			<img srcset="/p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_480x0_resize_box_2.png 480w, /p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_1024x0_resize_box_2.png 1024w"
+				src="/p/create-hugo-tutorial/repo_settings.png" width="958" height="386" loading="lazy"
+				alt="repo_settings">
+		</a>
+		
+		<figcaption>repo_settings</figcaption>
+		
+	</figure></p>
+<h3 id="6修改-configtoml">6、修改 config.toml</h3>
+<p>从第5点得到 GitHub Page 的 URL，把该 URL 替换到 config.toml 配置文件的 baseURL 配置值中</p>
+<pre><code>baseURL = &quot;https://genfanh.github.io/&quot;
+</code></pre><h3 id="7打包网站到-docs-文件夹下">7、打包网站到 /docs 文件夹下</h3>
+<pre><code>hugo -d docs
+</code></pre><h3 id="8把项目-push-到-github-仓库下">8、把项目 push 到 github 仓库下</h3>
+<pre><code>git commit -m &quot;上传hugo&quot;
+git push origin master
+</code></pre><h3 id="9查看成果">9、查看成果</h3>
+<p>登录https://genfanh.github.io/查看是否部署成功</p>
+<p><figure>
+		<a href="/p/create-hugo-tutorial/result.png" data-size="1552x502">
+			<img srcset="/p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_480x0_resize_box_2.png 480w, /p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_1024x0_resize_box_2.png 1024w"
+				src="/p/create-hugo-tutorial/result.png" width="1552" height="502" loading="lazy"
+				alt="result">
+		</a>
+		
+		<figcaption>result</figcaption>
+		
+	</figure></p>
+<h2 id="四参考资料">四、参考资料</h2>
+<p><a class="link" href="https://zhuanlan.zhihu.com/p/105021100?utm_source=weibo"  target="_blank" rel="noopener"
+    >使用 Hugo + Github 搭建个人博客 - 知乎 (zhihu.com)</a></p>
+<p><a class="link" href="https://gohugo.io/getting-started/installing/"  target="_blank" rel="noopener"
+    >Install Hugo | Hugo</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="https://genfanh.github.io/tags/hugo/">Hugo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    
+
+    <section class="article-view">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="2" />
+  <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+</svg>
+        <span id="/p/create-hugo-tutorial/" class="leancloud_visitors" data-flag-title="使用 Hugo &#43; Github Page 搭建个人博客">
+            <span class="leancloud-visitors-count">loading</span><span> VIEWS</span>
+        </span>
+    </section></footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo=""
+        issue-term="pathname"
+        theme="preferred-color-scheme" 
+        
+        crossorigin="anonymous" 
+        async>
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">&copy; 2020 genfanh Blog</section>
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="1.0.5">Stack</a></b> designed by
+        <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
+    integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin="anonymous"></script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<link rel="stylesheet" href="/css/highlight/light.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="/css/highlight/dark.min.css" media="(prefers-color-scheme: dark)">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FX29Q4RR92"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FX29Q4RR92');
+</script>
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments',
+      appId: 'IBQOzRWMnNNe0iMr5YiXQ9oD-MdYXbMMI',
+      appKey: 'Wf6ROG9SvmzvuFEANW7NmNiX',
+      avatar: 'retro', 
+      placeholder: '说点什么吧...',
+      visitor: 'true',
+      requiredFields: ['nick', 'mail']
+  });
+</script>
+    </body>
+</html>
