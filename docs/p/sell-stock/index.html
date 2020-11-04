@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='买卖股票最佳时机解法'><title>188.买卖股票的最佳时机</title>
+    
+    <link rel='canonical' href='https://genfanh.github.io/p/sell-stock/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='188.买卖股票的最佳时机'>
+<meta property='og:description' content='买卖股票最佳时机解法'>
+<meta property='og:url' content='https://genfanh.github.io/p/sell-stock/'>
+<meta property='og:site_name' content='genfanh Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='算法' /><meta property='article:tag' content='leetcode' /><meta property='article:published_time' content='2020-11-04T20:30:57&#43;08:00'/><meta property='article:modified_time' content='2020-11-04T20:30:57&#43;08:00'/>
+<meta name="twitter:title" content="188.买卖股票的最佳时机">
+<meta name="twitter:description" content="买卖股票最佳时机解法"><link rel="shortcut icon" href="/img/favicon.ico">
+<link rel="icon" href="/img/favicon.ico"> </head><body class="">
+        <div class="container flex on-phone--column align-items--flex-start extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+
+                
+                    
+                    <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x300_resize_box_2.png" width="300"
+                        height="300" class="site-logo" loading="lazy" alt="Avatar">
+                
+
+                <span class="emoji">🍉</span>
+            </figure>
+        
+        <h1 class="site-name"><a href="https://genfanh.github.io">genfanh Blog</a></h1>
+        <h2 class="site-description">暂时没想好填啥.</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='https://genfanh.github.io/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='https://genfanh.github.io/about'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='https://genfanh.github.io/archives'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+    </ol>
+</aside>
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://genfanh.github.io" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            
+                <a href="https://genfanh.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a>
+            
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="https://genfanh.github.io/p/sell-stock/">188.买卖股票的最佳时机</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        买卖股票最佳时机解法
+    </h3>
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Nov 04, 2020</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h3 id="一题目">一、题目</h3>
+<p><figure>
+		<a href="/p/sell-stock/question.PNG" data-size="1259x599">
+			<img srcset="/p/sell-stock/question_hu18803ef62b33f3a64c1dc07064bc59c5_33975_480x0_resize_box_2.PNG 480w, /p/sell-stock/question_hu18803ef62b33f3a64c1dc07064bc59c5_33975_1024x0_resize_box_2.PNG 1024w"
+				src="/p/sell-stock/question.PNG" width="1259" height="599" loading="lazy"
+				alt="题目">
+		</a>
+		
+		<figcaption>题目</figcaption>
+		
+	</figure></p>
+<h3 id="二解法">二、解法</h3>
+<h4 id="动态规划">动态规划</h4>
+<p><figure>
+		<a href="/p/sell-stock/state.png" data-size="492x362">
+			<img srcset="/p/sell-stock/state_hud08e77f2fddd8cc0a02ccd7582f4aa50_26806_480x0_resize_box_2.png 480w, /p/sell-stock/state_hud08e77f2fddd8cc0a02ccd7582f4aa50_26806_1024x0_resize_box_2.png 1024w"
+				src="/p/sell-stock/state.png" width="492" height="362" loading="lazy"
+				alt="状态流转图">
+		</a>
+		
+		<figcaption>状态流转图</figcaption>
+		
+	</figure></p>
+<p>交易k次的状态流转图如上图所示。</p>
+<p>初始状态时，手中没有股票，在初始状态可以保持该动作，不买不卖直至交易结束。</p>
+<p>初始状态只能通过买入进入到买入1状态，当买入1股后，我们可以有以下两种选择：</p>
+<ul>
+<li>啥也不做，保持买入1股状态，直至若干天后择优卖出</li>
+<li>马上手上股票，进入卖出1状态</li>
+</ul>
+<p>在卖出1状态时，也有两种选择：</p>
+<ul>
+<li>啥也不做，保持手上没有股票动作，直至下一个好时机买入</li>
+<li>马上进行第二次买入，进入买入2状态</li>
+</ul>
+<p>后面的买入2，保持，卖出2直至卖出k后，就无法在进行交易，只能进入交易结束状态</p>
+<p>所以在构造动态规划方程时，使用三个状态变量来表示买卖k次的交易状态</p>
+<ul>
+<li>i表示第i天</li>
+<li>k表示已经进行了k次买卖</li>
+<li>j表示当前手上是否持有股票</li>
+</ul>
+<p>此时我们得到动态规划状态表达式<code>dp[i][k][j]</code>，其中</p>
+<ul>
+<li><code>dp[i][k][0]</code>表示第i天交易了k次后手上不持有股票的累计最大利润</li>
+<li><code>dp[i][k][1]</code>表示第i天交易了k次后手上持有股票的累计最大利润</li>
+</ul>
+<p>此时，我们通过状态转化图，可以有</p>
+<pre><code># 第i天交易k次后手上不持有股票的累计最大利润为， 1、第i-1天k次后手上不持有股票的累计最大利润，或 2、第i-1天k次交易后手上持有股票的累计最大利润加上第i天卖出股票 ； 1或2中的最大值
+dp[i][k][0] = max( dp[i-1][k][0], d[i-1][k][1] + prices[i] )
+
+# 第i天交易k次后手上持有股票的累计最大利润为， 1、第i-1天k次后手上持有股票的累计最大利润，或 2、第i-1天k-1次交易后手上不持有股票的累计最大利润减去第i天买入股票 ； 1或2中的最大值
+dp[i][k][1] = max( dp[i-1][k][1], dp[i-1][k-1][0] - prices[i])
+
+# 此时题目解为 第i天 0~k 次交易后，手上不持有股票的累计利润最大值
+answer = max(dp[i][0~k][0])
+</code></pre><h3 id="三代码">三、代码</h3>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="nx">k</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">prices</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="nx">pLen</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">prices</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">prices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="p">}</span>
+
+    <span class="c1">//一次交易需要2天，如果交易次数大于总的天数/2，那么可以认为k是无穷大，套框架
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">k</span> <span class="p">&gt;</span> <span class="nx">pLen</span><span class="o">/</span><span class="mi">2</span><span class="p">{</span>
+        <span class="k">return</span> <span class="nf">maxProfit_k_Inf</span><span class="p">(</span><span class="nx">prices</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nx">tmp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([][</span><span class="mi">2</span><span class="p">]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nx">dp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([][][</span><span class="mi">2</span><span class="p">]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="p">&lt;</span><span class="nx">pLen</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">{</span>
+        <span class="nx">dp</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">dp</span><span class="p">,</span> <span class="nx">tmp</span><span class="p">)</span>
+    <span class="p">}</span>
+  
+    <span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="p">&lt;</span><span class="nx">pLen</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">{</span>
+        <span class="c1">//base case
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="nx">d</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">d</span><span class="o">&lt;=</span><span class="nx">k</span><span class="p">;</span> <span class="nx">d</span><span class="o">++</span><span class="p">{</span>
+                <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]=</span><span class="mi">0</span>
+                <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]=</span><span class="o">-</span><span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>  
+            <span class="p">}</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="nx">j</span><span class="o">:=</span><span class="nx">k</span><span class="p">;</span> <span class="nx">j</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">j</span><span class="o">--</span><span class="p">{</span>
+            <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]=</span><span class="nf">max</span><span class="p">(</span><span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nx">j</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nx">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+            <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]=</span><span class="nf">max</span><span class="p">(</span><span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nx">j</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nx">j</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">pLen</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nx">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">maxProfit_k_Inf</span><span class="p">(</span><span class="nx">prices</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">prices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="p">}</span>
+    <span class="nx">dp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([][</span><span class="mi">2</span><span class="p">]</span><span class="kt">int</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">prices</span><span class="p">))</span>
+
+    <span class="cm">/*
+</span><span class="cm">    k = +infinity
+</span><span class="cm">    dp[i][k][0]=max(dp[i-1][k][0], dp[i-1][k][1]+prices[i])
+</span><span class="cm">    dp[i][k][1]=max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i])
+</span><span class="cm">                =max(dp[i-1][k][1], dp[i-1][k][0]-prices[i])
+</span><span class="cm">
+</span><span class="cm">    我们发现数组中的 k 已经不会改变了，也就是说不需要记录 k 这个状态了：
+</span><span class="cm">    dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i])
+</span><span class="cm">    dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i])
+</span><span class="cm">    */</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="p">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="nx">prices</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span><span class="p">{</span>
+         <span class="k">if</span> <span class="nx">i</span><span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">{</span>
+             <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]=</span><span class="mi">0</span>
+             <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]=</span><span class="o">-</span><span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+             <span class="k">continue</span>
+         <span class="p">}</span>
+        <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="p">=</span> <span class="nf">max</span><span class="p">(</span><span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+        <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nf">max</span><span class="p">(</span><span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">dp</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">prices</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">max</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span><span class="p">{</span>
+    <span class="k">if</span> <span class="nx">x</span> <span class="p">&gt;</span> <span class="nx">y</span><span class="p">{</span>
+        <span class="k">return</span> <span class="nx">x</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">y</span>
+<span class="p">}</span>
+</code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="https://genfanh.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+        
+            <a href="https://genfanh.github.io/tags/leetcode/">leetcode</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    
+
+    <section class="article-view">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="2" />
+  <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+</svg>
+        <span id="/p/sell-stock/" class="leancloud_visitors" data-flag-title="188.买卖股票的最佳时机">
+            <span class="leancloud-visitors-count">loading</span><span> VIEWS</span>
+        </span>
+    </section></footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+    
+        
+    <div id="vcomments"></div>
+
+<style>
+  #vcomments {
+      background-color: var(--card-background);
+      border-radius: var(--card-border-radius);
+      box-shadow: var(--shadow-l1);
+      padding: var(--card-padding);
+  }
+</style>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">&copy; 2020 genfanh Blog</section>
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="1.0.5">Stack</a></b> designed by
+        <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
+    integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin="anonymous"></script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<link rel="stylesheet" href="/css/highlight/light.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="/css/highlight/dark.min.css" media="(prefers-color-scheme: dark)">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FX29Q4RR92"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FX29Q4RR92');
+</script>
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments',
+      appId: 'IBQOzRWMnNNe0iMr5YiXQ9oD-MdYXbMMI',
+      appKey: 'Wf6ROG9SvmzvuFEANW7NmNiX',
+      avatar: 'retro', 
+      placeholder: '说点什么吧...',
+      visitor: 'true',
+      requiredFields: ['nick', 'mail']
+  });
+</script>
+    </body>
+</html>

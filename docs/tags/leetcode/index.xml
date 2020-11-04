@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on genfanh Blog</title>
-    <link>https://genfanh.github.io/post/</link>
-    <description>Recent content in Posts on genfanh Blog</description>
+    <title>leetcode on genfanh Blog</title>
+    <link>https://genfanh.github.io/tags/leetcode/</link>
+    <description>Recent content in leetcode on genfanh Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 04 Nov 2020 20:30:57 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 04 Nov 2020 20:30:57 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/tags/leetcode/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>188.买卖股票的最佳时机</title>
       <link>https://genfanh.github.io/p/sell-stock/</link>
@@ -24,27 +24,6 @@
  i表示第i天 k表示已经进行了k次买卖 j表示当前手上是否持有股票  此时我们得到动态规划状态表达式dp[i][k][j]，其中
  dp[i][k][0]表示第i天交易了k次后手上不持有股票的累计最大利润 dp[i][k][1]表示第i天交易了k次后手上持有股票的累计最大利润  此时，我们通过状态转化图，可以有
 # 第i天交易k次后手上不持有股票的累计最大利润为， 1、第i-1天k次后手上不持有股票的累计最大利润，或 2、第i-1天k次交易后手上持有股票的累计最大利润加上第i天卖出股票 ； 1或2中的最大值 dp[i][k][0] = max( dp[i-1][k][0], d[i-1][k][1] + prices[i] ) # 第i天交易k次后手上持有股票的累计最大利润为， 1、第i-1天k次后手上持有股票的累计最大利润，或 2、第i-1天k-1次交易后手上不持有股票的累计最大利润减去第i天买入股票 ； 1或2中的最大值 dp[i][k][1] = max( dp[i-1][k][1], dp[i-1][k-1][0] - prices[i]) # 此时题目解为 第i天 0~k 次交易后，手上不持有股票的累计利润最大值 answer = max(dp[i][0~k][0]) 三、代码 func maxProfit(k int, prices []int) int { pLen := len(prices) if len(prices) == 0{ return 0 } //一次交易需要2天，如果交易次数大于总的天数/2，那么可以认为k是无穷大，套框架  if k &amp;gt; pLen/2{ return maxProfit_k_Inf(prices) } tmp := make([][2]int, k+1) dp := make([][][2]int, 0) for i:=0; i&amp;lt;pLen;i++{ dp = append(dp, tmp) } for i:=0; i&amp;lt;pLen; i++{ //base case  if i == 0 { for d:=0; d&amp;lt;=k; d++{ dp[i][d][0]=0 dp[i][d][1]=-prices[i] } continue } for j:=k; j&amp;gt;=1; j--{ dp[i][j][0]=max(dp[i-1][j][0], dp[i-1][j][1]+prices[i]) dp[i][j][1]=max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i]) } } return dp[pLen-1][k][0] } func maxProfit_k_Inf(prices []int) int { if len(prices) == 0 { return 0 } dp := make([][2]int, len(prices)) /* k = +infinity dp[i][k][0]=max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]) dp[i][k][1]=max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i]) =max(dp[i-1][k][1], dp[i-1][k][0]-prices[i]) 我们发现数组中的 k 已经不会改变了，也就是说不需要记录 k 这个状态了： dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]) dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]) */ for i:=0; i&amp;lt;len(prices); i++{ if i-1 == -1{ dp[i][0]=0 dp[i][1]=-prices[i] continue } dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]) dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]) } return dp[len(prices)-1][0] } func max(x, y int) int{ if x &amp;gt; y{ return x } return y } </description>
-    </item>
-    
-    <item>
-      <title>使用 Hugo &#43; Github Page 搭建个人博客</title>
-      <link>https://genfanh.github.io/p/create-hugo-tutorial/</link>
-      <pubDate>Mon, 02 Nov 2020 15:51:01 +0800</pubDate>
-      
-      <guid>https://genfanh.github.io/p/create-hugo-tutorial/</guid>
-      <description>今天主要记录用hugo搭建个人博客的过程，避免下次搭建流程遗失。
-一、安装Hugo 本人使用的是Windows系统，所以选择scoop安装方式。具体步骤如下：
-1、安装scoop 参考 github scoop 网站安装
-2、使用scoop安装hugo 安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本
-scoop install hugo-extended 若不喜欢使用拓展版本，可以使用以下指令安装基础版本
-scoop install hugo 3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
-其他平台可参考官网安装教程 Install Hugo
-二、使用hugo创建博客 1、创建网站 在创建前，请进入工作目录
-# 执行创建指令 # 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹 # 所有网站文件都在blog目录下 hugo new site blog 2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
-主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。
-cd blog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git  注：记得提前安装git
- 3、修改config.toml配置文件 正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可
-echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml 4、创建第一篇文章 hugo new posts/HelloWorld.md 5、启动hugo服务器 hugo server -D 三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.</description>
     </item>
     
   </channel>
