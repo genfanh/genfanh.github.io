@@ -6,7 +6,44 @@
     <description>Recent content in 算法 on genfanh Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 04 Nov 2020 20:30:57 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 05 Nov 2020 17:51:36 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>72.编辑距离</title>
+      <link>https://genfanh.github.io/p/edit-distance/</link>
+      <pubDate>Thu, 05 Nov 2020 17:51:36 +0800</pubDate>
+      
+      <guid>https://genfanh.github.io/p/edit-distance/</guid>
+      <description>一、题目 题目
+二、解法 动态规划 dp[i][j]代表 word1 的前 i 个字符转换成 word2 的前 j 字符需要的最少操作数
+所以，
+当 word1[i] == word2[j] 时， dp[i][j] = dp[i-1][j-1]
+当 word1[i] != word2[j] 时， dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1
+其中，dp[i-1][j-1] 表示替换操作， dp[i-1][j] 表示删除操作， dp[i][j-1] 表示插入操作。
+注意，针对第一行和第一列需要淡入考虑，如下图所示，引入 &#39;&#39;:
+
+第一行，是 word1 为空时变为 word2 最少要走的步数，也就是插入操作
+第一列，是 word2 为空时 word1 变为 word2 最少要走的步数， 也是删除操作
+最终结果就是 dp[i][j]
+复杂度 时间复杂度： O(m*n)
+空间复杂度： O(m*n)
+三、代码 func minDistance(word1 string, word2 string) int { n, m := len(word1), len(word2) dp := make([][]int, n+1) // word2 为空时 word1 变为 word2 最少要走的步数  for i:=0; i&amp;lt;=n; i++ { dp[i] = make([]int, m+1) dp[i][0] = i } // word1 为空时变为 word2 最少要走的步数  for j:=0; j&amp;lt;=m; j++ { dp[0][j] = j } for i:=1; i&amp;lt;=n; i++ { for j:=1; j&amp;lt;=m;j++ { if word1[i-1] == word2[j-1] { dp[i][j] = dp[i-1][j-1] } else { dp[i][j] = 1 + min(dp[i-1][j], min(dp[i][j-1], dp[i-1][j-1])) } } } return dp[n][m] } func min(x, y int) int { if x &amp;lt; y { return x } return y } </description>
+    </item>
+    
+    <item>
+      <title>322.零钱兑换</title>
+      <link>https://genfanh.github.io/p/coin-change/</link>
+      <pubDate>Thu, 05 Nov 2020 17:10:50 +0800</pubDate>
+      
+      <guid>https://genfanh.github.io/p/coin-change/</guid>
+      <description>一、题目 题目
+二、解法 动态规划 构造动态方程时，我们认为
+ dp[i]为凑成i金额所需要的最少硬币的数值  所以，当所有coins面值硬币选择一个时，其凑成的dp[i-coins[j]]的数值是最小时，可以认为dp[i]最小，动态转化表达式可以有
+dp[i] = min( dp[i-coins[j]] ) + 1 此时最终题解为，
+ ans = dp[amount]  复杂度 时间复杂度：O(amount * len(coins) )
+空间复杂度：O(amount)
+三、代码 func coinChange(coins []int, amount int) int { if amount == 0 { return 0 } dp := make([]int, amount+1) // 初始化所有 i&amp;gt;0 的 dp[i] 为 -1  for i := range dp { if i != 0 { dp[i] = -1 } } n := len(coins) for i:=1; i&amp;lt;=amount; i++ { minVal := math.</description>
+    </item>
+    
     <item>
       <title>188.买卖股票的最佳时机</title>
       <link>https://genfanh.github.io/p/sell-stock/</link>
