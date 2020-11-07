@@ -6,7 +6,54 @@
     <description>Recent content in 算法 on genfanh Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 05 Nov 2020 17:51:36 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 07 Nov 2020 16:03:54 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>139.单词拆分</title>
+      <link>https://genfanh.github.io/p/words-split/</link>
+      <pubDate>Sat, 07 Nov 2020 16:03:54 +0800</pubDate>
+      
+      <guid>https://genfanh.github.io/p/words-split/</guid>
+      <description>一、题目 题目
+二、解法 动态规划 
+  初始化 dp=[false, ⋯ , false]，长度为 n+1。n 为字符串长度。dp[i] 表示 s 的前 i 位是否可以用 wordDict 中的单词表示。
+  初始化 dp[0]=true，空字符可以被表示。
+  遍历字符串的所有子串，遍历开始索引 i，遍历区间 [0,n)：
+ 遍历结束索引 j，遍历区间 [i+1,n+1)：  若 dp[i]=true且 s[i, ⋯ ,j) 在 wordlist 中：dp[j]=true。解释：dp[i]=true 说明 s 的前 i 位可以用 wordDict 表示，则 s[i, ⋯ ,j) 出现在 wordDict 中，说明 s 的前 j 位可以表示。      返回 dp[n]</description>
+    </item>
+    
+    <item>
+      <title>140.单词拆分II</title>
+      <link>https://genfanh.github.io/p/words-split-ii/</link>
+      <pubDate>Sat, 07 Nov 2020 16:03:54 +0800</pubDate>
+      
+      <guid>https://genfanh.github.io/p/words-split-ii/</guid>
+      <description>一、题目 题目
+二、解法 动态规划+回溯  动态规划得到了原始输入字符串的任意长度的 前缀子串 是否可以拆分为单词集合中的单词； 我们以示例 2：s = &amp;quot;pineapplepenapple&amp;quot;、wordDict = [&amp;quot;apple&amp;quot;, &amp;quot;pen&amp;quot;, &amp;quot;applepen&amp;quot;, &amp;quot;pine&amp;quot;, &amp;quot;pineapple&amp;quot;] 为例，分析如何得到所有具体解。  所有任意长度的前缀是否可拆分是知道的，那么如果 后缀子串在单词集合中，这个后缀子串就是解的一部分，例如：
+示例
+再对比这个问题的输出：
+[ &amp;quot;pine apple pen apple&amp;quot;, &amp;quot;pineapple pen apple&amp;quot;, &amp;quot;pine applepen apple&amp;quot; ] 可以发现，树形结构中，从叶子结点到根结点的路径是符合要求的一个解，与以前做过的回溯算法的问题不一样，这个时候路径变量我们需要在依次在列表的开始位置插入元素，可以使用队列实现。
+三、代码 func wordBreak(s string, wordDict []string) bool { ans := make([]string, 0) size := len(s) // 使用 map 加速查找 	wordMap := make(map[string]bool, size + 1) for _, word := range wordDict { wordMap[word] = true } // 查找是否有解 	dp := make([]bool, size+1) dp[0] = true for i:=0; i&amp;lt;size; i++ { for j:=i+1; j&amp;lt;=size; j++ { if dp[i] &amp;amp;&amp;amp; wordMap[s[i:j]] { dp[j] = true } } } // 回溯算法，获取所有解 	path := make([]string, 0) var backtracking func(start int) backtracking = func(start int) { if start == size &amp;amp;&amp;amp; dp[size] { tmp := strings.</description>
+    </item>
+    
+    <item>
+      <title>131.分割回文串</title>
+      <link>https://genfanh.github.io/p/split-palindrome-string/</link>
+      <pubDate>Sat, 07 Nov 2020 15:15:03 +0800</pubDate>
+      
+      <guid>https://genfanh.github.io/p/split-palindrome-string/</guid>
+      <description>一、题目 题目
+二、解法 回溯+动态规划优化 搜索问题主要使用回溯法。
+回溯法思考的步骤：
+1、画递归树；
+2、根据自己画的递归树编码。
+思考如何根据这棵递归树编码：
+1、每一个结点表示剩余没有扫描到的字符串，产生分支是截取了剩余字符串的前缀；
+2、产生前缀字符串的时候，判断前缀字符串是否是回文。
+如果前缀字符串是回文，则可以产生分支和结点； 如果前缀字符串不是回文，则不产生分支和结点，这一步是剪枝操作。 3、在叶子结点是空字符串的时候结算，此时从根结点到叶子结点的路径，就是结果集里的一个结果，使用深度优先遍历，记录下所有可能的结果。
+ 采用一个路径变量 path 搜索，path 全局使用一个（注意结算的时候，需要生成一个拷贝），因此在递归执行方法结束以后需要回溯，即将递归之前添加进来的元素拿出去； path 的操作只在列表的末端，因此合适的数据结构是栈。  利用「力扣」第 5 题：最长回文子串 的思路，使用空间换时间，利用动态规划把结果先算出来，这样就可以以 O(1) 的时间复杂度直接得到一个子串是否是回文。
+三、代码 func partition(s string) [][]string { ans := make([][]string,0) size := len(s) if size == 0 { return ans } // 预处理 	// 使用 dp[i][j] 表示 s[i:j] 是否回文 	dp := make([][]bool, size) for i := range dp { dp[i] = make([]bool, size) } for r:=0; r&amp;lt;size; r++ { for l:=0; l&amp;lt;=r; l++ { if s[l] == s[r] &amp;amp;&amp;amp; (r - l &amp;lt;=2 || dp[l+1][r-1]) { dp[l][r] = true } } } path := make([]string, 0) var backtracking func(start int) backtracking = func (start int) { if start &amp;gt;= size { tmp := make([]string, len(path)) copy(tmp, path) ans = append(ans, tmp) return } for i := start; i &amp;lt; size; i++ { if !</description>
+    </item>
+    
     <item>
       <title>72.编辑距离</title>
       <link>https://genfanh.github.io/p/edit-distance/</link>

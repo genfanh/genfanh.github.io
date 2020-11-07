@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='一、题目 题目
+二、解法 回溯&#43;动态规划优化 搜索问题主要使用回溯法。
+回溯法思考的步骤：
+1、画递归树；
+2、根据自己画的递归树编码。
+思考如何根据这棵递归树编码：
+1、每一个结点表示剩余没有扫描到的字符串，产生分支是截取了剩余字符串的前缀；
+2、产生前缀字符串的时候，判断前缀字符串是否是回文。
+如果前缀字符串是回文，则可以产生分支和结点； 如果前缀字符串不是回文，则不产生分支和结点，这一步是剪枝操作。 3、在叶子结点是空字符串的时候结算，此时从根结点到叶子结点的路径，就是结果集里的一个结果，使用深度优先遍历，记录下所有可能的结果。
+ 采用一个路径变量 path 搜索，path 全局使用一个（注意结算的时候，需要生成一个拷贝），因此在递归执行方法结束以后需要回溯，即将递归之前添加进来的元素拿出去； path 的操作只在列表的末端，因此合适的数据结构是栈。  利用「力扣」第 5 题：最长回文子串 的思路，使用空间换时间，利用动态规划把结果先算出来，这样就可以以 O(1) 的时间复杂度直接得到一个子串是否是回文。
+三、代码 func partition(s string) [][]string { ans := make([][]string,0) size := len(s) if size == 0 { return ans } // 预处理 	// 使用 dp[i][j] 表示 s[i:j] 是否回文 	dp := make([][]bool, size) for i := range dp { dp[i] = make([]bool, size) } for r:=0; r&amp;lt;size; r&#43;&#43; { for l:=0; l&amp;lt;=r; l&#43;&#43; { if s[l] == s[r] &amp;amp;&amp;amp; (r - l &amp;lt;=2 || dp[l&#43;1][r-1]) { dp[l][r] = true } } } path := make([]string, 0) var backtracking func(start int) backtracking = func (start int) { if start &amp;gt;= size { tmp := make([]string, len(path)) copy(tmp, path) ans = append(ans, tmp) return } for i := start; i &amp;lt; size; i&#43;&#43; { if !'><title>131.分割回文串</title>
+    
+    <link rel='canonical' href='https://genfanh.github.io/p/split-palindrome-string/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='131.分割回文串'>
+<meta property='og:description' content='一、题目 题目
+二、解法 回溯&#43;动态规划优化 搜索问题主要使用回溯法。
+回溯法思考的步骤：
+1、画递归树；
+2、根据自己画的递归树编码。
+思考如何根据这棵递归树编码：
+1、每一个结点表示剩余没有扫描到的字符串，产生分支是截取了剩余字符串的前缀；
+2、产生前缀字符串的时候，判断前缀字符串是否是回文。
+如果前缀字符串是回文，则可以产生分支和结点； 如果前缀字符串不是回文，则不产生分支和结点，这一步是剪枝操作。 3、在叶子结点是空字符串的时候结算，此时从根结点到叶子结点的路径，就是结果集里的一个结果，使用深度优先遍历，记录下所有可能的结果。
+ 采用一个路径变量 path 搜索，path 全局使用一个（注意结算的时候，需要生成一个拷贝），因此在递归执行方法结束以后需要回溯，即将递归之前添加进来的元素拿出去； path 的操作只在列表的末端，因此合适的数据结构是栈。  利用「力扣」第 5 题：最长回文子串 的思路，使用空间换时间，利用动态规划把结果先算出来，这样就可以以 O(1) 的时间复杂度直接得到一个子串是否是回文。
+三、代码 func partition(s string) [][]string { ans := make([][]string,0) size := len(s) if size == 0 { return ans } // 预处理 	// 使用 dp[i][j] 表示 s[i:j] 是否回文 	dp := make([][]bool, size) for i := range dp { dp[i] = make([]bool, size) } for r:=0; r&amp;lt;size; r&#43;&#43; { for l:=0; l&amp;lt;=r; l&#43;&#43; { if s[l] == s[r] &amp;amp;&amp;amp; (r - l &amp;lt;=2 || dp[l&#43;1][r-1]) { dp[l][r] = true } } } path := make([]string, 0) var backtracking func(start int) backtracking = func (start int) { if start &amp;gt;= size { tmp := make([]string, len(path)) copy(tmp, path) ans = append(ans, tmp) return } for i := start; i &amp;lt; size; i&#43;&#43; { if !'>
+<meta property='og:url' content='https://genfanh.github.io/p/split-palindrome-string/'>
+<meta property='og:site_name' content='genfanh Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='算法' /><meta property='article:tag' content='leetcode' /><meta property='article:published_time' content='2020-11-07T15:15:03&#43;08:00'/><meta property='article:modified_time' content='2020-11-07T15:15:03&#43;08:00'/>
+<meta name="twitter:title" content="131.分割回文串">
+<meta name="twitter:description" content="一、题目 题目
+二、解法 回溯&#43;动态规划优化 搜索问题主要使用回溯法。
+回溯法思考的步骤：
+1、画递归树；
+2、根据自己画的递归树编码。
+思考如何根据这棵递归树编码：
+1、每一个结点表示剩余没有扫描到的字符串，产生分支是截取了剩余字符串的前缀；
+2、产生前缀字符串的时候，判断前缀字符串是否是回文。
+如果前缀字符串是回文，则可以产生分支和结点； 如果前缀字符串不是回文，则不产生分支和结点，这一步是剪枝操作。 3、在叶子结点是空字符串的时候结算，此时从根结点到叶子结点的路径，就是结果集里的一个结果，使用深度优先遍历，记录下所有可能的结果。
+ 采用一个路径变量 path 搜索，path 全局使用一个（注意结算的时候，需要生成一个拷贝），因此在递归执行方法结束以后需要回溯，即将递归之前添加进来的元素拿出去； path 的操作只在列表的末端，因此合适的数据结构是栈。  利用「力扣」第 5 题：最长回文子串 的思路，使用空间换时间，利用动态规划把结果先算出来，这样就可以以 O(1) 的时间复杂度直接得到一个子串是否是回文。
+三、代码 func partition(s string) [][]string { ans := make([][]string,0) size := len(s) if size == 0 { return ans } // 预处理 	// 使用 dp[i][j] 表示 s[i:j] 是否回文 	dp := make([][]bool, size) for i := range dp { dp[i] = make([]bool, size) } for r:=0; r&amp;lt;size; r&#43;&#43; { for l:=0; l&amp;lt;=r; l&#43;&#43; { if s[l] == s[r] &amp;amp;&amp;amp; (r - l &amp;lt;=2 || dp[l&#43;1][r-1]) { dp[l][r] = true } } } path := make([]string, 0) var backtracking func(start int) backtracking = func (start int) { if start &amp;gt;= size { tmp := make([]string, len(path)) copy(tmp, path) ans = append(ans, tmp) return } for i := start; i &amp;lt; size; i&#43;&#43; { if !"><link rel="shortcut icon" href="/img/favicon.ico">
+<link rel="icon" href="/img/favicon.ico"> </head><body class="">
+        <div class="container flex on-phone--column align-items--flex-start extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+
+                
+                    
+                    <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x300_resize_box_2.png" width="300"
+                        height="300" class="site-logo" loading="lazy" alt="Avatar">
+                
+
+                <span class="emoji">🍉</span>
+            </figure>
+        
+        <h1 class="site-name"><a href="https://genfanh.github.io">genfanh Blog</a></h1>
+        <h2 class="site-description">暂时没想好填啥.</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='https://genfanh.github.io/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='https://genfanh.github.io/about'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='https://genfanh.github.io/archives'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+    </ol>
+</aside>
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://genfanh.github.io" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            
+                <a href="https://genfanh.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a>
+            
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="https://genfanh.github.io/p/split-palindrome-string/">131.分割回文串</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Nov 07, 2020</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h3 id="一题目">一、题目</h3>
+<p><figure>
+		<a href="/p/split-palindrome-string/question.PNG" data-size="602x329">
+			<img srcset="/p/split-palindrome-string/question_hu69e739c9641210f06fefcd8ac430cf0f_10823_480x0_resize_box_2.PNG 480w, /p/split-palindrome-string/question_hu69e739c9641210f06fefcd8ac430cf0f_10823_1024x0_resize_box_2.PNG 1024w"
+				src="/p/split-palindrome-string/question.PNG" width="602" height="329" loading="lazy"
+				alt="题目">
+		</a>
+		
+		<figcaption>题目</figcaption>
+		
+	</figure></p>
+<h3 id="二解法">二、解法</h3>
+<h4 id="回溯动态规划优化">回溯+动态规划优化</h4>
+<p>搜索问题主要使用回溯法。</p>
+<p>回溯法思考的步骤：</p>
+<p>1、画递归树；</p>
+<p>2、根据自己画的递归树编码。</p>
+<p><img src="E:%5cworkspace%5cgithub-page%5cblog%5ccontent%5cpost%5c2020%5c11%5c07%5csplit-palindrome-string%5crecursive-tree.png" alt="递归树"  /></p>
+<p>思考如何根据这棵递归树编码：</p>
+<p>1、每一个结点表示剩余没有扫描到的字符串，产生分支是截取了剩余字符串的前缀；</p>
+<p>2、产生前缀字符串的时候，判断前缀字符串是否是回文。</p>
+<p>如果前缀字符串是回文，则可以产生分支和结点；
+如果前缀字符串不是回文，则不产生分支和结点，这一步是剪枝操作。
+3、在叶子结点是空字符串的时候结算，此时<strong>从根结点到叶子结点的路径，就是结果集里的一个结果，使用深度优先遍历，记录下所有可能的结果</strong>。</p>
+<ul>
+<li>采用一个路径变量 <code>path</code> 搜索，<code>path</code> 全局使用一个（注意结算的时候，需要生成一个拷贝），因此在递归执行方法结束以后需要回溯，即将递归之前添加进来的元素拿出去；</li>
+<li><code>path</code> 的操作只在列表的末端，因此合适的数据结构是栈。</li>
+</ul>
+<p>利用「力扣」第 5 题：<a class="link" href="https://leetcode-cn.com/problems/longest-palindromic-substring"  target="_blank" rel="noopener"
+    >最长回文子串</a> 的思路，使用空间换时间，利用动态规划把结果先算出来，这样就可以以 <strong>O(1)</strong> 的时间复杂度直接得到一个子串是否是回文。</p>
+<h3 id="三代码">三、代码</h3>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">partition</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">string</span> <span class="p">{</span>
+<span class="nx">ans</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([][]</span><span class="kt">string</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+	<span class="nx">size</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">ans</span>
+	<span class="p">}</span>
+	<span class="c1">// 预处理
+</span><span class="c1"></span>	<span class="c1">// 使用 dp[i][j] 表示 s[i:j] 是否回文
+</span><span class="c1"></span>	<span class="nx">dp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([][]</span><span class="kt">bool</span><span class="p">,</span> <span class="nx">size</span><span class="p">)</span>
+	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">dp</span> <span class="p">{</span>
+		<span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">bool</span><span class="p">,</span> <span class="nx">size</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">for</span> <span class="nx">r</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">r</span><span class="p">&lt;</span><span class="nx">size</span><span class="p">;</span> <span class="nx">r</span><span class="o">++</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="nx">l</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">l</span><span class="o">&lt;=</span><span class="nx">r</span><span class="p">;</span> <span class="nx">l</span><span class="o">++</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="nx">s</span><span class="p">[</span><span class="nx">l</span><span class="p">]</span> <span class="o">==</span> <span class="nx">s</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">r</span> <span class="o">-</span> <span class="nx">l</span> <span class="o">&lt;=</span><span class="mi">2</span> <span class="o">||</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">l</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="nx">r</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+				<span class="nx">dp</span><span class="p">[</span><span class="nx">l</span><span class="p">][</span><span class="nx">r</span><span class="p">]</span> <span class="p">=</span> <span class="kc">true</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="nx">path</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+	<span class="kd">var</span> <span class="nx">backtracking</span> <span class="kd">func</span><span class="p">(</span><span class="nx">start</span> <span class="kt">int</span><span class="p">)</span>
+	<span class="nx">backtracking</span> <span class="p">=</span> <span class="kd">func</span> <span class="p">(</span><span class="nx">start</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nx">start</span> <span class="o">&gt;=</span> <span class="nx">size</span> <span class="p">{</span>
+			<span class="nx">tmp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">))</span>
+			<span class="nb">copy</span><span class="p">(</span><span class="nx">tmp</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span>
+			<span class="nx">ans</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">ans</span><span class="p">,</span> <span class="nx">tmp</span><span class="p">)</span>
+			<span class="k">return</span>
+		<span class="p">}</span>
+		<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">start</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">size</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="p">!</span><span class="nx">dp</span><span class="p">[</span><span class="nx">start</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="p">{</span>
+				<span class="k">continue</span>
+			<span class="p">}</span>
+			<span class="nx">path</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="nx">s</span><span class="p">[</span><span class="nx">start</span><span class="p">:</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+			<span class="nf">backtracking</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+			<span class="nx">path</span> <span class="p">=</span> <span class="nx">path</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="nf">backtracking</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nx">ans</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="四参考">四、参考</h3>
+<p><strong>转载自：</strong><a class="link" href="https://leetcode-cn.com/problems/palindrome-partitioning/solution/hui-su-you-hua-jia-liao-dong-tai-gui-hua-by-liweiw/"  target="_blank" rel="noopener"
+    >回溯、优化（使用动态规划预处理数组） - 分割回文串 - 力扣（LeetCode） (leetcode-cn.com)</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="https://genfanh.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+        
+            <a href="https://genfanh.github.io/tags/leetcode/">leetcode</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    
+
+    <section class="article-view">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="2" />
+  <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+</svg>
+        <span id="/p/split-palindrome-string/" class="leancloud_visitors" data-flag-title="131.分割回文串">
+            <span class="leancloud-visitors-count">loading</span><span> VIEWS</span>
+        </span>
+    </section></footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="https://genfanh.github.io/p/words-split/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">139.单词拆分</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="https://genfanh.github.io/p/words-split-ii/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">140.单词拆分II</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="https://genfanh.github.io/p/edit-distance/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">72.编辑距离</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="https://genfanh.github.io/p/coin-change/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">322.零钱兑换</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="https://genfanh.github.io/p/sell-stock/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">188.买卖股票的最佳时机</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+    
+        
+    <div id="vcomments"></div>
+
+<style>
+  #vcomments {
+      background-color: var(--card-background);
+      border-radius: var(--card-border-radius);
+      box-shadow: var(--shadow-l1);
+      padding: var(--card-padding);
+  }
+</style>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">&copy; 2020 genfanh Blog</section>
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="1.0.5">Stack</a></b> designed by
+        <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
+    integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin="anonymous"></script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<link rel="stylesheet" href="/css/highlight/light.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="/css/highlight/dark.min.css" media="(prefers-color-scheme: dark)">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FX29Q4RR92"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FX29Q4RR92');
+</script>
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments',
+      appId: 'IBQOzRWMnNNe0iMr5YiXQ9oD-MdYXbMMI',
+      appKey: 'Wf6ROG9SvmzvuFEANW7NmNiX',
+      avatar: 'retro', 
+      placeholder: '说点什么吧...',
+      visitor: 'true',
+      requiredFields: ['nick', 'mail']
+  });
+</script>
+    </body>
+</html>
