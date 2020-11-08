@@ -13,8 +13,8 @@
       <pubDate>Sat, 07 Nov 2020 16:03:54 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/words-split/</guid>
-      <description>一、题目 题目
-二、解法 动态规划 
+      <description>一、题目   题目 
+二、解法 动态规划   
   初始化 dp=[false, ⋯ , false]，长度为 n+1。n 为字符串长度。dp[i] 表示 s 的前 i 位是否可以用 wordDict 中的单词表示。
   初始化 dp[0]=true，空字符可以被表示。
   遍历字符串的所有子串，遍历开始索引 i，遍历区间 [0,n)：
@@ -27,9 +27,9 @@
       <pubDate>Sat, 07 Nov 2020 16:03:54 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/words-split-ii/</guid>
-      <description>一、题目 题目
+      <description>一、题目   题目 
 二、解法 动态规划+回溯  动态规划得到了原始输入字符串的任意长度的 前缀子串 是否可以拆分为单词集合中的单词； 我们以示例 2：s = &amp;quot;pineapplepenapple&amp;quot;、wordDict = [&amp;quot;apple&amp;quot;, &amp;quot;pen&amp;quot;, &amp;quot;applepen&amp;quot;, &amp;quot;pine&amp;quot;, &amp;quot;pineapple&amp;quot;] 为例，分析如何得到所有具体解。  所有任意长度的前缀是否可拆分是知道的，那么如果 后缀子串在单词集合中，这个后缀子串就是解的一部分，例如：
-示例
+  示例 
 再对比这个问题的输出：
 [ &amp;quot;pine apple pen apple&amp;quot;, &amp;quot;pineapple pen apple&amp;quot;, &amp;quot;pine applepen apple&amp;quot; ] 可以发现，树形结构中，从叶子结点到根结点的路径是符合要求的一个解，与以前做过的回溯算法的问题不一样，这个时候路径变量我们需要在依次在列表的开始位置插入元素，可以使用队列实现。
 三、代码 func wordBreak(s string, wordDict []string) bool { ans := make([]string, 0) size := len(s) // 使用 map 加速查找 	wordMap := make(map[string]bool, size + 1) for _, word := range wordDict { wordMap[word] = true } // 查找是否有解 	dp := make([]bool, size+1) dp[0] = true for i:=0; i&amp;lt;size; i++ { for j:=i+1; j&amp;lt;=size; j++ { if dp[i] &amp;amp;&amp;amp; wordMap[s[i:j]] { dp[j] = true } } } // 回溯算法，获取所有解 	path := make([]string, 0) var backtracking func(start int) backtracking = func(start int) { if start == size &amp;amp;&amp;amp; dp[size] { tmp := strings.</description>
@@ -41,7 +41,7 @@
       <pubDate>Sat, 07 Nov 2020 15:15:03 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/split-palindrome-string/</guid>
-      <description>一、题目 题目
+      <description>一、题目   题目 
 二、解法 回溯+动态规划优化 搜索问题主要使用回溯法。
 回溯法思考的步骤：
 1、画递归树；
@@ -60,14 +60,14 @@
       <pubDate>Thu, 05 Nov 2020 17:51:36 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/edit-distance/</guid>
-      <description>一、题目 题目
+      <description>一、题目   题目 
 二、解法 动态规划 dp[i][j]代表 word1 的前 i 个字符转换成 word2 的前 j 字符需要的最少操作数
 所以，
 当 word1[i] == word2[j] 时， dp[i][j] = dp[i-1][j-1]
 当 word1[i] != word2[j] 时， dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1
 其中，dp[i-1][j-1] 表示替换操作， dp[i-1][j] 表示删除操作， dp[i][j-1] 表示插入操作。
 注意，针对第一行和第一列需要淡入考虑，如下图所示，引入 &#39;&#39;:
-
+  
 第一行，是 word1 为空时变为 word2 最少要走的步数，也就是插入操作
 第一列，是 word2 为空时 word1 变为 word2 最少要走的步数， 也是删除操作
 最终结果就是 dp[i][j]
@@ -82,7 +82,7 @@
       <pubDate>Thu, 05 Nov 2020 17:10:50 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/coin-change/</guid>
-      <description>一、题目 题目
+      <description>一、题目   题目 
 二、解法 动态规划 构造动态方程时，我们认为
  dp[i]为凑成i金额所需要的最少硬币的数值  所以，当所有coins面值硬币选择一个时，其凑成的dp[i-coins[j]]的数值是最小时，可以认为dp[i]最小，动态转化表达式可以有
 dp[i] = min( dp[i-coins[j]] ) + 1 此时最终题解为，
@@ -97,8 +97,8 @@ dp[i] = min( dp[i-coins[j]] ) + 1 此时最终题解为，
       <pubDate>Wed, 04 Nov 2020 20:30:57 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/sell-stock/</guid>
-      <description>一、题目 题目
-二、解法 动态规划 状态流转图
+      <description>一、题目   题目 
+二、解法 动态规划   状态流转图 
 交易k次的状态流转图如上图所示。
 初始状态时，手中没有股票，在初始状态可以保持该动作，不买不卖直至交易结束。
 初始状态只能通过买入进入到买入1状态，当买入1股后，我们可以有以下两种选择：
