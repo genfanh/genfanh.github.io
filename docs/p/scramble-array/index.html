@@ -4,11 +4,11 @@
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='一、题目   题目 
 二、解法 方法：Fisher-Yates 洗牌算法
 Fisher-Yates 洗牌算法跟暴力算法很像。在每次迭代中，生成一个范围在当前下标到数组末尾元素下标之间的随机整数。接下来，将当前元素和随机选出的下标所指的元素互相交换 - 这一步模拟了每次从 “帽子” 里面摸一个元素的过程，其中选取下标范围的依据在于每个被摸出的元素都不可能再被摸出来了。此外还有一个需要注意的细节，当前元素是可以和它本身互相交换的 - 否则生成最后的排列组合的概率就不对了。
-type Solution struct { r *rand.Rand nums []int } func Constructor(nums []int) Solution { return Solution{ r : rand.New(rand.NewSource(time.Now().UnixNano())), nums: nums, } } /** Resets the array to its original configuration and return it. */ func (this *Solution) Reset() []int { return this.nums } /** Returns a random shuffling of the array. */ func (this *Solution) Shuffle() []int { size := len(this.'><title>384打乱数组</title>
+type Solution struct { r *rand.Rand nums []int } func Constructor(nums []int) Solution { return Solution{ r : rand.New(rand.NewSource(time.Now().UnixNano())), nums: nums, } } /** Resets the array to its original configuration and return it. */ func (this *Solution) Reset() []int { return this.nums } /** Returns a random shuffling of the array. */ func (this *Solution) Shuffle() []int { size := len(this.'><title>384.打乱数组</title>
 
 <link rel='canonical' href='https://genfanh.github.io/p/scramble-array/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='384打乱数组'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='384.打乱数组'>
 <meta property='og:description' content='一、题目   题目 
 二、解法 方法：Fisher-Yates 洗牌算法
 Fisher-Yates 洗牌算法跟暴力算法很像。在每次迭代中，生成一个范围在当前下标到数组末尾元素下标之间的随机整数。接下来，将当前元素和随机选出的下标所指的元素互相交换 - 这一步模拟了每次从 “帽子” 里面摸一个元素的过程，其中选取下标范围的依据在于每个被摸出的元素都不可能再被摸出来了。此外还有一个需要注意的细节，当前元素是可以和它本身互相交换的 - 否则生成最后的排列组合的概率就不对了。
@@ -16,7 +16,7 @@ type Solution struct { r *rand.Rand nums []int } func Constructor(nums []int) So
 <meta property='og:url' content='https://genfanh.github.io/p/scramble-array/'>
 <meta property='og:site_name' content='genfanh Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='算法' /><meta property='article:tag' content='leetcode' /><meta property='article:published_time' content='2020-11-08T15:32:46&#43;08:00'/><meta property='article:modified_time' content='2020-11-08T15:32:46&#43;08:00'/>
-<meta name="twitter:title" content="384打乱数组">
+<meta name="twitter:title" content="384.打乱数组">
 <meta name="twitter:description" content="一、题目   题目 
 二、解法 方法：Fisher-Yates 洗牌算法
 Fisher-Yates 洗牌算法跟暴力算法很像。在每次迭代中，生成一个范围在当前下标到数组末尾元素下标之间的随机整数。接下来，将当前元素和随机选出的下标所指的元素互相交换 - 这一步模拟了每次从 “帽子” 里面摸一个元素的过程，其中选取下标范围的依据在于每个被摸出的元素都不可能再被摸出来了。此外还有一个需要注意的细节，当前元素是可以和它本身互相交换的 - 否则生成最后的排列组合的概率就不对了。
@@ -158,7 +158,7 @@ type Solution struct { r *rand.Rand nums []int } func Constructor(nums []int) So
     
 
     <h2 class="article-title">
-        <a href="/p/scramble-array/">384打乱数组</a>
+        <a href="/p/scramble-array/">384.打乱数组</a>
     </h2>
 
     <footer class="article-time">
@@ -277,7 +277,7 @@ type Solution struct { r *rand.Rand nums []int } func Constructor(nums []int) So
   <circle cx="12" cy="12" r="2" />
   <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
 </svg>
-        <span id="/p/scramble-array/" class="leancloud_visitors" data-flag-title="384打乱数组">
+        <span id="/p/scramble-array/" class="leancloud_visitors" data-flag-title="384.打乱数组">
             <span class="leancloud-visitors-count">loading</span><span> VIEWS</span>
         </span>
     </section></footer>
@@ -316,12 +316,24 @@ type Solution struct { r *rand.Rand nums []int } func Constructor(nums []int) So
                 
                     
 <article class="">
+    <a href="/p/kth-smallest-in-order-matrix/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">378.有序矩阵中第K小的元素</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/rotate-array/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">189旋转数组</h2>
+            <h2 class="article-title">189.旋转数组</h2>
         </div>
     </a>
 </article>
@@ -358,18 +370,6 @@ type Solution struct { r *rand.Rand nums []int } func Constructor(nums []int) So
 
         <div class="article-details">
             <h2 class="article-title">131.分割回文串</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/edit-distance/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">72.编辑距离</h2>
         </div>
     </a>
 </article>

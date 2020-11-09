@@ -1,5 +1,5 @@
 ---
-title: "189旋转数组"
+title: "189.旋转数组"
 description: "给定一个数组，向右移k位"
 date: 2020-11-08T14:24:44+08:00
 draft: false

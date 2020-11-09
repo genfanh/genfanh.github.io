@@ -1,5 +1,5 @@
 ---
-title: "384打乱数组"
+title: "384.打乱数组"
 description: ""
 date: 2020-11-08T15:32:46+08:00
 draft: false

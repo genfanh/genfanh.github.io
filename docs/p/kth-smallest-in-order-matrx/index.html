@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='一、题目   题目 
+二、解法 方法1：并归排序&#43;最小堆 解法
+由题目给出的性质可知，这个矩阵的每一行均为一个有序数组。问题即转化为从这 nn 个有序数组中找第 kk 大的数，可以想到利用归并排序的做法，归并到第 kk 个数即可停止。
+一般归并排序是两个数组归并，而本题是 nn 个数组归并，所以需要用小根堆维护，以优化时间复杂度。
+具体如何归并，可以参考23. 合并K个升序链表 - 力扣（LeetCode） (leetcode-cn.com)。
+代码
+func kthSmallest(matrix [][]int, k int) int { h := &amp;amp;IHeap{} // 按行把每行最小数入堆 	for i := 0; i &amp;lt; len(matrix); i&#43;&#43; { heap.Push(h, [3]int{matrix[i][0], i, 0}) } // 从 0 ~ k - 1， 先把最小数出堆，再把最小数所在行的下一个数入堆， 	// 循环 k - 1 次之后， 所有小于 第 k小 的数都不在堆中， 并且最小的第k个数就在堆顶 	for i := 0; i &amp;lt; k - 1; i&#43;&#43; { now := heap.'><title>378.有序矩阵中第K小的元素</title>
+
+<link rel='canonical' href='https://genfanh.github.io/p/kth-smallest-in-order-matrx/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='378.有序矩阵中第K小的元素'>
+<meta property='og:description' content='一、题目   题目 
+二、解法 方法1：并归排序&#43;最小堆 解法
+由题目给出的性质可知，这个矩阵的每一行均为一个有序数组。问题即转化为从这 nn 个有序数组中找第 kk 大的数，可以想到利用归并排序的做法，归并到第 kk 个数即可停止。
+一般归并排序是两个数组归并，而本题是 nn 个数组归并，所以需要用小根堆维护，以优化时间复杂度。
+具体如何归并，可以参考23. 合并K个升序链表 - 力扣（LeetCode） (leetcode-cn.com)。
+代码
+func kthSmallest(matrix [][]int, k int) int { h := &amp;amp;IHeap{} // 按行把每行最小数入堆 	for i := 0; i &amp;lt; len(matrix); i&#43;&#43; { heap.Push(h, [3]int{matrix[i][0], i, 0}) } // 从 0 ~ k - 1， 先把最小数出堆，再把最小数所在行的下一个数入堆， 	// 循环 k - 1 次之后， 所有小于 第 k小 的数都不在堆中， 并且最小的第k个数就在堆顶 	for i := 0; i &amp;lt; k - 1; i&#43;&#43; { now := heap.'>
+<meta property='og:url' content='https://genfanh.github.io/p/kth-smallest-in-order-matrx/'>
+<meta property='og:site_name' content='genfanh Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='算法' /><meta property='article:tag' content='leetcode' /><meta property='article:published_time' content='2020-11-09T14:57:36&#43;08:00'/><meta property='article:modified_time' content='2020-11-09T14:57:36&#43;08:00'/>
+<meta name="twitter:title" content="378.有序矩阵中第K小的元素">
+<meta name="twitter:description" content="一、题目   题目 
+二、解法 方法1：并归排序&#43;最小堆 解法
+由题目给出的性质可知，这个矩阵的每一行均为一个有序数组。问题即转化为从这 nn 个有序数组中找第 kk 大的数，可以想到利用归并排序的做法，归并到第 kk 个数即可停止。
+一般归并排序是两个数组归并，而本题是 nn 个数组归并，所以需要用小根堆维护，以优化时间复杂度。
+具体如何归并，可以参考23. 合并K个升序链表 - 力扣（LeetCode） (leetcode-cn.com)。
+代码
+func kthSmallest(matrix [][]int, k int) int { h := &amp;amp;IHeap{} // 按行把每行最小数入堆 	for i := 0; i &amp;lt; len(matrix); i&#43;&#43; { heap.Push(h, [3]int{matrix[i][0], i, 0}) } // 从 0 ~ k - 1， 先把最小数出堆，再把最小数所在行的下一个数入堆， 	// 循环 k - 1 次之后， 所有小于 第 k小 的数都不在堆中， 并且最小的第k个数就在堆顶 	for i := 0; i &amp;lt; k - 1; i&#43;&#43; { now := heap."><link rel="shortcut icon" href="/img/favicon.ico">
+<link rel="icon" href="/img/favicon.ico"> 
+    </head>
+    <body class="">
+        <div class="container flex on-phone--column align-items--flex-start extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+
+                
+                    
+                    <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x300_resize_box_2.png" width="300"
+                        height="300" class="site-logo" loading="lazy" alt="Avatar">
+                
+
+                <span class="emoji">🍉</span>
+            </figure>
+        
+        <h1 class="site-name"><a href="https://genfanh.github.io">genfanh Blog</a></h1>
+        <h2 class="site-description">暂时没想好填啥.</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+    </ol>
+</aside>
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://genfanh.github.io" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            
+                <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+            
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/kth-smallest-in-order-matrx/">378.有序矩阵中第K小的元素</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Nov 09, 2020</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h3 id="一题目">一、题目</h3>
+<p><figure>
+		<a href="/p/kth-smallest-in-order-matrx/question.PNG" data-size="553x466">
+			<img srcset="/p/kth-smallest-in-order-matrx/question_hu8f1a4f4c9ca10047417635bc1fe148c5_16564_480x0_resize_box_2.PNG 480w, /p/kth-smallest-in-order-matrx/question_hu8f1a4f4c9ca10047417635bc1fe148c5_16564_1024x0_resize_box_2.PNG 1024w"
+				src="/p/kth-smallest-in-order-matrx/question.PNG" width="553" height="466" loading="lazy"
+				alt="题目">
+		</a>
+		
+		<figcaption>题目</figcaption>
+		
+	</figure></p>
+<h3 id="二解法">二、解法</h3>
+<h4 id="方法1并归排序最小堆">方法1：并归排序+最小堆</h4>
+<p><strong>解法</strong></p>
+<p>由题目给出的性质可知，这个矩阵的每一行均为一个有序数组。问题即转化为从这 nn 个有序数组中找第 kk 大的数，可以想到利用归并排序的做法，归并到第 kk 个数即可停止。</p>
+<p>一般归并排序是两个数组归并，而本题是 nn 个数组归并，所以需要用小根堆维护，以优化时间复杂度。</p>
+<p>具体如何归并，可以参考<a class="link" href="https://leetcode-cn.com/problems/merge-k-sorted-lists/"  target="_blank" rel="noopener"
+    >23. 合并K个升序链表 - 力扣（LeetCode） (leetcode-cn.com)</a>。</p>
+<p><strong>代码</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">kthSmallest</span><span class="p">(</span><span class="nx">matrix</span> <span class="p">[][]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="nx">h</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">IHeap</span><span class="p">{}</span>
+	<span class="c1">// 按行把每行最小数入堆
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">matrix</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="nx">h</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">})</span>
+	<span class="p">}</span>
+
+	<span class="c1">// 从 0 ~ k - 1， 先把最小数出堆，再把最小数所在行的下一个数入堆，
+</span><span class="c1"></span>	<span class="c1">// 循环 k - 1 次之后， 所有小于 第 k小 的数都不在堆中， 并且最小的第k个数就在堆顶
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">now</span> <span class="o">:=</span> <span class="nx">heap</span><span class="p">.</span><span class="nf">Pop</span><span class="p">(</span><span class="nx">h</span><span class="p">).([</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">now</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">matrix</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">{</span>
+			<span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="nx">h</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="nx">matrix</span><span class="p">[</span><span class="nx">now</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="nx">now</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="nx">now</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">now</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">})</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">heap</span><span class="p">.</span><span class="nf">Pop</span><span class="p">(</span><span class="nx">h</span><span class="p">).([</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">IHeap</span> <span class="p">[][</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="nx">IHeap</span><span class="p">)</span> <span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span>           <span class="p">{</span> <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="nx">IHeap</span><span class="p">)</span> <span class="nf">Less</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">h</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="p">&lt;</span> <span class="nx">h</span><span class="p">[</span><span class="nx">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="nx">IHeap</span><span class="p">)</span> <span class="nf">Swap</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span>      <span class="p">{</span> <span class="nx">h</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">h</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="nx">h</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">h</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">IHeap</span><span class="p">)</span> <span class="nf">Push</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+	<span class="o">*</span><span class="nx">h</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="o">*</span><span class="nx">h</span><span class="p">,</span> <span class="nx">x</span><span class="p">.([</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">IHeap</span><span class="p">)</span> <span class="nf">Pop</span><span class="p">()</span> <span class="kd">interface</span><span class="p">{}</span> <span class="p">{</span>
+	<span class="nx">old</span> <span class="o">:=</span> <span class="o">*</span><span class="nx">h</span>
+	<span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">old</span><span class="p">)</span>
+	<span class="nx">x</span> <span class="o">:=</span> <span class="nx">old</span><span class="p">[</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+	<span class="o">*</span><span class="nx">h</span> <span class="p">=</span> <span class="nx">old</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+	<span class="k">return</span> <span class="nx">x</span>
+<span class="p">}</span>
+</code></pre></div><p><strong>复杂度分析</strong></p>
+<p>时间复杂度：$O(k\log{n})$，归并 $k$ 次，每次堆中插入和弹出的操作时间复杂度均为 $\log{n}$。</p>
+<p>空间复杂度：$O(n)$，堆的大小始终为 $n$。</p>
+<blockquote>
+<p>需要注意的是，$k$ 在最坏情况下是 $n^2$，因此该解法最坏时间复杂度为 $O(n^2\log{n})$。</p>
+</blockquote>
+<h4 id="方法2二分查找">方法2：二分查找</h4>
+<p><strong>解法</strong></p>
+<p>由题目给出的性质可知，这个矩阵内的元素是从左上到右下递增的（假设矩阵左上角为 $matrix[0][0]$）。以下图为例：</p>
+<p><figure>
+		<a href="/p/kth-smallest-in-order-matrx/p1.png" data-size="2000x1013">
+			<img srcset="/p/kth-smallest-in-order-matrx/p1_huca730df43cce2e546daef5d01bb27337_109467_480x0_resize_box_2.png 480w, /p/kth-smallest-in-order-matrx/p1_huca730df43cce2e546daef5d01bb27337_109467_1024x0_resize_box_2.png 1024w"
+				src="/p/kth-smallest-in-order-matrx/p1.png" width="2000" height="1013" loading="lazy"
+				alt="&nbsp;">
+		</a>
+		
+	</figure></p>
+<p>我们知道整个二维数组中 $matrix[0][0]$ 为最小值，$matrix[n - 1][n - 1]$ 为最大值，现在我们将其分别记作 $l$ 和 $r$。</p>
+<p>可以发现一个性质：任取一个数 $mid$ 满足 $l\leq mid \leq r$，那么矩阵中不大于 $mid$ 的数，肯定全部分布在矩阵的左上角。</p>
+<p>例如下图，取 $mid=8$：</p>
+<p><figure>
+		<a href="/p/kth-smallest-in-order-matrx/p2.png" data-size="2000x1013">
+			<img srcset="/p/kth-smallest-in-order-matrx/p2_hu6ddf6cfa2a7d7a5f3814c151c1aad446_110903_480x0_resize_box_2.png 480w, /p/kth-smallest-in-order-matrx/p2_hu6ddf6cfa2a7d7a5f3814c151c1aad446_110903_1024x0_resize_box_2.png 1024w"
+				src="/p/kth-smallest-in-order-matrx/p2.png" width="2000" height="1013" loading="lazy"
+				alt="&nbsp;">
+		</a>
+		
+	</figure></p>
+<p>我们可以看到，矩阵中大于 $mid$ 的数就和不大于 $mid$ 的数分别形成了两个板块，沿着一条锯齿线将这个矩形分开。其中左上角板块的大小即为矩阵中不大于 $mid$ 的数的数量。</p>
+<p>读者也可以自己取一些 $mid$ 值，通过画图以加深理解。</p>
+<p>我们只要沿着这条锯齿线走一遍即可计算出这两个板块的大小，也自然就统计出了这个矩阵中不大于 $mid$ 的数的个数了。</p>
+<p>走法演示如下，依然取 $mid=8$：</p>
+<p><figure>
+		<a href="/p/kth-smallest-in-order-matrx/p3.png" data-size="2000x1037">
+			<img srcset="/p/kth-smallest-in-order-matrx/p3_hu1d02d83ca5021f4e6504b049c018e776_126313_480x0_resize_box_2.png 480w, /p/kth-smallest-in-order-matrx/p3_hu1d02d83ca5021f4e6504b049c018e776_126313_1024x0_resize_box_2.png 1024w"
+				src="/p/kth-smallest-in-order-matrx/p3.png" width="2000" height="1037" loading="lazy"
+				alt="&nbsp;">
+		</a>
+		
+	</figure></p>
+<p>可以这样描述走法：</p>
+<p>初始位置在 $matrix[n - 1][0]$（即左下角）；</p>
+<p>设当前位置为 $matrix[i][j]$。若 $matrix[i][j] \leq mid$，则将当前所在列的不大于 $mid$ 的数的数量（即 $i + 1$）累加到答案中，并向右移动，否则向上移动；</p>
+<p>不断移动直到走出格子为止。</p>
+<p>我们发现这样的走法时间复杂度为 $O(n)$，即我们可以线性计算对于任意一个 $mid$，矩阵中有多少数不大于它。这满足了二分查找的性质。</p>
+<p>不妨假设答案为 $x$，那么可以知道 $l\leq x\leq r$，这样就确定了二分查找的上下界。</p>
+<p>每次对于「猜测」的答案 $mid$，计算矩阵中有多少数不大于 $mid$ ：</p>
+<p>如果数量不少于 $k$，那么说明最终答案 $x$ 不大于 $mid$；
+如果数量少于 $k$，那么说明最终答案 $x$ 大于 $mid$。
+这样我们就可以计算出最终的结果 $x$ 了。</p>
+<p><strong>代码</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">
+<span class="kd">func</span> <span class="nf">kthSmallest</span><span class="p">(</span><span class="nx">matrix</span> <span class="p">[][]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">matrix</span><span class="p">)</span>
+    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">matrix</span><span class="p">[</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="nf">check</span><span class="p">(</span><span class="nx">matrix</span><span class="p">,</span> <span class="nx">mid</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">left</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">check</span><span class="p">(</span><span class="nx">matrix</span> <span class="p">[][]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">mid</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+    <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="o">:=</span> <span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="nx">num</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nx">n</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="nx">mid</span> <span class="p">{</span>
+            <span class="nx">num</span> <span class="o">+=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="nx">j</span><span class="o">++</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">i</span><span class="o">--</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">num</span> <span class="o">&gt;=</span> <span class="nx">k</span>
+<span class="p">}</span>
+</code></pre></div><p><strong>复杂度分析</strong></p>
+<p>时间复杂度：$O(n\log(r-l))$，二分查找进行次数为 $O(\log(r-l))$，每次操作时间复杂度为 $O(n)$。</p>
+<p>空间复杂度：$O(1)$。</p>
+<h3 id="三参考">三、参考</h3>
+<p><strong>转载自：</strong><a class="link" href="https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/solution/you-xu-ju-zhen-zhong-di-kxiao-de-yuan-su-by-leetco/"  target="_blank" rel="noopener"
+    >有序矩阵中第K小的元素 - 有序矩阵中第K小的元素 - 力扣（LeetCode） (leetcode-cn.com)</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+        
+            <a href="/tags/leetcode/">leetcode</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    
+
+    <section class="article-view">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="2" />
+  <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+</svg>
+        <span id="/p/kth-smallest-in-order-matrx/" class="leancloud_visitors" data-flag-title="378.有序矩阵中第K小的元素">
+            <span class="leancloud-visitors-count">loading</span><span> VIEWS</span>
+        </span>
+    </section></footer>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+    integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
+    integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4"
+    crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+    integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous">
+</script>
+<script>
+    var onload = function() {
+        var options = [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: options})        
+    }
+    document.addEventListener("DOMContentLoaded", onload);
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/scramble-array/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">384.打乱数组</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/rotate-array/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">189.旋转数组</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/words-split/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">139.单词拆分</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/words-split-ii/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">140.单词拆分II</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/split-palindrome-string/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">131.分割回文串</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+
+    
+        
+    <div id="vcomments"></div>
+
+<style>
+  #vcomments {
+      background-color: var(--card-background);
+      border-radius: var(--card-border-radius);
+      box-shadow: var(--shadow-l1);
+      padding: var(--card-padding);
+  }
+</style>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">&copy; 2020 genfanh Blog</section>
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="1.1.0">Stack</a></b> designed by
+        <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
+    integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin="anonymous"></script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<link rel="stylesheet" href="/css/highlight/light.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="/css/highlight/dark.min.css" media="(prefers-color-scheme: dark)">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FX29Q4RR92"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FX29Q4RR92');
+</script>
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments',
+      appId: 'IBQOzRWMnNNe0iMr5YiXQ9oD-MdYXbMMI',
+      appKey: 'Wf6ROG9SvmzvuFEANW7NmNiX',
+      avatar: 'retro', 
+      placeholder: '说点什么吧...',
+      visitor: 'true',
+      requiredFields: ['nick', 'mail']
+  });
+</script>
+    </body>
+</html>
