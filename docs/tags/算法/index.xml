@@ -13,7 +13,7 @@
       <pubDate>Mon, 09 Nov 2020 14:57:36 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/kth-smallest-in-order-matrix/</guid>
-      <description>一、题目   题目 
+      <description>一、题目 题目
 二、解法 方法1：并归排序+最小堆 解法
 由题目给出的性质可知，这个矩阵的每一行均为一个有序数组。问题即转化为从这 nn 个有序数组中找第 kk 大的数，可以想到利用归并排序的做法，归并到第 kk 个数即可停止。
 一般归并排序是两个数组归并，而本题是 nn 个数组归并，所以需要用小根堆维护，以优化时间复杂度。
@@ -28,7 +28,7 @@ func kthSmallest(matrix [][]int, k int) int { h := &amp;amp;IHeap{} // 按行把
       <pubDate>Sun, 08 Nov 2020 15:32:46 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/scramble-array/</guid>
-      <description>一、题目   题目 
+      <description>一、题目 题目
 二、解法 方法：Fisher-Yates 洗牌算法
 Fisher-Yates 洗牌算法跟暴力算法很像。在每次迭代中，生成一个范围在当前下标到数组末尾元素下标之间的随机整数。接下来，将当前元素和随机选出的下标所指的元素互相交换 - 这一步模拟了每次从 “帽子” 里面摸一个元素的过程，其中选取下标范围的依据在于每个被摸出的元素都不可能再被摸出来了。此外还有一个需要注意的细节，当前元素是可以和它本身互相交换的 - 否则生成最后的排列组合的概率就不对了。
 type Solution struct { r *rand.Rand nums []int } func Constructor(nums []int) Solution { return Solution{ r : rand.New(rand.NewSource(time.Now().UnixNano())), nums: nums, } } /** Resets the array to its original configuration and return it. */ func (this *Solution) Reset() []int { return this.nums } /** Returns a random shuffling of the array. */ func (this *Solution) Shuffle() []int { size := len(this.</description>
@@ -40,7 +40,7 @@ type Solution struct { r *rand.Rand nums []int } func Constructor(nums []int) So
       <pubDate>Sun, 08 Nov 2020 14:24:44 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/rotate-array/</guid>
-      <description>一、题目   题目 
+      <description>一、题目 题目
 二、解法 1、方法1：使用额外数组 算法
 我们可以用一个额外的数组来将每个元素放到正确的位置上，也就是原本数组里下标为 $i$ 的我们把它放到 $(i+k)\% 数组长度$ 的位置。然后把新的数组拷贝到原数组中。
 func rotate(nums []int, k int) { size := len(nums) ans := make([]int, size) for i:=0; i&amp;lt;size; i++ { ans[(i+k) % size] = nums[i] } for i:=0; i&amp;lt;size; i++ { nums[i] = ans[i] } } 复杂度分析
@@ -54,8 +54,8 @@ func rotate(nums []int, k int) { size := len(nums) ans := make([]int, size) for 
       <pubDate>Sat, 07 Nov 2020 16:03:54 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/words-split/</guid>
-      <description>一、题目   题目 
-二、解法 动态规划   
+      <description>一、题目 题目
+二、解法 动态规划 
   初始化 dp=[false, ⋯ , false]，长度为 n+1。n 为字符串长度。dp[i] 表示 s 的前 i 位是否可以用 wordDict 中的单词表示。
   初始化 dp[0]=true，空字符可以被表示。
   遍历字符串的所有子串，遍历开始索引 i，遍历区间 [0,n)：
@@ -68,11 +68,11 @@ func rotate(nums []int, k int) { size := len(nums) ans := make([]int, size) for 
       <pubDate>Sat, 07 Nov 2020 16:03:54 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/words-split-ii/</guid>
-      <description>一、题目   题目 
+      <description>一、题目 题目
 二、解法 动态规划+回溯  动态规划得到了原始输入字符串的任意长度的 前缀子串 是否可以拆分为单词集合中的单词； 我们以示例 2：s = &amp;quot;pineapplepenapple&amp;quot;、wordDict = [&amp;quot;apple&amp;quot;, &amp;quot;pen&amp;quot;, &amp;quot;applepen&amp;quot;, &amp;quot;pine&amp;quot;, &amp;quot;pineapple&amp;quot;] 为例，分析如何得到所有具体解。  所有任意长度的前缀是否可拆分是知道的，那么如果 后缀子串在单词集合中，这个后缀子串就是解的一部分，例如：
-  示例 
+示例
 再对比这个问题的输出：
-[ &amp;quot;pine apple pen apple&amp;quot;, &amp;quot;pineapple pen apple&amp;quot;, &amp;quot;pine applepen apple&amp;quot; ] 可以发现，树形结构中，从叶子结点到根结点的路径是符合要求的一个解，与以前做过的回溯算法的问题不一样，这个时候路径变量我们需要在依次在列表的开始位置插入元素，可以使用队列实现。
+[&amp;quot;pine apple pen apple&amp;quot;,&amp;quot;pineapple pen apple&amp;quot;,&amp;quot;pine applepen apple&amp;quot;]可以发现，树形结构中，从叶子结点到根结点的路径是符合要求的一个解，与以前做过的回溯算法的问题不一样，这个时候路径变量我们需要在依次在列表的开始位置插入元素，可以使用队列实现。
 三、代码 func wordBreak(s string, wordDict []string) bool { ans := make([]string, 0) size := len(s) // 使用 map 加速查找 	wordMap := make(map[string]bool, size + 1) for _, word := range wordDict { wordMap[word] = true } // 查找是否有解 	dp := make([]bool, size+1) dp[0] = true for i:=0; i&amp;lt;size; i++ { for j:=i+1; j&amp;lt;=size; j++ { if dp[i] &amp;amp;&amp;amp; wordMap[s[i:j]] { dp[j] = true } } } // 回溯算法，获取所有解 	path := make([]string, 0) var backtracking func(start int) backtracking = func(start int) { if start == size &amp;amp;&amp;amp; dp[size] { tmp := strings.</description>
     </item>
     
@@ -82,7 +82,7 @@ func rotate(nums []int, k int) { size := len(nums) ans := make([]int, size) for 
       <pubDate>Sat, 07 Nov 2020 15:15:03 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/split-palindrome-string/</guid>
-      <description>一、题目   题目 
+      <description>一、题目 题目
 二、解法 回溯+动态规划优化 搜索问题主要使用回溯法。
 回溯法思考的步骤：
 1、画递归树；
@@ -101,14 +101,14 @@ func rotate(nums []int, k int) { size := len(nums) ans := make([]int, size) for 
       <pubDate>Thu, 05 Nov 2020 17:51:36 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/edit-distance/</guid>
-      <description>一、题目   题目 
+      <description>一、题目 题目
 二、解法 动态规划 dp[i][j]代表 word1 的前 i 个字符转换成 word2 的前 j 字符需要的最少操作数
 所以，
 当 word1[i] == word2[j] 时， dp[i][j] = dp[i-1][j-1]
 当 word1[i] != word2[j] 时， dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1
 其中，dp[i-1][j-1] 表示替换操作， dp[i-1][j] 表示删除操作， dp[i][j-1] 表示插入操作。
 注意，针对第一行和第一列需要淡入考虑，如下图所示，引入 &#39;&#39;:
-  
+
 第一行，是 word1 为空时变为 word2 最少要走的步数，也就是插入操作
 第一列，是 word2 为空时 word1 变为 word2 最少要走的步数， 也是删除操作
 最终结果就是 dp[i][j]
@@ -123,10 +123,10 @@ func rotate(nums []int, k int) { size := len(nums) ans := make([]int, size) for 
       <pubDate>Thu, 05 Nov 2020 17:10:50 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/coin-change/</guid>
-      <description>一、题目   题目 
+      <description>一、题目 题目
 二、解法 动态规划 构造动态方程时，我们认为
  dp[i]为凑成i金额所需要的最少硬币的数值  所以，当所有coins面值硬币选择一个时，其凑成的dp[i-coins[j]]的数值是最小时，可以认为dp[i]最小，动态转化表达式可以有
-dp[i] = min( dp[i-coins[j]] ) + 1 此时最终题解为，
+dp[i] = min( dp[i-coins[j]] ) + 1此时最终题解为，
  ans = dp[amount]  复杂度 时间复杂度：O(amount * len(coins) )
 空间复杂度：O(amount)
 三、代码 func coinChange(coins []int, amount int) int { if amount == 0 { return 0 } dp := make([]int, amount+1) // 初始化所有 i&amp;gt;0 的 dp[i] 为 -1  for i := range dp { if i != 0 { dp[i] = -1 } } n := len(coins) for i:=1; i&amp;lt;=amount; i++ { minVal := math.</description>
@@ -138,8 +138,8 @@ dp[i] = min( dp[i-coins[j]] ) + 1 此时最终题解为，
       <pubDate>Wed, 04 Nov 2020 20:30:57 +0800</pubDate>
       
       <guid>https://genfanh.github.io/p/sell-stock/</guid>
-      <description>一、题目   题目 
-二、解法 动态规划   状态流转图 
+      <description>一、题目 题目
+二、解法 动态规划 状态流转图
 交易k次的状态流转图如上图所示。
 初始状态时，手中没有股票，在初始状态可以保持该动作，不买不卖直至交易结束。
 初始状态只能通过买入进入到买入1状态，当买入1股后，我们可以有以下两种选择：
@@ -148,7 +148,7 @@ dp[i] = min( dp[i-coins[j]] ) + 1 此时最终题解为，
 所以在构造动态规划方程时，使用三个状态变量来表示买卖k次的交易状态
  i表示第i天 k表示已经进行了k次买卖 j表示当前手上是否持有股票  此时我们得到动态规划状态表达式dp[i][k][j]，其中
  dp[i][k][0]表示第i天交易了k次后手上不持有股票的累计最大利润 dp[i][k][1]表示第i天交易了k次后手上持有股票的累计最大利润  此时，我们通过状态转化图，可以有
-# 第i天交易k次后手上不持有股票的累计最大利润为， 1、第i-1天k次后手上不持有股票的累计最大利润，或 2、第i-1天k次交易后手上持有股票的累计最大利润加上第i天卖出股票 ； 1或2中的最大值 dp[i][k][0] = max( dp[i-1][k][0], d[i-1][k][1] + prices[i] ) # 第i天交易k次后手上持有股票的累计最大利润为， 1、第i-1天k次后手上持有股票的累计最大利润，或 2、第i-1天k-1次交易后手上不持有股票的累计最大利润减去第i天买入股票 ； 1或2中的最大值 dp[i][k][1] = max( dp[i-1][k][1], dp[i-1][k-1][0] - prices[i]) # 此时题目解为 第i天 0~k 次交易后，手上不持有股票的累计利润最大值 answer = max(dp[i][0~k][0]) 三、代码 func maxProfit(k int, prices []int) int { pLen := len(prices) if len(prices) == 0{ return 0 } //一次交易需要2天，如果交易次数大于总的天数/2，那么可以认为k是无穷大，套框架  if k &amp;gt; pLen/2{ return maxProfit_k_Inf(prices) } tmp := make([][2]int, k+1) dp := make([][][2]int, 0) for i:=0; i&amp;lt;pLen;i++{ dp = append(dp, tmp) } for i:=0; i&amp;lt;pLen; i++{ //base case  if i == 0 { for d:=0; d&amp;lt;=k; d++{ dp[i][d][0]=0 dp[i][d][1]=-prices[i] } continue } for j:=k; j&amp;gt;=1; j--{ dp[i][j][0]=max(dp[i-1][j][0], dp[i-1][j][1]+prices[i]) dp[i][j][1]=max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i]) } } return dp[pLen-1][k][0] } func maxProfit_k_Inf(prices []int) int { if len(prices) == 0 { return 0 } dp := make([][2]int, len(prices)) /* k = +infinity dp[i][k][0]=max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]) dp[i][k][1]=max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i]) =max(dp[i-1][k][1], dp[i-1][k][0]-prices[i]) 我们发现数组中的 k 已经不会改变了，也就是说不需要记录 k 这个状态了： dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]) dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]) */ for i:=0; i&amp;lt;len(prices); i++{ if i-1 == -1{ dp[i][0]=0 dp[i][1]=-prices[i] continue } dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]) dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]) } return dp[len(prices)-1][0] } func max(x, y int) int{ if x &amp;gt; y{ return x } return y } </description>
+# 第i天交易k次后手上不持有股票的累计最大利润为， 1、第i-1天k次后手上不持有股票的累计最大利润，或 2、第i-1天k次交易后手上持有股票的累计最大利润加上第i天卖出股票 ； 1或2中的最大值dp[i][k][0] = max( dp[i-1][k][0], d[i-1][k][1] + prices[i] )# 第i天交易k次后手上持有股票的累计最大利润为， 1、第i-1天k次后手上持有股票的累计最大利润，或 2、第i-1天k-1次交易后手上不持有股票的累计最大利润减去第i天买入股票 ； 1或2中的最大值dp[i][k][1] = max( dp[i-1][k][1], dp[i-1][k-1][0] - prices[i])# 此时题目解为 第i天 0~k 次交易后，手上不持有股票的累计利润最大值answer = max(dp[i][0~k][0])三、代码 func maxProfit(k int, prices []int) int { pLen := len(prices) if len(prices) == 0{ return 0 } //一次交易需要2天，如果交易次数大于总的天数/2，那么可以认为k是无穷大，套框架  if k &amp;gt; pLen/2{ return maxProfit_k_Inf(prices) } tmp := make([][2]int, k+1) dp := make([][][2]int, 0) for i:=0; i&amp;lt;pLen;i++{ dp = append(dp, tmp) } for i:=0; i&amp;lt;pLen; i++{ //base case  if i == 0 { for d:=0; d&amp;lt;=k; d++{ dp[i][d][0]=0 dp[i][d][1]=-prices[i] } continue } for j:=k; j&amp;gt;=1; j--{ dp[i][j][0]=max(dp[i-1][j][0], dp[i-1][j][1]+prices[i]) dp[i][j][1]=max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i]) } } return dp[pLen-1][k][0] } func maxProfit_k_Inf(prices []int) int { if len(prices) == 0 { return 0 } dp := make([][2]int, len(prices)) /* k = +infinity dp[i][k][0]=max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]) dp[i][k][1]=max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i]) =max(dp[i-1][k][1], dp[i-1][k][0]-prices[i]) 我们发现数组中的 k 已经不会改变了，也就是说不需要记录 k 这个状态了： dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]) dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]) */ for i:=0; i&amp;lt;len(prices); i++{ if i-1 == -1{ dp[i][0]=0 dp[i][1]=-prices[i] continue } dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]) dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]) } return dp[len(prices)-1][0] } func max(x, y int) int{ if x &amp;gt; y{ return x } return y } </description>
     </item>
     
   </channel>

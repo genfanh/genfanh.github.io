@@ -13,10 +13,12 @@
         
         <guid>https://genfanh.github.io/p/kth-smallest-in-order-matrix/</guid>
         <description>&lt;h3 id=&#34;一题目&#34;&gt;一、题目&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/question.PNG&#34; data-size=&#34;553x466&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/question_hu8f1a4f4c9ca10047417635bc1fe148c5_16564_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/kth-smallest-in-order-matrix/question_hu8f1a4f4c9ca10047417635bc1fe148c5_16564_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/question.PNG&#34; width=&#34;553&#34; height=&#34;466&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 118; flex-basis: 284px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/question.PNG&#34; data-size=&#34;553x466&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/question.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/question_hu8f1a4f4c9ca10047417635bc1fe148c5_16564_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/kth-smallest-in-order-matrix/question_hu8f1a4f4c9ca10047417635bc1fe148c5_16564_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;553&#34;
+				height=&#34;466&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;题目&#34;&gt;
 		&lt;/a&gt;
 		
@@ -75,22 +77,26 @@
 &lt;h4 id=&#34;方法2二分查找&#34;&gt;方法2：二分查找&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;解法&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;由题目给出的性质可知，这个矩阵内的元素是从左上到右下递增的（假设矩阵左上角为 $matrix[0][0]$）。以下图为例：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p1.png&#34; data-size=&#34;2000x1013&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p1_huca730df43cce2e546daef5d01bb27337_109467_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/kth-smallest-in-order-matrix/p1_huca730df43cce2e546daef5d01bb27337_109467_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p1.png&#34; width=&#34;2000&#34; height=&#34;1013&#34; loading=&#34;lazy&#34;
-				alt=&#34;&amp;nbsp;&#34;&gt;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 197; flex-basis: 473px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p1.png&#34; data-size=&#34;2000x1013&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p1.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p1_huca730df43cce2e546daef5d01bb27337_109467_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/kth-smallest-in-order-matrix/p1_huca730df43cce2e546daef5d01bb27337_109467_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;2000&#34;
+				height=&#34;1013&#34;
+				loading=&#34;lazy&#34;
+				&gt;
 		&lt;/a&gt;
 		
 	&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;我们知道整个二维数组中 $matrix[0][0]$ 为最小值，$matrix[n - 1][n - 1]$ 为最大值，现在我们将其分别记作 $l$ 和 $r$。&lt;/p&gt;
 &lt;p&gt;可以发现一个性质：任取一个数 $mid$ 满足 $l\leq mid \leq r$，那么矩阵中不大于 $mid$ 的数，肯定全部分布在矩阵的左上角。&lt;/p&gt;
 &lt;p&gt;例如下图，取 $mid=8$：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p2.png&#34; data-size=&#34;2000x1013&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p2_hu6ddf6cfa2a7d7a5f3814c151c1aad446_110903_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/kth-smallest-in-order-matrix/p2_hu6ddf6cfa2a7d7a5f3814c151c1aad446_110903_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p2.png&#34; width=&#34;2000&#34; height=&#34;1013&#34; loading=&#34;lazy&#34;
-				alt=&#34;&amp;nbsp;&#34;&gt;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 197; flex-basis: 473px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p2.png&#34; data-size=&#34;2000x1013&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p2.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p2_hu6ddf6cfa2a7d7a5f3814c151c1aad446_110903_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/kth-smallest-in-order-matrix/p2_hu6ddf6cfa2a7d7a5f3814c151c1aad446_110903_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;2000&#34;
+				height=&#34;1013&#34;
+				loading=&#34;lazy&#34;
+				&gt;
 		&lt;/a&gt;
 		
 	&lt;/figure&gt;&lt;/p&gt;
@@ -98,11 +104,13 @@
 &lt;p&gt;读者也可以自己取一些 $mid$ 值，通过画图以加深理解。&lt;/p&gt;
 &lt;p&gt;我们只要沿着这条锯齿线走一遍即可计算出这两个板块的大小，也自然就统计出了这个矩阵中不大于 $mid$ 的数的个数了。&lt;/p&gt;
 &lt;p&gt;走法演示如下，依然取 $mid=8$：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p3.png&#34; data-size=&#34;2000x1037&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p3_hu1d02d83ca5021f4e6504b049c018e776_126313_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/kth-smallest-in-order-matrix/p3_hu1d02d83ca5021f4e6504b049c018e776_126313_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p3.png&#34; width=&#34;2000&#34; height=&#34;1037&#34; loading=&#34;lazy&#34;
-				alt=&#34;&amp;nbsp;&#34;&gt;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 192; flex-basis: 462px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p3.png&#34; data-size=&#34;2000x1037&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p3.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/kth-smallest-in-order-matrix/p3_hu1d02d83ca5021f4e6504b049c018e776_126313_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/kth-smallest-in-order-matrix/p3_hu1d02d83ca5021f4e6504b049c018e776_126313_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;2000&#34;
+				height=&#34;1037&#34;
+				loading=&#34;lazy&#34;
+				&gt;
 		&lt;/a&gt;
 		
 	&lt;/figure&gt;&lt;/p&gt;
@@ -160,10 +168,12 @@
         
         <guid>https://genfanh.github.io/p/scramble-array/</guid>
         <description>&lt;h3 id=&#34;一题目&#34;&gt;一、题目&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/scramble-array/question.PNG&#34; data-size=&#34;847x673&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/scramble-array/question_hu240318a2370919b86be8acae4eba7258_33581_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/scramble-array/question_hu240318a2370919b86be8acae4eba7258_33581_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/scramble-array/question.PNG&#34; width=&#34;847&#34; height=&#34;673&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 125; flex-basis: 302px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/scramble-array/question.PNG&#34; data-size=&#34;847x673&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/scramble-array/question.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/scramble-array/question_hu240318a2370919b86be8acae4eba7258_33581_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/scramble-array/question_hu240318a2370919b86be8acae4eba7258_33581_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;847&#34;
+				height=&#34;673&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;题目&#34;&gt;
 		&lt;/a&gt;
 		
@@ -235,10 +245,12 @@
         
         <guid>https://genfanh.github.io/p/rotate-array/</guid>
         <description>&lt;h3 id=&#34;一题目&#34;&gt;一、题目&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/rotate-array/question.PNG&#34; data-size=&#34;570x544&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/rotate-array/question_hu1f456f5aff0a1b241c62e22b6e18faac_22592_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/rotate-array/question_hu1f456f5aff0a1b241c62e22b6e18faac_22592_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/rotate-array/question.PNG&#34; width=&#34;570&#34; height=&#34;544&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 104; flex-basis: 251px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/rotate-array/question.PNG&#34; data-size=&#34;570x544&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/rotate-array/question.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/rotate-array/question_hu1f456f5aff0a1b241c62e22b6e18faac_22592_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/rotate-array/question_hu1f456f5aff0a1b241c62e22b6e18faac_22592_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;570&#34;
+				height=&#34;544&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;题目&#34;&gt;
 		&lt;/a&gt;
 		
@@ -271,11 +283,13 @@
 &lt;p&gt;让我们看一下接下来的例子，以更好地说明这个过程：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;nums: [1, 2, 3, 4, 5, 6]
 k: 2
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/rotate-array/huan.png&#34; data-size=&#34;527x261&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/rotate-array/huan_hu0eddd2f6489963ce3449a186d2e74cc3_15661_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/rotate-array/huan_hu0eddd2f6489963ce3449a186d2e74cc3_15661_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/rotate-array/huan.png&#34; width=&#34;527&#34; height=&#34;261&#34; loading=&#34;lazy&#34;
-				alt=&#34;&amp;nbsp;&#34;&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure style=&#34;flex-grow: 201; flex-basis: 484px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/rotate-array/huan.png&#34; data-size=&#34;527x261&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/rotate-array/huan.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/rotate-array/huan_hu0eddd2f6489963ce3449a186d2e74cc3_15661_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/rotate-array/huan_hu0eddd2f6489963ce3449a186d2e74cc3_15661_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;527&#34;
+				height=&#34;261&#34;
+				loading=&#34;lazy&#34;
+				&gt;
 		&lt;/a&gt;
 		
 	&lt;/figure&gt;&lt;/p&gt;
@@ -342,10 +356,12 @@ k: 2
         
         <guid>https://genfanh.github.io/p/words-split/</guid>
         <description>&lt;h3 id=&#34;一题目&#34;&gt;一、题目&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/words-split/question.PNG&#34; data-size=&#34;752x560&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/words-split/question_hu66ef86c17015b62444a2b1d7e0923a69_26477_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/words-split/question_hu66ef86c17015b62444a2b1d7e0923a69_26477_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/words-split/question.PNG&#34; width=&#34;752&#34; height=&#34;560&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 134; flex-basis: 322px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/words-split/question.PNG&#34; data-size=&#34;752x560&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/words-split/question.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/words-split/question_hu66ef86c17015b62444a2b1d7e0923a69_26477_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/words-split/question_hu66ef86c17015b62444a2b1d7e0923a69_26477_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;752&#34;
+				height=&#34;560&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;题目&#34;&gt;
 		&lt;/a&gt;
 		
@@ -354,11 +370,13 @@ k: 2
 	&lt;/figure&gt;&lt;/p&gt;
 &lt;h3 id=&#34;二解法&#34;&gt;二、解法&lt;/h3&gt;
 &lt;h4 id=&#34;动态规划&#34;&gt;动态规划&lt;/h4&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/words-split/table.png&#34; data-size=&#34;1426x88&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/words-split/table_hud1063c71093f48802ea82745674c3b6c_7124_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/words-split/table_hud1063c71093f48802ea82745674c3b6c_7124_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/words-split/table.png&#34; width=&#34;1426&#34; height=&#34;88&#34; loading=&#34;lazy&#34;
-				alt=&#34;&amp;nbsp;&#34;&gt;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 1620; flex-basis: 3889px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/words-split/table.png&#34; data-size=&#34;1426x88&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/words-split/table.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/words-split/table_hud1063c71093f48802ea82745674c3b6c_7124_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/words-split/table_hud1063c71093f48802ea82745674c3b6c_7124_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;1426&#34;
+				height=&#34;88&#34;
+				loading=&#34;lazy&#34;
+				&gt;
 		&lt;/a&gt;
 		
 	&lt;/figure&gt;&lt;/p&gt;
@@ -418,10 +436,12 @@ k: 2
         
         <guid>https://genfanh.github.io/p/words-split-ii/</guid>
         <description>&lt;h3 id=&#34;一题目&#34;&gt;一、题目&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/words-split-ii/question.PNG&#34; data-size=&#34;963x852&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/words-split-ii/question_hu7c33b9d9842db18746564af773c37e61_31928_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/words-split-ii/question_hu7c33b9d9842db18746564af773c37e61_31928_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/words-split-ii/question.PNG&#34; width=&#34;963&#34; height=&#34;852&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 113; flex-basis: 271px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/words-split-ii/question.PNG&#34; data-size=&#34;963x852&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/words-split-ii/question.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/words-split-ii/question_hu7c33b9d9842db18746564af773c37e61_31928_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/words-split-ii/question_hu7c33b9d9842db18746564af773c37e61_31928_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;963&#34;
+				height=&#34;852&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;题目&#34;&gt;
 		&lt;/a&gt;
 		
@@ -435,10 +455,12 @@ k: 2
 &lt;li&gt;我们以示例 2：&lt;code&gt;s = &amp;quot;pineapplepenapple&amp;quot;&lt;/code&gt;、&lt;code&gt;wordDict = [&amp;quot;apple&amp;quot;, &amp;quot;pen&amp;quot;, &amp;quot;applepen&amp;quot;, &amp;quot;pine&amp;quot;, &amp;quot;pineapple&amp;quot;]&lt;/code&gt; 为例，分析如何得到所有具体解。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;所有任意长度的前缀是否可拆分是知道的，那么如果 &lt;strong&gt;后缀子串在单词集合中&lt;/strong&gt;，这个后缀子串就是解的一部分，例如：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/words-split-ii/example.png&#34; data-size=&#34;1970x998&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/words-split-ii/example_hu21077b5aac2b73c5dfa6a774c297d619_132419_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/words-split-ii/example_hu21077b5aac2b73c5dfa6a774c297d619_132419_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/words-split-ii/example.png&#34; width=&#34;1970&#34; height=&#34;998&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 197; flex-basis: 473px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/words-split-ii/example.png&#34; data-size=&#34;1970x998&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/words-split-ii/example.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/words-split-ii/example_hu21077b5aac2b73c5dfa6a774c297d619_132419_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/words-split-ii/example_hu21077b5aac2b73c5dfa6a774c297d619_132419_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;1970&#34;
+				height=&#34;998&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;示例&#34;&gt;
 		&lt;/a&gt;
 		
@@ -507,10 +529,12 @@ k: 2
         
         <guid>https://genfanh.github.io/p/split-palindrome-string/</guid>
         <description>&lt;h3 id=&#34;一题目&#34;&gt;一、题目&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/split-palindrome-string/question.PNG&#34; data-size=&#34;602x329&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/split-palindrome-string/question_hu69e739c9641210f06fefcd8ac430cf0f_10823_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/split-palindrome-string/question_hu69e739c9641210f06fefcd8ac430cf0f_10823_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/split-palindrome-string/question.PNG&#34; width=&#34;602&#34; height=&#34;329&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 182; flex-basis: 439px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/split-palindrome-string/question.PNG&#34; data-size=&#34;602x329&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/split-palindrome-string/question.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/split-palindrome-string/question_hu69e739c9641210f06fefcd8ac430cf0f_10823_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/split-palindrome-string/question_hu69e739c9641210f06fefcd8ac430cf0f_10823_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;602&#34;
+				height=&#34;329&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;题目&#34;&gt;
 		&lt;/a&gt;
 		
@@ -591,10 +615,12 @@ k: 2
         
         <guid>https://genfanh.github.io/p/edit-distance/</guid>
         <description>&lt;h3 id=&#34;一题目&#34;&gt;一、题目&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/edit-distance/question.PNG&#34; data-size=&#34;838x648&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/edit-distance/question_hue5cd02aebfed31a5f3993419d59036f7_27128_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/edit-distance/question_hue5cd02aebfed31a5f3993419d59036f7_27128_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/edit-distance/question.PNG&#34; width=&#34;838&#34; height=&#34;648&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 129; flex-basis: 310px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/edit-distance/question.PNG&#34; data-size=&#34;838x648&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/edit-distance/question.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/edit-distance/question_hue5cd02aebfed31a5f3993419d59036f7_27128_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/edit-distance/question_hue5cd02aebfed31a5f3993419d59036f7_27128_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;838&#34;
+				height=&#34;648&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;题目&#34;&gt;
 		&lt;/a&gt;
 		
@@ -609,11 +635,13 @@ k: 2
 &lt;p&gt;当 &lt;code&gt;word1[i] != word2[j]&lt;/code&gt; 时， &lt;code&gt;dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;其中，&lt;code&gt;dp[i-1][j-1]&lt;/code&gt; 表示替换操作， &lt;code&gt;dp[i-1][j]&lt;/code&gt; 表示删除操作， &lt;code&gt;dp[i][j-1]&lt;/code&gt; 表示插入操作。&lt;/p&gt;
 &lt;p&gt;注意，针对第一行和第一列需要淡入考虑，如下图所示，引入 &lt;code&gt;&#39;&#39;&lt;/code&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/edit-distance/IMG1.png&#34; data-size=&#34;555x347&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/edit-distance/IMG1_hu63eea2bccdf4ba78c26d5cc07e53f0fd_8920_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/edit-distance/IMG1_hu63eea2bccdf4ba78c26d5cc07e53f0fd_8920_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/edit-distance/IMG1.png&#34; width=&#34;555&#34; height=&#34;347&#34; loading=&#34;lazy&#34;
-				alt=&#34;&amp;nbsp;&#34;&gt;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 159; flex-basis: 383px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/edit-distance/IMG1.png&#34; data-size=&#34;555x347&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/edit-distance/IMG1.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/edit-distance/IMG1_hu63eea2bccdf4ba78c26d5cc07e53f0fd_8920_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/edit-distance/IMG1_hu63eea2bccdf4ba78c26d5cc07e53f0fd_8920_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;555&#34;
+				height=&#34;347&#34;
+				loading=&#34;lazy&#34;
+				&gt;
 		&lt;/a&gt;
 		
 	&lt;/figure&gt;&lt;/p&gt;
@@ -663,10 +691,12 @@ k: 2
         
         <guid>https://genfanh.github.io/p/coin-change/</guid>
         <description>&lt;h3 id=&#34;一题目&#34;&gt;一、题目&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/coin-change/question.PNG&#34; data-size=&#34;1045x844&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/coin-change/question_hu612d96217b5306e222e3453be1d139e4_28496_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/coin-change/question_hu612d96217b5306e222e3453be1d139e4_28496_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/coin-change/question.PNG&#34; width=&#34;1045&#34; height=&#34;844&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 123; flex-basis: 297px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/coin-change/question.PNG&#34; data-size=&#34;1045x844&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/coin-change/question.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/coin-change/question_hu612d96217b5306e222e3453be1d139e4_28496_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/coin-change/question_hu612d96217b5306e222e3453be1d139e4_28496_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;1045&#34;
+				height=&#34;844&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;题目&#34;&gt;
 		&lt;/a&gt;
 		
@@ -732,10 +762,12 @@ k: 2
         
         <guid>https://genfanh.github.io/p/sell-stock/</guid>
         <description>&lt;h3 id=&#34;一题目&#34;&gt;一、题目&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/sell-stock/question.PNG&#34; data-size=&#34;1259x599&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/sell-stock/question_hu18803ef62b33f3a64c1dc07064bc59c5_33975_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/sell-stock/question_hu18803ef62b33f3a64c1dc07064bc59c5_33975_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/sell-stock/question.PNG&#34; width=&#34;1259&#34; height=&#34;599&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 210; flex-basis: 504px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/sell-stock/question.PNG&#34; data-size=&#34;1259x599&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/sell-stock/question.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/sell-stock/question_hu18803ef62b33f3a64c1dc07064bc59c5_33975_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/sell-stock/question_hu18803ef62b33f3a64c1dc07064bc59c5_33975_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;1259&#34;
+				height=&#34;599&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;题目&#34;&gt;
 		&lt;/a&gt;
 		
@@ -744,10 +776,12 @@ k: 2
 	&lt;/figure&gt;&lt;/p&gt;
 &lt;h3 id=&#34;二解法&#34;&gt;二、解法&lt;/h3&gt;
 &lt;h4 id=&#34;动态规划&#34;&gt;动态规划&lt;/h4&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/sell-stock/state.png&#34; data-size=&#34;492x362&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/sell-stock/state_hud08e77f2fddd8cc0a02ccd7582f4aa50_26806_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/sell-stock/state_hud08e77f2fddd8cc0a02ccd7582f4aa50_26806_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/sell-stock/state.png&#34; width=&#34;492&#34; height=&#34;362&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 135; flex-basis: 326px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/sell-stock/state.png&#34; data-size=&#34;492x362&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/sell-stock/state.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/sell-stock/state_hud08e77f2fddd8cc0a02ccd7582f4aa50_26806_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/sell-stock/state_hud08e77f2fddd8cc0a02ccd7582f4aa50_26806_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;492&#34;
+				height=&#34;362&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;状态流转图&#34;&gt;
 		&lt;/a&gt;
 		
@@ -908,10 +942,12 @@ git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;三把hugo部署到github-pages上&#34;&gt;三、把Hugo部署到Github Pages上&lt;/h2&gt;
 &lt;h3 id=&#34;1创建一个github仓库&#34;&gt;1、创建一个Github仓库&lt;/h3&gt;
 &lt;p&gt;在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.github.io&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo.PNG&#34; data-size=&#34;233x208&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_1024x0_resize_box_2.PNG 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo.PNG&#34; width=&#34;233&#34; height=&#34;208&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 112; flex-basis: 268px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo.PNG&#34; data-size=&#34;233x208&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo.PNG&#34;
+				srcset=&#34;https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_480x0_resize_box_2.PNG 480w, https://genfanh.github.io/p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_1024x0_resize_box_2.PNG 1024w&#34;
+				width=&#34;233&#34;
+				height=&#34;208&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;git_create_repo&#34;&gt;
 		&lt;/a&gt;
 		
@@ -936,10 +972,12 @@ draft: true
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;5修改repo配置&#34;&gt;5、修改repo配置&lt;/h3&gt;
 &lt;p&gt;进入刚刚创建的 Repository 的 Setting 界面， 把 GitHub Page 配置下的 Source 配置为Branch:master/docs。这意味着通过URL访问博客时，会从该仓库 master 分支下的 docs 文件夹下读取静态资源。具体如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/create-hugo-tutorial/repo_settings.png&#34; data-size=&#34;958x386&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/create-hugo-tutorial/repo_settings.png&#34; width=&#34;958&#34; height=&#34;386&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 248; flex-basis: 595px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/create-hugo-tutorial/repo_settings.png&#34; data-size=&#34;958x386&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/create-hugo-tutorial/repo_settings.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;958&#34;
+				height=&#34;386&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;repo_settings&#34;&gt;
 		&lt;/a&gt;
 		
@@ -956,10 +994,12 @@ draft: true
 git push origin master
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;9查看成果&#34;&gt;9、查看成果&lt;/h3&gt;
 &lt;p&gt;登录https://genfanh.github.io/查看是否部署成功&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-		&lt;a href=&#34;https://genfanh.github.io/p/create-hugo-tutorial/result.png&#34; data-size=&#34;1552x502&#34;&gt;
-			&lt;img srcset=&#34;https://genfanh.github.io/p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_1024x0_resize_box_2.png 1024w&#34;
-				src=&#34;https://genfanh.github.io/p/create-hugo-tutorial/result.png&#34; width=&#34;1552&#34; height=&#34;502&#34; loading=&#34;lazy&#34;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 309; flex-basis: 741px&#34;&gt;
+		&lt;a href=&#34;https://genfanh.github.io/p/create-hugo-tutorial/result.png&#34; data-size=&#34;1552x502&#34;&gt;&lt;img src=&#34;https://genfanh.github.io/p/create-hugo-tutorial/result.png&#34;
+				srcset=&#34;https://genfanh.github.io/p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_480x0_resize_box_2.png 480w, https://genfanh.github.io/p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;1552&#34;
+				height=&#34;502&#34;
+				loading=&#34;lazy&#34;
 				alt=&#34;result&#34;&gt;
 		&lt;/a&gt;
 		

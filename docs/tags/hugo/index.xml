@@ -17,15 +17,15 @@
 一、安装Hugo 本人使用的是Windows系统，所以选择scoop安装方式。具体步骤如下：
 1、安装scoop 参考 github scoop 网站安装
 2、使用scoop安装hugo 安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本
-scoop install hugo-extended 若不喜欢使用拓展版本，可以使用以下指令安装基础版本
-scoop install hugo 3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
+scoop install hugo-extended若不喜欢使用拓展版本，可以使用以下指令安装基础版本
+scoop install hugo3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
 其他平台可参考官网安装教程 Install Hugo
 二、使用hugo创建博客 1、创建网站 在创建前，请进入工作目录
-# 执行创建指令 # 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹 # 所有网站文件都在blog目录下 hugo new site blog 2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
+# 执行创建指令# 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹# 所有网站文件都在blog目录下hugo new site blog2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
 主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。
-cd blog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git  注：记得提前安装git
+cd bloggit initgit submodule add https://github.com/CaiJimmy/hugo-theme-stack.git 注：记得提前安装git
  3、修改config.toml配置文件 正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可
-echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml 4、创建第一篇文章 hugo new posts/HelloWorld.md 5、启动hugo服务器 hugo server -D 三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.</description>
+echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml4、创建第一篇文章 hugo new posts/HelloWorld.md5、启动hugo服务器 hugo server -D三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.</description>
     </item>
     
   </channel>

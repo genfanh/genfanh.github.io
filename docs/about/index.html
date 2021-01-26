@@ -24,7 +24,28 @@ JAVA/Golang学习中
 <link rel="icon" href="/img/favicon.ico"> 
     </head>
     <body class="article-page keep-sidebar">
-        <div class="container flex on-phone--column align-items--flex-start extended ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.body.dataset.scheme = 'dark';
+        } else {
+            document.body.dataset.scheme = 'light';
+        }
+    })();
+</script><div class="container main-container flex on-phone--column extended ">
             <aside class="sidebar left-sidebar sticky">
     <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
         <span class="hamburger-box">
@@ -36,14 +57,18 @@ JAVA/Golang学习中
         
             <figure class="site-avatar">
                 
-
-                
                     
-                    <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x300_resize_box_2.png" width="300"
-                        height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                    
+                        
+                        <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x0_resize_box_2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
                 
 
-                <span class="emoji">🍉</span>
+                
+                    <span class="emoji">🍉</span>
+                
             </figure>
         
         <h1 class="site-name"><a href="https://genfanh.github.io">genfanh Blog</a></h1>
@@ -127,8 +152,31 @@ JAVA/Golang学习中
             </a>
         </li>
         
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>暗色模式</span>
+            </li>
+        
     </ol>
 </aside>
+
             <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
@@ -200,7 +248,7 @@ JAVA/Golang学习中
 
 
         <span class="article-time--modified">
-            最后更新于 Oct 31, 2020 22:29 CST
+             Oct 31, 2020 22:29 CST
         </span>
     </section></footer>
 
@@ -210,16 +258,22 @@ JAVA/Golang学习中
     
 
     <footer class="site-footer">
-    <section class="copyright">&copy; 2020 genfanh Blog</section>
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 genfanh Blog
+    </section>
+    
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="1.1.0">Stack</a></b> designed by
-        <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.0.1">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 
     
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
     
     <div class="pswp__bg"></div>
@@ -282,6 +336,12 @@ JAVA/Golang学习中
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+
             </main>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
@@ -297,8 +357,6 @@ JAVA/Golang学习中
         document.head.appendChild(customFont);
     }());
 </script>
-<link rel="stylesheet" href="/css/highlight/light.min.css" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="/css/highlight/dark.min.css" media="(prefers-color-scheme: dark)">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FX29Q4RR92"></script>
 <script>
   window.dataLayer = window.dataLayer || [];

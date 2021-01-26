@@ -5,15 +5,15 @@
 一、安装Hugo 本人使用的是Windows系统，所以选择scoop安装方式。具体步骤如下：
 1、安装scoop 参考 github scoop 网站安装
 2、使用scoop安装hugo 安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本
-scoop install hugo-extended 若不喜欢使用拓展版本，可以使用以下指令安装基础版本
-scoop install hugo 3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
+scoop install hugo-extended若不喜欢使用拓展版本，可以使用以下指令安装基础版本
+scoop install hugo3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
 其他平台可参考官网安装教程 Install Hugo
 二、使用hugo创建博客 1、创建网站 在创建前，请进入工作目录
-# 执行创建指令 # 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹 # 所有网站文件都在blog目录下 hugo new site blog 2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
+# 执行创建指令# 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹# 所有网站文件都在blog目录下hugo new site blog2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
 主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。
-cd blog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git  注：记得提前安装git
+cd bloggit initgit submodule add https://github.com/CaiJimmy/hugo-theme-stack.git 注：记得提前安装git
  3、修改config.toml配置文件 正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可
-echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml 4、创建第一篇文章 hugo new posts/HelloWorld.md 5、启动hugo服务器 hugo server -D 三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.'><title>使用 Hugo &#43; Github Page 搭建个人博客</title>
+echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml4、创建第一篇文章 hugo new posts/HelloWorld.md5、启动hugo服务器 hugo server -D三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.'><title>使用 Hugo &#43; Github Page 搭建个人博客</title>
 
 <link rel='canonical' href='https://genfanh.github.io/p/create-hugo-tutorial/'>
 
@@ -22,15 +22,15 @@ echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; con
 一、安装Hugo 本人使用的是Windows系统，所以选择scoop安装方式。具体步骤如下：
 1、安装scoop 参考 github scoop 网站安装
 2、使用scoop安装hugo 安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本
-scoop install hugo-extended 若不喜欢使用拓展版本，可以使用以下指令安装基础版本
-scoop install hugo 3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
+scoop install hugo-extended若不喜欢使用拓展版本，可以使用以下指令安装基础版本
+scoop install hugo3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
 其他平台可参考官网安装教程 Install Hugo
 二、使用hugo创建博客 1、创建网站 在创建前，请进入工作目录
-# 执行创建指令 # 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹 # 所有网站文件都在blog目录下 hugo new site blog 2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
+# 执行创建指令# 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹# 所有网站文件都在blog目录下hugo new site blog2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
 主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。
-cd blog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git  注：记得提前安装git
+cd bloggit initgit submodule add https://github.com/CaiJimmy/hugo-theme-stack.git 注：记得提前安装git
  3、修改config.toml配置文件 正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可
-echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml 4、创建第一篇文章 hugo new posts/HelloWorld.md 5、启动hugo服务器 hugo server -D 三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.'>
+echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml4、创建第一篇文章 hugo new posts/HelloWorld.md5、启动hugo服务器 hugo server -D三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;.'>
 <meta property='og:url' content='https://genfanh.github.io/p/create-hugo-tutorial/'>
 <meta property='og:site_name' content='genfanh Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Hugo' /><meta property='article:published_time' content='2020-11-02T15:51:01&#43;08:00'/><meta property='article:modified_time' content='2020-11-02T15:51:01&#43;08:00'/>
@@ -39,19 +39,40 @@ echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; con
 一、安装Hugo 本人使用的是Windows系统，所以选择scoop安装方式。具体步骤如下：
 1、安装scoop 参考 github scoop 网站安装
 2、使用scoop安装hugo 安装hugo拓展版本，因为后续选择主题需要拓展版本，所以安装了此版本
-scoop install hugo-extended 若不喜欢使用拓展版本，可以使用以下指令安装基础版本
-scoop install hugo 3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
+scoop install hugo-extended若不喜欢使用拓展版本，可以使用以下指令安装基础版本
+scoop install hugo3、验证hugo安装 打开CMD，输入hugo version，若版本正确输出则安装成功
 其他平台可参考官网安装教程 Install Hugo
 二、使用hugo创建博客 1、创建网站 在创建前，请进入工作目录
-# 执行创建指令 # 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹 # 所有网站文件都在blog目录下 hugo new site blog 2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
+# 执行创建指令# 其中 blog 是网站名称，即会在工作目录下创建blog名称文件夹# 所有网站文件都在blog目录下hugo new site blog2、添加hugo主题 hugo有很多第三方开源的主题，可以在官网的themes下自行选择。本人选Stack主题作为博客的主题。
 主题选好后进入blog（也就是刚才创建网站是创建出来的目录）目录下，把stack主题git到themes目录下。
-cd blog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git  注：记得提前安装git
+cd bloggit initgit submodule add https://github.com/CaiJimmy/hugo-theme-stack.git 注：记得提前安装git
  3、修改config.toml配置文件 正常流程应该直接修改config.toml文件，但是Stack主题已经内置修改好的文件，直接复制该config.toml到根目录即可
-echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml 4、创建第一篇文章 hugo new posts/HelloWorld.md 5、启动hugo服务器 hugo server -D 三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;."><link rel="shortcut icon" href="/img/favicon.ico">
+echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; config.toml4、创建第一篇文章 hugo new posts/HelloWorld.md5、启动hugo服务器 hugo server -D三、把Hugo部署到Github Pages上 1、创建一个Github仓库 在github上创建一个仓库，名称一般为&amp;lt;gihub名称&amp;gt;."><link rel="shortcut icon" href="/img/favicon.ico">
 <link rel="icon" href="/img/favicon.ico"> 
     </head>
     <body class="">
-        <div class="container flex on-phone--column align-items--flex-start extended article-page with-toolbar">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.body.dataset.scheme = 'dark';
+        } else {
+            document.body.dataset.scheme = 'light';
+        }
+    })();
+</script><div class="container main-container flex on-phone--column extended article-page with-toolbar">
             <aside class="sidebar left-sidebar sticky">
     <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
         <span class="hamburger-box">
@@ -63,14 +84,18 @@ echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; con
         
             <figure class="site-avatar">
                 
-
-                
                     
-                    <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x300_resize_box_2.png" width="300"
-                        height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                    
+                        
+                        <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x0_resize_box_2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
                 
 
-                <span class="emoji">🍉</span>
+                
+                    <span class="emoji">🍉</span>
+                
             </figure>
         
         <h1 class="site-name"><a href="https://genfanh.github.io">genfanh Blog</a></h1>
@@ -154,8 +179,31 @@ echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; con
             </a>
         </li>
         
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>暗色模式</span>
+            </li>
+        
     </ol>
 </aside>
+
             <main class="main full-width">
     <div id="article-toolbar">
         <a href="https://genfanh.github.io" class="back-home">
@@ -177,9 +225,9 @@ echo &#39;theme = &amp;quot;hugo-theme-stack&amp;quot;&#39; &amp;gt;&amp;gt; con
     
     <header class="article-category">
         
-            
-                <a href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
-            
+            <a href="/categories/%E6%8A%80%E6%9C%AF/" >
+                技术
+            </a>
         
     </header>
     
@@ -245,10 +293,12 @@ git submodule add https://github.com/CaiJimmy/hugo-theme-stack.git
 </code></pre><h2 id="三把hugo部署到github-pages上">三、把Hugo部署到Github Pages上</h2>
 <h3 id="1创建一个github仓库">1、创建一个Github仓库</h3>
 <p>在github上创建一个仓库，名称一般为&lt;gihub名称&gt;.github.io</p>
-<p><figure>
-		<a href="/p/create-hugo-tutorial/git_create_repo.PNG" data-size="233x208">
-			<img srcset="/p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_480x0_resize_box_2.PNG 480w, /p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_1024x0_resize_box_2.PNG 1024w"
-				src="/p/create-hugo-tutorial/git_create_repo.PNG" width="233" height="208" loading="lazy"
+<p><figure style="flex-grow: 112; flex-basis: 268px">
+		<a href="/p/create-hugo-tutorial/git_create_repo.PNG" data-size="233x208"><img src="/p/create-hugo-tutorial/git_create_repo.PNG"
+				srcset="/p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_480x0_resize_box_2.PNG 480w, /p/create-hugo-tutorial/git_create_repo_huefd1f253109d627e2b7afb0a8c29be0c_10373_1024x0_resize_box_2.PNG 1024w"
+				width="233"
+				height="208"
+				loading="lazy"
 				alt="git_create_repo">
 		</a>
 		
@@ -273,10 +323,12 @@ draft: true
 </blockquote>
 <h3 id="5修改repo配置">5、修改repo配置</h3>
 <p>进入刚刚创建的 Repository 的 Setting 界面， 把 GitHub Page 配置下的 Source 配置为Branch:master/docs。这意味着通过URL访问博客时，会从该仓库 master 分支下的 docs 文件夹下读取静态资源。具体如下图所示：</p>
-<p><figure>
-		<a href="/p/create-hugo-tutorial/repo_settings.png" data-size="958x386">
-			<img srcset="/p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_480x0_resize_box_2.png 480w, /p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_1024x0_resize_box_2.png 1024w"
-				src="/p/create-hugo-tutorial/repo_settings.png" width="958" height="386" loading="lazy"
+<p><figure style="flex-grow: 248; flex-basis: 595px">
+		<a href="/p/create-hugo-tutorial/repo_settings.png" data-size="958x386"><img src="/p/create-hugo-tutorial/repo_settings.png"
+				srcset="/p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_480x0_resize_box_2.png 480w, /p/create-hugo-tutorial/repo_settings_hu2d7b8f4f30a2c920128607598da42043_1110190_1024x0_resize_box_2.png 1024w"
+				width="958"
+				height="386"
+				loading="lazy"
 				alt="repo_settings">
 		</a>
 		
@@ -293,10 +345,12 @@ draft: true
 git push origin master
 </code></pre><h3 id="9查看成果">9、查看成果</h3>
 <p>登录https://genfanh.github.io/查看是否部署成功</p>
-<p><figure>
-		<a href="/p/create-hugo-tutorial/result.png" data-size="1552x502">
-			<img srcset="/p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_480x0_resize_box_2.png 480w, /p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_1024x0_resize_box_2.png 1024w"
-				src="/p/create-hugo-tutorial/result.png" width="1552" height="502" loading="lazy"
+<p><figure style="flex-grow: 309; flex-basis: 741px">
+		<a href="/p/create-hugo-tutorial/result.png" data-size="1552x502"><img src="/p/create-hugo-tutorial/result.png"
+				srcset="/p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_480x0_resize_box_2.png 480w, /p/create-hugo-tutorial/result_hu53556974ad71518952d17c3b980cad13_2337366_1024x0_resize_box_2.png 1024w"
+				width="1552"
+				height="502"
+				loading="lazy"
 				alt="result">
 		</a>
 		
@@ -371,14 +425,20 @@ git push origin master
     
 
     <footer class="site-footer">
-    <section class="copyright">&copy; 2020 genfanh Blog</section>
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 genfanh Blog
+    </section>
+    
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="1.1.0">Stack</a></b> designed by
-        <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.0.1">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
     
     <div class="pswp__bg"></div>
@@ -440,6 +500,12 @@ git push origin master
     </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
             </main>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
@@ -455,8 +521,6 @@ git push origin master
         document.head.appendChild(customFont);
     }());
 </script>
-<link rel="stylesheet" href="/css/highlight/light.min.css" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="/css/highlight/dark.min.css" media="(prefers-color-scheme: dark)">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FX29Q4RR92"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
