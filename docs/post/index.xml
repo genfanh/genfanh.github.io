@@ -6,7 +6,19 @@
     <description>Recent content in Posts on genfanh Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 03 Feb 2021 20:38:01 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 06 Feb 2021 17:53:39 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>client-go EventBroadcaster事件管理器简介</title>
+      <link>https://genfanh.github.io/p/client-go-eventbroadcaster/</link>
+      <pubDate>Sat, 06 Feb 2021 17:53:39 +0800</pubDate>
+      
+      <guid>https://genfanh.github.io/p/client-go-eventbroadcaster/</guid>
+      <description>1. 概述 k8s的事件（Event）是一种资源对象（Resource Object），用于记录集群内发生的情况，kubernetes各个组件会把运行时发生的各种事件上报给api-server，如调度器做了什么决定等。默认情况下只会显示最近（一小时内）发生的事件。 由于k8s事件是一种资源对象，因此事件都会被存储在etcd中，而为了避免磁盘空间被填满，所以回强制执行保留策略：在最后一次的事件发生后，删除1小时之前发生的事件。 因为k8s系统中Pod资源是最核心的资源，如Deployment、StatefulSet、ReplicaSet、DaemonSet、Job、CronJob等最终都会创建出Pod。所以k8s事件也是围绕Pod进行的，在Pod的生命周期内的关键步骤中都会产生事件消息。Event资源数据结构体定义在core资源组下，具体代码示例如下：
+代码路径：vendor/k8s.io/api/core/v1/types.go
+type Event struct { metav1.TypeMeta metav1.ObjectMeta InvolvedObject ObjectReference Reason string Message string Source EventSource FirstTimestamp metav1.Time LastTimestamp metav1.Time Count int32 Type string EventTime metav1.MicroTime Series *EventSeries Action string Related *ObjectReference ReportingController string ReportingInstance string } Event资源数据结构体描述了当前时间段内发生了哪些关键性事件。事件有两种类型：Normal（正常事件）和Warning（警告事件）。代码示例如下：
+const ( // Information only and will not cause any problems 	EventTypeNormal string = &amp;#34;Normal&amp;#34; // These events are to warn that something might go wrong 	EventTypeWarning string = &amp;#34;Warning&amp;#34; ) 2.</description>
+    </item>
+    
     <item>
       <title>client-go Informer简介</title>
       <link>https://genfanh.github.io/p/client-go-informer/</link>

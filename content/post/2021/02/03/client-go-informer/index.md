@@ -5,8 +5,7 @@ date: 2021-02-03T20:38:01+08:00
 draft: false
 tags: 
   - k8s
-  - clinet-go
-  - informer
+  - client-go
 categories: 
   - k8s
 slug: "client-go-informer"
@@ -383,7 +382,7 @@ func (c *threadSafeMap) ByIndex(indexName, indexedValue string) ([]interface{}, 
 	return list, nil
 }
 ```
-ByIndex接收两个参数:IndexName(索引器名称)和indexKey(需要检索的key)。首先从c.indexers中查找指定的索引器函数，从c.indices中查找指定的缓存器函数，然后根据西药索引的indexKey从缓存数据中查到并返回
+ByIndex接收两个参数:IndexName(索引器名称)和indexKey(需要检索的key)。首先从c.indexers中查找指定的索引器函数，从c.indices中查找指定的缓存器函数，然后根据索引的indexKey从缓存数据中查到并返回
 ## 3. 参考文献
 1. **《Kubernetes源码剖析》** **作者**：郑东旭
 2. client-go源码 **版本**:release-1.20 **commit**:fb61a7c88cb9f599363919a34b7c54a605455ffc

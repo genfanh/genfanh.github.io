@@ -6,29 +6,20 @@
     <description>Recent content in Tags on genfanh Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 03 Feb 2021 20:38:01 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 06 Feb 2021 17:53:39 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>clinet-go</title>
-      <link>https://genfanh.github.io/tags/clinet-go/</link>
-      <pubDate>Wed, 03 Feb 2021 20:38:01 +0800</pubDate>
+      <title>client-go</title>
+      <link>https://genfanh.github.io/tags/client-go/</link>
+      <pubDate>Sat, 06 Feb 2021 17:53:39 +0800</pubDate>
       
-      <guid>https://genfanh.github.io/tags/clinet-go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>informer</title>
-      <link>https://genfanh.github.io/tags/informer/</link>
-      <pubDate>Wed, 03 Feb 2021 20:38:01 +0800</pubDate>
-      
-      <guid>https://genfanh.github.io/tags/informer/</guid>
+      <guid>https://genfanh.github.io/tags/client-go/</guid>
       <description></description>
     </item>
     
     <item>
       <title>k8s</title>
       <link>https://genfanh.github.io/tags/k8s/</link>
-      <pubDate>Wed, 03 Feb 2021 20:38:01 +0800</pubDate>
+      <pubDate>Sat, 06 Feb 2021 17:53:39 +0800</pubDate>
       
       <guid>https://genfanh.github.io/tags/k8s/</guid>
       <description></description>

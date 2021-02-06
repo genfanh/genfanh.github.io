@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='对k8s client-go 事件管理器学习总结'><title>client-go EventBroadcaster事件管理器简介</title>
+
+<link rel='canonical' href='https://genfanh.github.io/p/client-go-eventbroadcaster/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='client-go EventBroadcaster事件管理器简介'>
+<meta property='og:description' content='对k8s client-go 事件管理器学习总结'>
+<meta property='og:url' content='https://genfanh.github.io/p/client-go-eventbroadcaster/'>
+<meta property='og:site_name' content='genfanh Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='k8s' /><meta property='article:tag' content='client-go' /><meta property='article:published_time' content='2021-02-06T17:53:39&#43;08:00'/><meta property='article:modified_time' content='2021-02-06T17:53:39&#43;08:00'/>
+<meta name="twitter:title" content="client-go EventBroadcaster事件管理器简介">
+<meta name="twitter:description" content="对k8s client-go 事件管理器学习总结"><link rel="shortcut icon" href="/img/favicon.ico">
+<link rel="icon" href="/img/favicon.ico"> 
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.body.dataset.scheme = 'dark';
+        } else {
+            document.body.dataset.scheme = 'light';
+        }
+    })();
+</script><div class="container main-container flex on-phone--column extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x0_resize_box_2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+
+                
+                    <span class="emoji">🍉</span>
+                
+            </figure>
+        
+        <h1 class="site-name"><a href="https://genfanh.github.io">genfanh Blog</a></h1>
+        <h2 class="site-description">暂时没想好填啥.</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>暗色模式</span>
+            </li>
+        
+    </ol>
+</aside>
+
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://genfanh.github.io" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/k8s/" >
+                k8s
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/client-go-eventbroadcaster/">client-go EventBroadcaster事件管理器简介</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        对k8s client-go 事件管理器学习总结
+    </h3>
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Feb 06, 2021</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h2 id="1-概述">1. 概述</h2>
+<p>k8s的事件（Event）是一种资源对象（Resource Object），用于记录集群内发生的情况，kubernetes各个组件会把运行时发生的各种事件上报给api-server，如调度器做了什么决定等。默认情况下只会显示最近（一小时内）发生的事件。
+由于k8s事件是一种资源对象，因此事件都会被存储在etcd中，而为了避免磁盘空间被填满，所以回强制执行保留策略：在最后一次的事件发生后，删除1小时之前发生的事件。
+因为k8s系统中Pod资源是最核心的资源，如Deployment、StatefulSet、ReplicaSet、DaemonSet、Job、CronJob等最终都会创建出Pod。所以k8s事件也是围绕Pod进行的，在Pod的生命周期内的关键步骤中都会产生事件消息。Event资源数据结构体定义在core资源组下，具体代码示例如下：</p>
+<p><strong>代码路径：vendor/k8s.io/api/core/v1/types.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Event</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span>
+	<span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span>
+	<span class="nx">InvolvedObject</span> <span class="nx">ObjectReference</span>
+	<span class="nx">Reason</span> <span class="kt">string</span>
+	<span class="nx">Message</span> <span class="kt">string</span>
+	<span class="nx">Source</span> <span class="nx">EventSource</span>
+	<span class="nx">FirstTimestamp</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span>
+	<span class="nx">LastTimestamp</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span>
+	<span class="nx">Count</span> <span class="kt">int32</span>
+	<span class="nx">Type</span> <span class="kt">string</span>
+	<span class="nx">EventTime</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">MicroTime</span>
+	<span class="nx">Series</span> <span class="o">*</span><span class="nx">EventSeries</span>
+	<span class="nx">Action</span> <span class="kt">string</span>
+	<span class="nx">Related</span> <span class="o">*</span><span class="nx">ObjectReference</span>
+	<span class="nx">ReportingController</span> <span class="kt">string</span>
+	<span class="nx">ReportingInstance</span> <span class="kt">string</span>
+<span class="p">}</span>
+</code></pre></div><p>Event资源数据结构体描述了当前时间段内发生了哪些关键性事件。事件有两种类型：Normal（正常事件）和Warning（警告事件）。代码示例如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">const</span> <span class="p">(</span>
+	<span class="c1">// Information only and will not cause any problems
+</span><span class="c1"></span>	<span class="nx">EventTypeNormal</span> <span class="kt">string</span> <span class="p">=</span> <span class="s">&#34;Normal&#34;</span>
+	<span class="c1">// These events are to warn that something might go wrong
+</span><span class="c1"></span>	<span class="nx">EventTypeWarning</span> <span class="kt">string</span> <span class="p">=</span> <span class="s">&#34;Warning&#34;</span>
+<span class="p">)</span>
+</code></pre></div><h2 id="2-架构">2. 架构</h2>
+<p><figure style="flex-grow: 117; flex-basis: 281px">
+		<a href="/p/client-go-eventbroadcaster/client-go-eventbroadcaster.png" data-size="811x691"><img src="/p/client-go-eventbroadcaster/client-go-eventbroadcaster.png"
+				srcset="/p/client-go-eventbroadcaster/client-go-eventbroadcaster_hu531c7fa32c558baf1c3c23c67aa91981_52009_480x0_resize_box_2.png 480w, /p/client-go-eventbroadcaster/client-go-eventbroadcaster_hu531c7fa32c558baf1c3c23c67aa91981_52009_1024x0_resize_box_2.png 1024w"
+				width="811"
+				height="691"
+				loading="lazy"
+				alt="图1 EventBroadcaster事件管理机制运行原理">
+		</a>
+		
+		<figcaption>图1 EventBroadcaster事件管理机制运行原理</figcaption>
+		
+	</figure>
+EventBroadcaster事件运行原理如<strong>图1</strong>所示，Actor可以看做k8s系统中任一组件，当组件发生关键性事务时，可通过EventRecorder记录该事件，事件管理机制可以分为以下几个部分：</p>
+<ul>
+<li><strong>EventRcorder：</strong> 事件（Event）生产者，也可叫做事件记录器。k8s系统组件通过EventRecorder记录关键性事件。</li>
+<li><strong>EventBroadcaster：</strong> 事件（Event）消费者，也叫做事件广播器。EventBroadcaster消费EventRecorder产生的事件兵分发给其已经连接的broadcasterWatcher。分发机制分为非阻塞分发和阻塞分发。</li>
+<li><strong>broadcasterWatcher：</strong> 观察者（Wathcer）用于定义事件的处理方式，如上传事件带api-server。</li>
+</ul>
+<h3 id="21-eventrecorder">2.1. EventRecorder</h3>
+<p>EventRecorder主要通过Eventf方法进行事件的记录，接口代码如下所示：</p>
+<p><strong>代码路径：vendor/k8s.io/client-go/tools/record/event.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">EventRecorder</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nf">Event</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+	<span class="nf">Eventf</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+	<span class="nf">AnnotatedEventf</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li><strong>Event:</strong> 对刚发生的事件进行记录</li>
+<li><strong>Eventf:</strong> 与Event方法类似，只是使用fmt.Sprintf对信息进行格式化</li>
+<li><strong>AnnotatedEventf:</strong> 与Eventf类型，但是附在了注释（Annotation）字段
+Eventf方法记录当前事件路径为，Event -&gt; recorder.makeEvent -&gt; recorder.Action。Action函数通过goroutine操作实现一部操作，主要把Event对象写入m.incoming Channel中，完成事件的生产流程。Action函数代码示例如下：</li>
+</ul>
+<p><strong>代码路径：vendor/k8s.io/apimachinery/pkg/watch/mux.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">Broadcaster</span><span class="p">)</span> <span class="nf">Action</span><span class="p">(</span><span class="nx">action</span> <span class="nx">EventType</span><span class="p">,</span> <span class="nx">obj</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">m</span><span class="p">.</span><span class="nx">incoming</span> <span class="o">&lt;-</span> <span class="nx">Event</span><span class="p">{</span><span class="nx">action</span><span class="p">,</span> <span class="nx">obj</span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="22-eventbroadcaster">2.2. EventBroadcaster</h3>
+<p>EventBroadcaster消费EventRecorder记录的事件并分发给目前所有已经连接到该Eventbroadcaster的broadcasterWatcher。EventBroadcaster通过NewBroadcaster函数进行实例化：</p>
+<p><strong>代码路径：vendor/k8s.io/client-go/tools/record/event_broadcaster.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">newBroadcaster</span><span class="p">(</span><span class="nx">sink</span> <span class="nx">EventSink</span><span class="p">,</span> <span class="nx">sleepDuration</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span><span class="p">,</span> <span class="nx">eventCache</span> <span class="kd">map</span><span class="p">[</span><span class="nx">eventKey</span><span class="p">]</span><span class="o">*</span><span class="nx">eventsv1</span><span class="p">.</span><span class="nx">Event</span><span class="p">)</span> <span class="nx">EventBroadcaster</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">eventBroadcasterImpl</span><span class="p">{</span>
+		<span class="nx">Broadcaster</span><span class="p">:</span>   <span class="nx">watch</span><span class="p">.</span><span class="nf">NewBroadcaster</span><span class="p">(</span><span class="nx">maxQueuedEvents</span><span class="p">,</span> <span class="nx">watch</span><span class="p">.</span><span class="nx">DropIfChannelFull</span><span class="p">),</span>
+		<span class="nx">eventCache</span><span class="p">:</span>    <span class="nx">eventCache</span><span class="p">,</span>
+		<span class="nx">sleepDuration</span><span class="p">:</span> <span class="nx">sleepDuration</span><span class="p">,</span>
+		<span class="nx">sink</span><span class="p">:</span>          <span class="nx">sink</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>在实例化过程中，回通过watch.NewBroadcaster函数在内部启动一个goroutine（m.loop函数）对m.incoming进行监控，并将监控的事件通过m.distribute函数分发给所有已经连接的broadcasterWatcher。通过m.fullChannelBehaboir标志区分分发机制，若标志为DropIfChannelFull时为非阻塞分发，此时w.result缓冲区满时事件会丢失；反之，为阻塞分发，事件不会丢失。m.loop和m.distribute代码如下：</p>
+<p><strong>代码路径：vendor/k8s.io/apimachinery/pkg/watch/mux.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">Broadcaster</span><span class="p">)</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// Deliberately not catching crashes here. Yes, bring down the process if there&#39;s a
+</span><span class="c1"></span>	<span class="c1">// bug in watch.Broadcaster.
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">event</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">m</span><span class="p">.</span><span class="nx">incoming</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nx">event</span><span class="p">.</span><span class="nx">Type</span> <span class="o">==</span> <span class="nx">internalRunFunctionMarker</span> <span class="p">{</span>
+			<span class="nx">event</span><span class="p">.</span><span class="nx">Object</span><span class="p">.(</span><span class="nx">functionFakeRuntimeObject</span><span class="p">)()</span>
+			<span class="k">continue</span>
+		<span class="p">}</span>
+		<span class="nx">m</span><span class="p">.</span><span class="nf">distribute</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">m</span><span class="p">.</span><span class="nf">closeAll</span><span class="p">()</span>
+	<span class="nx">m</span><span class="p">.</span><span class="nx">distributing</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">Broadcaster</span><span class="p">)</span> <span class="nf">distribute</span><span class="p">(</span><span class="nx">event</span> <span class="nx">Event</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">m</span><span class="p">.</span><span class="nx">fullChannelBehavior</span> <span class="o">==</span> <span class="nx">DropIfChannelFull</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">w</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">m</span><span class="p">.</span><span class="nx">watchers</span> <span class="p">{</span>
+			<span class="k">select</span> <span class="p">{</span>
+			<span class="k">case</span> <span class="nx">w</span><span class="p">.</span><span class="nx">result</span> <span class="o">&lt;-</span> <span class="nx">event</span><span class="p">:</span>
+			<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">w</span><span class="p">.</span><span class="nx">stopped</span><span class="p">:</span>
+			<span class="k">default</span><span class="p">:</span> <span class="c1">// Don&#39;t block if the event can&#39;t be queued.
+</span><span class="c1"></span>			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">w</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">m</span><span class="p">.</span><span class="nx">watchers</span> <span class="p">{</span>
+			<span class="k">select</span> <span class="p">{</span>
+			<span class="k">case</span> <span class="nx">w</span><span class="p">.</span><span class="nx">result</span> <span class="o">&lt;-</span> <span class="nx">event</span><span class="p">:</span>
+			<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">w</span><span class="p">.</span><span class="nx">stopped</span><span class="p">:</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="23-broadcasterwatcher">2.3. broadcasterWatcher</h3>
+<p>broadcasterWatcher是每个k8s系统组件自定义处理事件的方式，如上报事件到api-server。每个broadcasterWatcher拥有三种自定义处理事件的函数：</p>
+<ul>
+<li><strong>StartLogging：</strong> 将事件写入日志中</li>
+<li><strong>StartRecordingToSink：</strong> 将事件上报至api-server并存储到etcd中</li>
+<li><strong>StartStructuredLogging：</strong> 将事件根据入参的等级写入日志中
+这StartLogging、StartRecordingToSink以及StartStructuredLogging函数依赖于StartEventWatcher函数，该函数内置了一个goroutine，不断的监控EventBroadcaster来发现事件并调用相关函数对事件进行处理。
+下面对StartRecordingToSink函数进行重点介绍，如kubelet组件中的broadcasterWatcher为例，组件将v1core.EventSinkImpl作为上报事件的自定义函数。</li>
+</ul>
+<p><strong>代码路径：cmd/kubelet/app/server.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// makeEventRecorder sets up kubeDeps.Recorder if it&#39;s nil. It&#39;s a no-op otherwise.
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">makeEventRecorder</span><span class="p">(</span><span class="nx">kubeDeps</span> <span class="o">*</span><span class="nx">kubelet</span><span class="p">.</span><span class="nx">Dependencies</span><span class="p">,</span> <span class="nx">nodeName</span> <span class="nx">types</span><span class="p">.</span><span class="nx">NodeName</span><span class="p">)</span> <span class="p">{</span>
+	<span class="o">...</span>
+	<span class="nx">eventBroadcaster</span><span class="p">.</span><span class="nf">StartStructuredLogging</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">kubeDeps</span><span class="p">.</span><span class="nx">EventClient</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="o">...</span>
+		<span class="nx">eventBroadcaster</span><span class="p">.</span><span class="nf">StartRecordingToSink</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">v1core</span><span class="p">.</span><span class="nx">EventSinkImpl</span><span class="p">{</span><span class="nx">Interface</span><span class="p">:</span> <span class="nx">kubeDeps</span><span class="p">.</span><span class="nx">EventClient</span><span class="p">.</span><span class="nf">Events</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">)})</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="o">...</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>上报事件有3种方法：Create、Update、Patch。以Create方法为例，Create -&gt; e.Interface.CreateWithEventNamespace(event)，该方法上报通过RESTClient发送POST请求，将事件发送到api-server。代码示例如下：</p>
+<p><strong>代码路径：vendor/k8s.io/client-go/kubernetes/typed/core/v1/event_expansion.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">events</span><span class="p">)</span> <span class="nf">CreateWithEventNamespace</span><span class="p">(</span><span class="nx">event</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="o">...</span>
+	<span class="nx">result</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">{}</span>
+	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nf">Post</span><span class="p">().</span>
+		<span class="nf">NamespaceIfScoped</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">).</span>
+		<span class="nf">Resource</span><span class="p">(</span><span class="s">&#34;events&#34;</span><span class="p">).</span>
+		<span class="nf">Body</span><span class="p">(</span><span class="nx">event</span><span class="p">).</span>
+		<span class="nf">Do</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">()).</span>
+		<span class="nf">Into</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">err</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="3-参考文献">3. 参考文献</h2>
+<ol>
+<li><strong>《Kubernetes源码剖析》</strong> <strong>作者</strong>：郑东旭</li>
+<li>k8s源码 <strong>版本</strong>:release-1.20 <strong>commit</strong>:9158049ccd96cea766756c2c6370b728472e2246</li>
+</ol>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/k8s/">k8s</a>
+        
+            <a href="/tags/client-go/">client-go</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    
+
+    <section class="article-view">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="2" />
+  <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+</svg>
+        <span id="/p/client-go-eventbroadcaster/" class="leancloud_visitors" data-flag-title="client-go EventBroadcaster事件管理器简介">
+            <span class="leancloud-visitors-count">loading</span><span> VIEWS</span>
+        </span>
+    </section></footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/client-go-informer/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">client-go Informer简介</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="genfanh/genfanh-blog-comments"
+        issue-term="pathname"
+        theme="preferred-color-scheme" 
+        
+        label="production"
+        
+        crossorigin="anonymous" 
+        async>
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${e.detail}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 genfanh Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.0.1">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
+    integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin="anonymous"></script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FX29Q4RR92"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FX29Q4RR92');
+</script>
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments',
+      appId: 'IBQOzRWMnNNe0iMr5YiXQ9oD-MdYXbMMI',
+      appKey: 'Wf6ROG9SvmzvuFEANW7NmNiX',
+      avatar: 'retro', 
+      placeholder: '说点什么吧...',
+      visitor: 'true',
+      requiredFields: ['nick', 'mail']
+  });
+</script>
+    </body>
+</html>
