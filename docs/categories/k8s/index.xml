@@ -16,7 +16,8 @@
       <description>1. 概述 k8s其他组件如kubelet、controller manager、scheduler都是通过client-go的Informer机制与api-server进行通信。所以在阅读组件源代码时，需要先理解client-go的informer机制。
 2. Informer架构 图1 Infomer架构
 如图所示，Informer的中核心组件有Reflector、DeltaFIFO以及Indexer。下面对各个组件进行重点介绍：
-2.1. Reflector Reflector主要用作监控(Watch)Informer创建时指定的k8s资源（可以是内置资源或者CRD资源），当监控的资源发生变化时会触发相应的事件，如Added事件、Updated事件、Deleted事件（分别对应资源对象的添加、更新以及删除），并将该事件对应的资源对象存放到本地缓存DeltaFIFO中。 Reflector对象主要通过NewReflector函数进行实例化，查看函数入参可以知道，在Reflector对象实例化的时候需要传入一个ListerWatcher数据接口对象，该对象拥有List和Watch方法，用于获取和监控资源列表。Reflector对象通过Run函数驱动监控并处理监控事件，在Run函数中可以看到，Reflector主要重复运行ListAndWatch函数获取资源列表(List)并监控(Watch)资源。 代码路径：client-go/tools/cache/reflector.go
+2.1. Reflector Reflector主要用作监控(Watch)Informer创建时指定的k8s资源（可以是内置资源或者CRD资源），当监控的资源发生变化时会触发相应的事件，如Added事件、Updated事件、Deleted事件（分别对应资源对象的添加、更新以及删除），并将该事件对应的资源对象存放到本地缓存DeltaFIFO中。 Reflector对象主要通过NewReflector函数进行实例化，查看函数入参可以知道，在Reflector对象实例化的时候需要传入一个ListerWatcher数据接口对象，该对象拥有List和Watch方法，用于获取和监控资源列表。Reflector对象通过Run函数驱动监控并处理监控事件，在Run函数中可以看到，Reflector主要重复运行ListAndWatch函数获取资源列表(List)并监控(Watch)资源。
+代码路径：client-go/tools/cache/reflector.go
 func NewReflector(lw ListerWatcher, expectedType interface{}, store Store, resyncPeriod time.Duration) *Reflector { return NewNamedReflector(naming.GetNameFromCallsite(internalPackages...), lw, expectedType, store, resyncPeriod) } // Run repeatedly uses the reflector&amp;#39;s ListAndWatch to fetch all the // objects and subsequent deltas. // Run will exit when stopCh is closed. func (r *Reflector) Run(stopCh &amp;lt;-chan struct{}) { ... wait.BackoffUntil(func() { if err := r.</description>
     </item>
     

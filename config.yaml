@@ -45,11 +45,11 @@ params:
 
     comments:
         enabled: true
-        provider: valine
+        provider: utterances
         utterances:
-            repo:
+            repo: genfanh/genfanh-blog-comments
             issueTerm: pathname
-            label:
+            label: production
             theme: preferred-color-scheme
         valine:
             appId: IBQOzRWMnNNe0iMr5YiXQ9oD-MdYXbMMI

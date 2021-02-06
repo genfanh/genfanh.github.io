@@ -466,16 +466,37 @@ answer = max(dp[i][0~k][0])
 
     
         
-    <div id="vcomments"></div>
+    <script src="https://utteranc.es/client.js" 
+        repo="genfanh/genfanh-blog-comments"
+        issue-term="pathname"
+        theme="preferred-color-scheme" 
+        
+        label="production"
+        
+        crossorigin="anonymous" 
+        async>
+</script>
 
 <style>
-  #vcomments {
-      background-color: var(--card-background);
-      border-radius: var(--card-border-radius);
-      box-shadow: var(--shadow-l1);
-      padding: var(--card-padding);
-  }
+    .utterances {
+        max-width: unset;
+    }
 </style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${e.detail}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    })
+</script>
 
     
 

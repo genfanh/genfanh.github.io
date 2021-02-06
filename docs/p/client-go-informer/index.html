@@ -218,9 +218,9 @@
 </header>
 
     <section class="article-content">
-    <h3 id="1-概述">1. 概述</h3>
+    <h2 id="1-概述">1. 概述</h2>
 <p>k8s其他组件如kubelet、controller manager、scheduler都是通过client-go的Informer机制与api-server进行通信。所以在阅读组件源代码时，需要先理解client-go的informer机制。</p>
-<h3 id="2-informer架构">2. Informer架构</h3>
+<h2 id="2-informer架构">2. Informer架构</h2>
 <p><figure style="flex-grow: 111; flex-basis: 266px">
 		<a href="/p/client-go-informer/client-go-informer.png" data-size="712x641"><img src="/p/client-go-informer/client-go-informer.png"
 				srcset="/p/client-go-informer/client-go-informer_hu37d4f752f33f54c3f89ae250191036e7_39009_480x0_resize_box_2.png 480w, /p/client-go-informer/client-go-informer_hu37d4f752f33f54c3f89ae250191036e7_39009_1024x0_resize_box_2.png 1024w"
@@ -234,10 +234,10 @@
 		
 	</figure></p>
 <p>如图所示，Informer的中核心组件有Reflector、DeltaFIFO以及Indexer。下面对各个组件进行重点介绍：</p>
-<h4 id="21-reflector">2.1. Reflector</h4>
+<h3 id="21-reflector">2.1. Reflector</h3>
 <p>Reflector主要用作监控(Watch)Informer创建时指定的k8s资源（可以是内置资源或者CRD资源），当监控的<strong>资源发生变化</strong>时会触发相应的事件，如Added事件、Updated事件、Deleted事件（分别对应资源对象的添加、更新以及删除），并将该事件对应的<strong>资源对象</strong>存放到本地缓存DeltaFIFO中。
-Reflector对象主要通过NewReflector函数进行实例化，查看函数入参可以知道，在Reflector对象实例化的时候需要传入一个ListerWatcher数据接口对象，该对象拥有List和Watch方法，用于获取和监控资源列表。Reflector对象通过Run函数驱动监控并处理监控事件，在Run函数中可以看到，Reflector主要重复运行ListAndWatch函数获取资源列表(List)并监控(Watch)资源。
-<strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
+Reflector对象主要通过NewReflector函数进行实例化，查看函数入参可以知道，在Reflector对象实例化的时候需要传入一个ListerWatcher数据接口对象，该对象拥有List和Watch方法，用于获取和监控资源列表。Reflector对象通过Run函数驱动监控并处理监控事件，在Run函数中可以看到，Reflector主要重复运行ListAndWatch函数获取资源列表(List)并监控(Watch)资源。</p>
+<p><strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">NewReflector</span><span class="p">(</span><span class="nx">lw</span> <span class="nx">ListerWatcher</span><span class="p">,</span> <span class="nx">expectedType</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">store</span> <span class="nx">Store</span><span class="p">,</span> <span class="nx">resyncPeriod</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span><span class="p">)</span> <span class="o">*</span><span class="nx">Reflector</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="nf">NewNamedReflector</span><span class="p">(</span><span class="nx">naming</span><span class="p">.</span><span class="nf">GetNameFromCallsite</span><span class="p">(</span><span class="nx">internalPackages</span><span class="o">...</span><span class="p">),</span> <span class="nx">lw</span><span class="p">,</span> <span class="nx">expectedType</span><span class="p">,</span> <span class="nx">store</span><span class="p">,</span> <span class="nx">resyncPeriod</span><span class="p">)</span>
 <span class="p">}</span>
@@ -255,7 +255,7 @@ Reflector对象主要通过NewReflector函数进行实例化，查看函数入�
 	<span class="o">...</span>
 <span class="p">}</span>
 </code></pre></div><p>ListAndWatch函数实现主要分为两个部分：1、获取资源列表数据(List)；2、监控资源对象(Watch)</p>
-<h5 id="211-获取资源数据list">2.1.1. 获取资源数据(List)</h5>
+<h4 id="211-获取资源数据list">2.1.1. 获取资源数据(List)</h4>
 <p>ListAndWatch List流程如下图所示：
 <figure style="flex-grow: 46; flex-basis: 111px">
 		<a href="/p/client-go-informer/reflector-list.png" data-size="271x581"><img src="/p/client-go-informer/reflector-list.png"
@@ -277,8 +277,8 @@ Reflector对象主要通过NewReflector函数进行实例化，查看函数入�
 <li>r.syncWith 将资源对象列表中的资源对象和对应版本号存储至DeltaFIFO中，同时会替换已经存在的对象。</li>
 <li>r.setLastSyncResourceVersion 会设置最新的资源版本号。</li>
 </ol>
-<p>ListAndWatch List代码示例：
-<strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
+<p>ListAndWatch List代码示例：</p>
+<p><strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Reflector</span><span class="p">)</span> <span class="nf">ListAndWatch</span><span class="p">(</span><span class="nx">stopCh</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
 	<span class="o">...</span>
 	<span class="kd">var</span> <span class="nx">resourceVersion</span> <span class="kt">string</span>
@@ -314,10 +314,10 @@ Reflector对象主要通过NewReflector函数进行实例化，查看函数入�
 	<span class="p">}</span>
   <span class="o">...</span>
 <span class="p">}</span>
-</code></pre></div><h5 id="212-监控资源对象watch">2.1.2. 监控资源对象(Watch)</h5>
+</code></pre></div><h4 id="212-监控资源对象watch">2.1.2. 监控资源对象(Watch)</h4>
 <p>Watch（监控）操作通过HTTP协议与API-Server建立长连接，接收api-server发来的资源变更时间，实现的机制是使用HTTP协议的分块传输编码(Chunked Transfer Encoding)。
-ListAndWatch Watch代码示例：
-<strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
+ListAndWatch Watch代码示例：</p>
+<p><strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Reflector</span><span class="p">)</span> <span class="nf">ListAndWatch</span><span class="p">(</span><span class="nx">stopCh</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
 	<span class="o">...</span>
 	<span class="k">for</span> <span class="p">{</span>
@@ -339,8 +339,8 @@ ListAndWatch Watch代码示例：
 	<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><p>r.watchHandler 用于处理资源变更的事件。当出发Added事件、Updated事件、Deleted事件时，将对应的资源对象更新到本地缓存DeltaFIFO中并更新ResourceVersion版本号。
-r.watchHandler 代码示例：
-<strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
+r.watchHandler 代码示例：</p>
+<p><strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Reflector</span><span class="p">)</span> <span class="nf">watchHandler</span><span class="p">(</span><span class="nx">start</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">w</span> <span class="nx">watch</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span> <span class="nx">resourceVersion</span> <span class="o">*</span><span class="kt">string</span><span class="p">,</span> <span class="nx">errc</span> <span class="kd">chan</span> <span class="kt">error</span><span class="p">,</span> <span class="nx">stopCh</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
 	<span class="nx">eventCount</span> <span class="o">:=</span> <span class="mi">0</span>
 
@@ -377,9 +377,9 @@ r.watchHandler 代码示例：
   <span class="o">...</span>
 <span class="p">}</span>
 
-</code></pre></div><h4 id="22-deltafifo">2.2. DeltaFIFO</h4>
-<p>DeltaFIFO可以分开理解，FIFO是一个先进先出队列，它拥有队列操作的基本方法（如Add、Update、Delete、List、Pop、Close等），而Delte是一个资源对象存储，用于保存资源对象的操作类型（如Added操作类型、Updated操作类型、Deleted操作类型、Sync操作类型等）。DeltaFIFO的struct结构代码如下所示：
-<strong>代码路径：client-go/tools/cache/delta_fifo.go</strong></p>
+</code></pre></div><h3 id="22-deltafifo">2.2. DeltaFIFO</h3>
+<p>DeltaFIFO可以分开理解，FIFO是一个先进先出队列，它拥有队列操作的基本方法（如Add、Update、Delete、List、Pop、Close等），而Delte是一个资源对象存储，用于保存资源对象的操作类型（如Added操作类型、Updated操作类型、Deleted操作类型、Sync操作类型等）。DeltaFIFO的struct结构代码如下所示：</p>
+<p><strong>代码路径：client-go/tools/cache/delta_fifo.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">DeltaFIFO</span> <span class="kd">struct</span> <span class="p">{</span>
 	<span class="o">...</span>
 	<span class="nx">items</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">Deltas</span>
@@ -392,15 +392,15 @@ r.watchHandler 代码示例：
 <span class="p">}</span>
 <span class="kd">type</span> <span class="nx">Deltas</span> <span class="p">[]</span><span class="nx">Delta</span>
 </code></pre></div><p>DeltaFIFO会保留所有关于资源对象(obj)的操作类型，队列中会存在拥有<strong>不同操作类型</strong>的<strong>同一个资源对象</strong>，队列的消费者能够在处理该资源对象时能够了解该资源对象所发生的事情。DeltaFIFO作为一个先进先出的队列，有其数据的生产者和消费者，其中生产者是Reflector调用的Add方法，消费者是Controller（informer的Controller）调用的Pop方法。下面针对DeltaFIFO的核心功能：生产者方法、消费者方法以及Resync机制进行介绍。</p>
-<h5 id="221-生产者方法">2.2.1. 生产者方法</h5>
+<h4 id="221-生产者方法">2.2.1. 生产者方法</h4>
 <p>DeltaFIFO队列中的资源对象在Added事件、Updated事件、Deleted事件中都调用了queueActionLocked函数，该函数主要根据操作类型把资源对象append到队列中，具体的代码执行流程如下：</p>
 <ol>
 <li>通过f.KeyOf计算资源对象的Key</li>
 <li>将actionType和资源对象构造成Delta，添加到items中，并通过dedupDeltas函数进行去重操作</li>
 <li>更新构造后的Delta并通过f.cond.Broadcast通知所有消费者解除阻塞</li>
 </ol>
-<p>queueActionLocked代码示例如下：
-<strong>代码路径：client-go/tools/cache/delta_fifo.go</strong></p>
+<p>queueActionLocked代码示例如下：</p>
+<p><strong>代码路径：client-go/tools/cache/delta_fifo.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">DeltaFIFO</span><span class="p">)</span> <span class="nf">queueActionLocked</span><span class="p">(</span><span class="nx">actionType</span> <span class="nx">DeltaType</span><span class="p">,</span> <span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
 	<span class="nx">id</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">KeyOf</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span>
 	<span class="o">...</span>
@@ -419,9 +419,9 @@ r.watchHandler 代码示例：
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="kc">nil</span>
 <span class="p">}</span>
-</code></pre></div><h5 id="222-消费者方法">2.2.2. 消费者方法</h5>
-<p>Pop方法作为消费者方法使用，该方法从DeltaFIFO的头部去除最早进入队列中的资源对象数据。在调用Pop方法时须传入process函数，该函数用于接收并处理对象的回调方法。Pop方法代码如下：
-<strong>代码路径：client-go/tools/cache/delta_fifo.go</strong></p>
+</code></pre></div><h4 id="222-消费者方法">2.2.2. 消费者方法</h4>
+<p>Pop方法作为消费者方法使用，该方法从DeltaFIFO的头部去除最早进入队列中的资源对象数据。在调用Pop方法时须传入process函数，该函数用于接收并处理对象的回调方法。Pop方法代码如下：</p>
+<p><strong>代码路径：client-go/tools/cache/delta_fifo.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">DeltaFIFO</span><span class="p">)</span> <span class="nf">Pop</span><span class="p">(</span><span class="nx">process</span> <span class="nx">PopProcessFunc</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
 	<span class="nx">f</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
 	<span class="k">defer</span> <span class="nx">f</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
@@ -449,8 +449,8 @@ r.watchHandler 代码示例：
 	<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><p>当队列中没有数据时，通过f.cond.Wait阻塞等待数据，只有收到cond.Broadcast时才说明有数据加入队列，此时阻塞才被清除。如果队列不为空，则取出队列头，将该对象传入process函数，由上层消费者处理，若process回调函数处理出错，则将对象重新存入队列。
-Controller的processLoop方法负责从DeltaFIFO队列中取出数据，并传给回调函数。而process回调函数代码示例如下：
-<strong>代码路径：client-go/tools/cache/shared_informer.go</strong></p>
+Controller的processLoop方法负责从DeltaFIFO队列中取出数据，并传给回调函数。而process回调函数代码示例如下：</p>
+<p><strong>代码路径：client-go/tools/cache/shared_informer.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">sharedIndexInformer</span><span class="p">)</span> <span class="nf">HandleDeltas</span><span class="p">(</span><span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
 	<span class="o">...</span>
 	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">d</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">obj</span><span class="p">.(</span><span class="nx">Deltas</span><span class="p">)</span> <span class="p">{</span>
@@ -479,9 +479,9 @@ Controller的processLoop方法负责从DeltaFIFO队列中取出数据，并传�
 	<span class="k">return</span> <span class="kc">nil</span>
 <span class="p">}</span>
 </code></pre></div><p>HandleDeltas函数作为process回调函数，当资源对象的操作类型为Added、Updated、Deleted时，在indexer中对该资源对象进行相应操作（该操作并发安全），并通过distribute函数将资源对象分发至SharedInformer中。如Added操作即对应的informer.AddEventHandler函数。</p>
-<h5 id="223-resync机制">2.2.3. Resync机制</h5>
-<p>Resync机制会将Indexer本地存储中的资源对象同步到DeltaFIFO中，并将这些资源对象设置为Sync操作类型。Resync函数在Reflector中定时执行，执行周期在生成Reflector对象时，由传入的resyncPeriod参数设定。具体代码在ListAndWatch函数中，如下所示：
-<strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
+<h4 id="223-resync机制">2.2.3. Resync机制</h4>
+<p>Resync机制会将Indexer本地存储中的资源对象同步到DeltaFIFO中，并将这些资源对象设置为Sync操作类型。Resync函数在Reflector中定时执行，执行周期在生成Reflector对象时，由传入的resyncPeriod参数设定。具体代码在ListAndWatch函数中，如下所示：</p>
+<p><strong>代码路径：client-go/tools/cache/reflector.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Reflector</span><span class="p">)</span> <span class="nf">ListAndWatch</span><span class="p">(</span><span class="nx">stopCh</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
 	<span class="o">...</span>
 	<span class="nx">resyncerrc</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">error</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -510,8 +510,8 @@ Controller的processLoop方法负责从DeltaFIFO队列中取出数据，并传�
 	<span class="p">}()</span>
 	<span class="o">...</span>
 <span class="p">}</span>
-</code></pre></div><p>Reflector 在 ListAndWatch 函数中启动了一个goroutine定时实行r.store.Resync操作，而在DeltaFIFO中Resync-&gt;syncKeyLocked代码如下：
-<strong>代码路径：client-go/tools/cache/delta_fifo.go</strong></p>
+</code></pre></div><p>Reflector 在 ListAndWatch 函数中启动了一个goroutine定时实行r.store.Resync操作，而在DeltaFIFO中Resync-&gt;syncKeyLocked代码如下：</p>
+<p><strong>代码路径：client-go/tools/cache/delta_fifo.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">DeltaFIFO</span><span class="p">)</span> <span class="nf">syncKeyLocked</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
 	<span class="nx">obj</span><span class="p">,</span> <span class="nx">exists</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nx">knownObjects</span><span class="p">.</span><span class="nf">GetByKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
 	<span class="o">...</span>
@@ -523,7 +523,7 @@ Controller的processLoop方法负责从DeltaFIFO队列中取出数据，并传�
 	<span class="k">return</span> <span class="kc">nil</span>
 <span class="p">}</span>
 </code></pre></div><p>f.knownObjects是indexer本地存储对象，通过该对象可以获取client-go目前存储的所有资源对象。</p>
-<h4 id="23-indexer">2.3. Indexer</h4>
+<h3 id="23-indexer">2.3. Indexer</h3>
 <p>Indexer是client-go用来存储资源对象并自带索引功能的本地存储，Reflector从DeltaFIFO中将消费出来的资源对象存储至Indexer。Indexer中的数据与Etcd中数据完全一致，因此client-go可以方便地从本地存储中获取数据，无需每次都从远端etcd获取，减轻api-server压力。
 Indexer是在ThreadSafeMap（具有并发安全特性）的基础上进行了封装，除了继承了ThreadSafeMap的操作方法同时实现了Indexer Func等功能（如Index、IndexKyes、GetIndexers等方法），存储结构如下图所示：
 <figure style="flex-grow: 112; flex-basis: 271px">
@@ -538,9 +538,9 @@ Indexer是在ThreadSafeMap（具有并发安全特性）的基础上进行了封
 		<figcaption>Indexer存储结构</figcaption>
 		
 	</figure></p>
-<h5 id="231-threadsafemap并发安全存储">2.3.1. ThreadSafeMap并发安全存储</h5>
-<p>ThreadSafeMap是一个内存中的存储，数据不会写入本地磁盘中，在进行增、删、该、查操作都会进行加锁，以保证数据的一致性。ThreadSafeMap将资源对象存储于一个map数据结构中。其数据结构代码如下：
-<strong>代码路径：client-go/tools/cache/thread_safe_store.go</strong></p>
+<h4 id="231-threadsafemap并发安全存储">2.3.1. ThreadSafeMap并发安全存储</h4>
+<p>ThreadSafeMap是一个内存中的存储，数据不会写入本地磁盘中，在进行增、删、该、查操作都会进行加锁，以保证数据的一致性。ThreadSafeMap将资源对象存储于一个map数据结构中。其数据结构代码如下：</p>
+<p><strong>代码路径：client-go/tools/cache/thread_safe_store.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">threadSafeMap</span> <span class="kd">struct</span> <span class="p">{</span>
 	<span class="nx">lock</span>  <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>
 	<span class="nx">items</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span>
@@ -550,9 +550,9 @@ Indexer是在ThreadSafeMap（具有并发安全特性）的基础上进行了封
 </span><span class="c1"></span>	<span class="nx">indices</span> <span class="nx">Indices</span>
 <span class="p">}</span>
 </code></pre></div><p>items字段存储的是资源对象数据，其中items的key通过keyFunc函数计算得到。</p>
-<h5 id="232-indexer索引器">2.3.2. Indexer索引器</h5>
-<p>每次增、删、改ThreadSafeStore数据时，都会通过updateIndeces或deleteFromIndeices函数变更Indexer。Indexer被设计为可以自定义索引函数，其4个非常重要的数据结构为Indeices、Index、Indexer以及IndexFunc，数据结构如下：
-<strong>代码路径：client-go/tools/cache/index.go</strong></p>
+<h4 id="232-indexer索引器">2.3.2. Indexer索引器</h4>
+<p>每次增、删、改ThreadSafeStore数据时，都会通过updateIndeces或deleteFromIndeices函数变更Indexer。Indexer被设计为可以自定义索引函数，其4个非常重要的数据结构为Indeices、Index、Indexer以及IndexFunc，数据结构如下：</p>
+<p><strong>代码路径：client-go/tools/cache/index.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// IndexFunc knows how to compute the set of indexed values for an object.
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">IndexFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
 
@@ -570,9 +570,9 @@ Indexer是在ThreadSafeMap（具有并发安全特性）的基础上进行了封
 <li><strong>Indices:</strong> 存储缓存器，key为缓存器名称，value为缓存数据。</li>
 <li><strong>Index:</strong> 存储缓存数据，数据结构为K/V结构。</li>
 </ul>
-<h5 id="233-indexer索引器核心实现">2.3.3. Indexer索引器核心实现</h5>
-<p>index.ByIndex函数通过执行索引器函数得到索引结果，代码示例：
-<strong>代码路径：client-go/tools/cache/thread_safe_store.go</strong></p>
+<h4 id="233-indexer索引器核心实现">2.3.3. Indexer索引器核心实现</h4>
+<p>index.ByIndex函数通过执行索引器函数得到索引结果，代码示例：</p>
+<p><strong>代码路径：client-go/tools/cache/thread_safe_store.go</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">threadSafeMap</span><span class="p">)</span> <span class="nf">ByIndex</span><span class="p">(</span><span class="nx">indexName</span><span class="p">,</span> <span class="nx">indexedValue</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
 	<span class="o">...</span>
 	<span class="nx">indexFunc</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">indexers</span><span class="p">[</span><span class="nx">indexName</span><span class="p">]</span>
@@ -586,7 +586,7 @@ Indexer是在ThreadSafeMap（具有并发安全特性）的基础上进行了封
 	<span class="k">return</span> <span class="nx">list</span><span class="p">,</span> <span class="kc">nil</span>
 <span class="p">}</span>
 </code></pre></div><p>ByIndex接收两个参数:IndexName(索引器名称)和indexKey(需要检索的key)。首先从c.indexers中查找指定的索引器函数，从c.indices中查找指定的缓存器函数，然后根据西药索引的indexKey从缓存数据中查到并返回</p>
-<h3 id="3-参考文献">3. 参考文献</h3>
+<h2 id="3-参考文献">3. 参考文献</h2>
 <ol>
 <li><strong>《Kubernetes源码剖析》</strong> <strong>作者</strong>：郑东旭</li>
 <li>client-go源码 <strong>版本</strong>:release-1.20 <strong>commit</strong>:fb61a7c88cb9f599363919a34b7c54a605455ffc</li>
@@ -644,16 +644,37 @@ Indexer是在ThreadSafeMap（具有并发安全特性）的基础上进行了封
 
     
         
-    <div id="vcomments"></div>
+    <script src="https://utteranc.es/client.js" 
+        repo="genfanh/genfanh-blog-comments"
+        issue-term="pathname"
+        theme="preferred-color-scheme" 
+        
+        label="production"
+        
+        crossorigin="anonymous" 
+        async>
+</script>
 
 <style>
-  #vcomments {
-      background-color: var(--card-background);
-      border-radius: var(--card-border-radius);
-      box-shadow: var(--shadow-l1);
-      padding: var(--card-padding);
-  }
+    .utterances {
+        max-width: unset;
+    }
 </style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${e.detail}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    })
+</script>
 
     
 
