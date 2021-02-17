@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='对client-go WorkQueue学习总结'><title>client-go WorkQueue工作队列简介</title>
+
+<link rel='canonical' href='https://genfanh.github.io/p/client-go-workqueue/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='client-go WorkQueue工作队列简介'>
+<meta property='og:description' content='对client-go WorkQueue学习总结'>
+<meta property='og:url' content='https://genfanh.github.io/p/client-go-workqueue/'>
+<meta property='og:site_name' content='genfanh Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='k8s' /><meta property='article:tag' content='client-go' /><meta property='article:published_time' content='2021-02-17T13:38:57&#43;08:00'/><meta property='article:modified_time' content='2021-02-17T13:38:57&#43;08:00'/>
+<meta name="twitter:title" content="client-go WorkQueue工作队列简介">
+<meta name="twitter:description" content="对client-go WorkQueue学习总结"><link rel="shortcut icon" href="/img/favicon.ico">
+<link rel="icon" href="/img/favicon.ico"> 
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.body.dataset.scheme = 'dark';
+        } else {
+            document.body.dataset.scheme = 'light';
+        }
+    })();
+</script><div class="container main-container flex on-phone--column extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hua56bc347e42857790e9beb35033694f6_58905_300x0_resize_box_2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+
+                
+                    <span class="emoji">🍉</span>
+                
+            </figure>
+        
+        <h1 class="site-name"><a href="https://genfanh.github.io">genfanh Blog</a></h1>
+        <h2 class="site-description">暂时没想好填啥.</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>暗色模式</span>
+            </li>
+        
+    </ol>
+</aside>
+
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://genfanh.github.io" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/k8s/" >
+                k8s
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/client-go-workqueue/">client-go WorkQueue工作队列简介</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        对client-go WorkQueue学习总结
+    </h3>
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Feb 17, 2021</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h2 id="1-概述">1. 概述</h2>
+<p>WrokQueue是k8s的工作队列，与普通FIFO队列相比，实现起来更加复杂，主要特性如下：</p>
+<ul>
+<li><strong>有序</strong>：按照添加顺序处理元素（item）。</li>
+<li><strong>去重</strong>：相同元素在同一时间不会被重复处理，例如一个元素在处理之前被添加了多次，它只会被处理一次。</li>
+<li><strong>并发性</strong>：多生产者和多消费者。</li>
+<li><strong>标记机制</strong>：支持标记功能，标记一个元素是否被处理，也允许元素在处理时重新排队。</li>
+<li><strong>通知机制</strong>：ShutDown方法通过信号量通知队列不再接收新的元素，并通知metric goroutine退出。</li>
+<li><strong>延迟</strong>：支持延迟队列，延迟一段时间后再将元素存入队列。</li>
+<li><strong>限速</strong>：支持限速队列，元素存入队列时进行速率限制。限制一个元素被重新排队（Reenqueued）的次数。</li>
+<li><strong>Metric</strong>：支持metric监控指标，可用于Prometheus监控。
+client-go中WorkQueue支持3种队列同时提供了3种接口，每种队列对应特定的应用场景，具体如下：</li>
+<li>Interface：FIFO队列接口，先进先出队列，并支持去重机制。</li>
+<li>DelayingInterface：延迟队列接口，基于Interface接口封装，延迟一段时间后再将元素存入队列。</li>
+<li>RateLimitingInterface：限速队列接口，基于DelayingInterface接口封装，支持元素存入队列时进行速率限制。</li>
+</ul>
+<h2 id="2-队列介绍">2. 队列介绍</h2>
+<h3 id="21-fifo队列">2.1. FIFO队列</h3>
+<p>FIFO队列支持最基本的队列方法，例如插入元素、获取元素、获取队列长度等。另外，WorkQueue中的限速及延迟队列都基于Interface接口实现，其提供如下方法：</p>
+<p><strong>代码路径：vendor/k8s.io/client-go/util/workqueue/queue.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Interface</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nf">Add</span><span class="p">(</span><span class="nx">item</span> <span class="kd">interface</span><span class="p">{})</span>
+	<span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span>
+	<span class="nf">Get</span><span class="p">()</span> <span class="p">(</span><span class="nx">item</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">shutdown</span> <span class="kt">bool</span><span class="p">)</span>
+	<span class="nf">Done</span><span class="p">(</span><span class="nx">item</span> <span class="kd">interface</span><span class="p">{})</span>
+	<span class="nf">ShutDown</span><span class="p">()</span>
+	<span class="nf">ShuttingDown</span><span class="p">()</span> <span class="kt">bool</span>
+<span class="p">}</span>
+</code></pre></div><p>FIFO队列接口方法说明：</p>
+<ul>
+<li><strong>Add</strong>：给队列添加元素（item），可以是任意类型元素。</li>
+<li><strong>Len</strong>：返回当前队列的长度。</li>
+<li><strong>Get</strong>：获取队列头部的一个元素。</li>
+<li><strong>Done</strong>：标记队列中该元素已被处理。</li>
+<li><strong>ShutDown</strong>：关闭队列。</li>
+<li><strong>ShuttingDown</strong>：查询队列是否正在关闭。
+FIFO队列数据结构如下：</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Type</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">queue</span> <span class="p">[]</span><span class="nx">t</span>
+	<span class="nx">dirty</span> <span class="nx">set</span>
+	<span class="nx">processing</span> <span class="nx">set</span>
+	<span class="nx">cond</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span>
+	<span class="nx">shuttingDown</span> <span class="kt">bool</span>
+	<span class="nx">metrics</span> <span class="nx">queueMetrics</span>
+	<span class="nx">unfinishedWorkUpdatePeriod</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
+	<span class="nx">clock</span>                      <span class="nx">clock</span><span class="p">.</span><span class="nx">Clock</span>
+<span class="p">}</span>
+</code></pre></div><p>FIFO队列数据结构中最主要的字段有queue、dirty和processing。其中：</p>
+<ul>
+<li><strong>queue字段</strong>是实际存储元素的地方，它是slice结构的，用于保证元素有序；</li>
+<li><strong>dirty字段</strong>非常关键，除了能保证去重，还能保证在处理一个元素之前哪怕其被添加了多次（并发情况下），但也只会被处理一次；</li>
+<li><strong>processing字段</strong>用于标记机制，标记一个元素是否正在被处理。</li>
+</ul>
+<h3 id="22-延迟队列">2.2. 延迟队列</h3>
+<p>迟队列，基于FIFO队列接口封装，在原有功能上增加了AddAfter方法，其原理是延迟一段时间后再将元素插入FIFO队列。延迟队列数据结构如下：</p>
+<p><strong>代码路径：vendor/k8s.io/client-go/util/workqueue/delaying_queue.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">DelayingInterface</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nx">Interface</span>
+	<span class="nf">AddAfter</span><span class="p">(</span><span class="nx">item</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">duration</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">delayingType</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Interface</span>
+	<span class="nx">clock</span> <span class="nx">clock</span><span class="p">.</span><span class="nx">Clock</span>
+	<span class="nx">stopCh</span> <span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}</span>
+	<span class="nx">stopOnce</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Once</span>
+	<span class="nx">heartbeat</span> <span class="nx">clock</span><span class="p">.</span><span class="nx">Ticker</span>
+	<span class="nx">waitingForAddCh</span> <span class="kd">chan</span> <span class="o">*</span><span class="nx">waitFor</span>
+	<span class="nx">metrics</span> <span class="nx">retryMetrics</span>
+<span class="p">}</span>
+</code></pre></div><p>AddAfter方法会插入一个item（元素）参数，并附带一个duration（延迟时间）参数，该duration参数用于指定元素延迟插入FIFO队列的时间。如果duration小于或等于0，会直接将元素插入FIFO队列中。
+delayingType结构中最主要的字段是waitingForAddCh，其默认初始大小为1000，通过AddAfter方法插入元素时，是非阻塞状态的，只有当插入的元素大于或等于1000时，延迟队列才会处于阻塞状态。waitingForAddCh字段中的数据通过goroutine运行的waitingLoop函数持久运行。</p>
+<h3 id="23-限速队列">2.3. 限速队列</h3>
+<p>限速队列，基于延迟队列和FIFO队列接口封装，限速队列接口（RateLimitingInterface）在原有功能上增加了AddRateLimited、Forget、NumRequeues方法。限速队列的重点不在于RateLimitingInterface接口，而在于它提供的4种限速算法接口（RateLimiter）。其原理是，限速队列利用延迟队列的特性，延迟某个元素的插入时间，达到限速目的。RateLimiter数据结构如下：</p>
+<p><strong>代码路径：vendor/k8s.io/client-go/util/workqueue/default_rate_limiters.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">RateLimiter</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nf">When</span><span class="p">(</span><span class="nx">item</span> <span class="kd">interface</span><span class="p">{})</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
+	<span class="nf">Forget</span><span class="p">(</span><span class="nx">item</span> <span class="kd">interface</span><span class="p">{})</span>
+	<span class="nf">NumRequeues</span><span class="p">(</span><span class="nx">item</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">int</span>
+<span class="p">}</span>
+</code></pre></div><p>限速算法每个方法说明如下：</p>
+<ul>
+<li><strong>When</strong>：获取指定元素应该等待的时间。</li>
+<li><strong>Forget</strong>：释放指定元素，清空该元素的排队数。</li>
+<li><strong>NumRequeues</strong>：获取指定元素的排队数。</li>
+</ul>
+<p><strong>注意</strong>：这里有一个非常重要的概念——<strong>限速周期</strong>，一个限速周期是指从执行AddRateLimited方法到执行完Forget方法之间的时间。如果该元素被Forget方法处理完，则清空排队数。下面会分别详解WorkQueue提供的4种限速算法，应对不同的场景，这4种限速算法分别如下。</p>
+<ul>
+<li>令牌桶算法（BucketRateLimiter）。</li>
+<li>排队指数算法（ItemExponentialFailureRateLimiter）。</li>
+<li>计数器算法（ItemFastSlowRateLimiter）。</li>
+<li>混合模式（MaxOfRateLimiter），将多种限速算法混合使用。</li>
+</ul>
+<h4 id="231-令牌桶算法">2.3.1. 令牌桶算法</h4>
+<p>令牌桶算法是通过Go语言的第三方库golang.org/x/time/rate实现的。令牌桶算法内部实现了一个存放token（令牌）的“桶”，初始时“桶”是空的，token会以固定速率往“桶”里填充，直到将其填满为止，多余的token会被丢弃。每个元素都会从令牌桶得到一个token，只有得到token的元素才允许通过（accept），而没有得到token的元素处于等待状态。令牌桶算法通过控制发放token来达到限速目的。
+WorkQueue在默认的情况下会实例化令牌桶，代码示例如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">rate</span><span class="p">.</span><span class="nf">NewLimiter</span><span class="p">(</span><span class="nx">rate</span><span class="p">.</span><span class="nf">Limit</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div><p>在实例化rate.NewLimiter后，传入r和b两个参数，其中r参数表示每秒往“桶”里填充的token数量，b参数表示令牌桶的大小（即令牌桶最多存放的token数量）。我们假定r为10，b为100。假设在一个限速周期内插入了1000个元素，通过<code>r.Limiter.Reserve().Delay</code>函数返回指定元素应该等待的时间，那么前b（即100）个元素会被立刻处理，而后面元素的延迟时间分别为item100/100ms、item101/200ms、item102/300ms、item103/400ms，以此类推。</p>
+<h4 id="232-排队指数算法">2.3.2. 排队指数算法</h4>
+<p>排队指数算法将相同元素的排队数作为指数，排队数增大，速率限制呈指数级增长，但其最大值不会超过maxDelay。元素的排队数统计是有限速周期的，一个限速周期是指从执行AddRateLimited方法到执行完Forget方法之间的时间。如果该元素被Forget方法处理完，则清空排队数。排队指数算法的核心实现代码示例如下：</p>
+<p><strong>代码路径：vendor/k8s.io/client-go/util/workqueue/default_rate_limiters.go</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">exp</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">failures</span><span class="p">[</span><span class="nx">item</span><span class="p">]</span>
+<span class="nx">r</span><span class="p">.</span><span class="nx">failures</span><span class="p">[</span><span class="nx">item</span><span class="p">]</span> <span class="p">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">failures</span><span class="p">[</span><span class="nx">item</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="nx">backoff</span> <span class="o">:=</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">baseDelay</span><span class="p">.</span><span class="nf">Nanoseconds</span><span class="p">())</span> <span class="o">*</span> <span class="nx">math</span><span class="p">.</span><span class="nf">Pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">exp</span><span class="p">))</span>
+<span class="k">if</span> <span class="nx">backoff</span> <span class="p">&gt;</span> <span class="nx">math</span><span class="p">.</span><span class="nx">MaxInt64</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nx">maxDelay</span>
+<span class="p">}</span>
+</code></pre></div><p>该算法提供了3个主要字段：failures、baseDelay、maxDelay。其中，failures字段用于统计元素排队数，每当AddRateLimited方法插入新元素时，会为该字段加1；另外，baseDelay字段是最初的限速单位（默认为5ms），maxDelay字段是最大限速单位（默认为1000s）。限速队列利用延迟队列的特性，延迟多个相同元素的插入时间，达到限速目的。</p>
+<h4 id="233-计数器算法">2.3.3. 计数器算法</h4>
+<p>计数器算法是限速算法中最简单的一种，其原理是：限制一段时间内允许通过的元素数量，例如在1分钟内只允许通过100个元素，每插入一个元素，计数器自增1，当计数器数到100的阈值且还在限速周期内时，则不允许元素再通过。但WorkQueue在此基础上扩展了fast和slow速率。计数器算法提供了4个主要字段：failures、fastDelay、slowDelay及maxFastAttempts。其中，failures字段用于统计元素排队数，每当AddRateLimited方法插入新元素时，会为该字段加1；而fastDelay和slowDelay字段是用于定义fast、slow速率的；另外，maxFastAttempts字段用于控制从fast速率转换到slow速率。计数器算法核心实现的代码示例如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">r</span><span class="p">.</span><span class="nx">failures</span><span class="p">[</span><span class="nx">item</span><span class="p">]</span> <span class="p">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">failures</span><span class="p">[</span><span class="nx">item</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="k">if</span> <span class="nx">r</span><span class="p">.</span><span class="nx">failures</span><span class="p">[</span><span class="nx">item</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">maxFastAttempts</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nx">fastDelay</span>
+<span class="p">}</span>
+<span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nx">slowDelay</span>
+</code></pre></div><h4 id="234-混合模式">2.3.4. 混合模式</h4>
+<p>混合模式是将多种限速算法混合使用，即多种限速算法同时生效。例如，同时使用排队指数算法和令牌桶算法。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/k8s/">k8s</a>
+        
+            <a href="/tags/client-go/">client-go</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    
+
+    <section class="article-view">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="2" />
+  <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+</svg>
+        <span id="/p/client-go-workqueue/" class="leancloud_visitors" data-flag-title="client-go WorkQueue工作队列简介">
+            <span class="leancloud-visitors-count">loading</span><span> VIEWS</span>
+        </span>
+    </section></footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/client-go-eventbroadcaster/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">client-go EventBroadcaster事件管理器简介</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/client-go-informer/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">client-go Informer简介</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="genfanh/genfanh-blog-comments"
+        issue-term="pathname"
+        theme="preferred-color-scheme" 
+        
+        label="production"
+        
+        crossorigin="anonymous" 
+        async>
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${e.detail}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 genfanh Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.0.1">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
+    integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin="anonymous"></script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FX29Q4RR92"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FX29Q4RR92');
+</script>
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+  new Valine({
+      el: '#vcomments',
+      appId: 'IBQOzRWMnNNe0iMr5YiXQ9oD-MdYXbMMI',
+      appKey: 'Wf6ROG9SvmzvuFEANW7NmNiX',
+      avatar: 'retro', 
+      placeholder: '说点什么吧...',
+      visitor: 'true',
+      requiredFields: ['nick', 'mail']
+  });
+</script>
+    </body>
+</html>

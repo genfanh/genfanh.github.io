@@ -6,7 +6,133 @@
         <description>Recent content on genfanh Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-CN</language>
-        <lastBuildDate>Sat, 06 Feb 2021 17:53:39 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 17 Feb 2021 13:38:57 +0800</lastBuildDate><atom:link href="https://genfanh.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>client-go WorkQueue工作队列简介</title>
+        <link>https://genfanh.github.io/p/client-go-workqueue/</link>
+        <pubDate>Wed, 17 Feb 2021 13:38:57 +0800</pubDate>
+        
+        <guid>https://genfanh.github.io/p/client-go-workqueue/</guid>
+        <description>&lt;h2 id=&#34;1-概述&#34;&gt;1. 概述&lt;/h2&gt;
+&lt;p&gt;WrokQueue是k8s的工作队列，与普通FIFO队列相比，实现起来更加复杂，主要特性如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;有序&lt;/strong&gt;：按照添加顺序处理元素（item）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;去重&lt;/strong&gt;：相同元素在同一时间不会被重复处理，例如一个元素在处理之前被添加了多次，它只会被处理一次。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;并发性&lt;/strong&gt;：多生产者和多消费者。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;标记机制&lt;/strong&gt;：支持标记功能，标记一个元素是否被处理，也允许元素在处理时重新排队。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;通知机制&lt;/strong&gt;：ShutDown方法通过信号量通知队列不再接收新的元素，并通知metric goroutine退出。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;延迟&lt;/strong&gt;：支持延迟队列，延迟一段时间后再将元素存入队列。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;限速&lt;/strong&gt;：支持限速队列，元素存入队列时进行速率限制。限制一个元素被重新排队（Reenqueued）的次数。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metric&lt;/strong&gt;：支持metric监控指标，可用于Prometheus监控。
+client-go中WorkQueue支持3种队列同时提供了3种接口，每种队列对应特定的应用场景，具体如下：&lt;/li&gt;
+&lt;li&gt;Interface：FIFO队列接口，先进先出队列，并支持去重机制。&lt;/li&gt;
+&lt;li&gt;DelayingInterface：延迟队列接口，基于Interface接口封装，延迟一段时间后再将元素存入队列。&lt;/li&gt;
+&lt;li&gt;RateLimitingInterface：限速队列接口，基于DelayingInterface接口封装，支持元素存入队列时进行速率限制。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-队列介绍&#34;&gt;2. 队列介绍&lt;/h2&gt;
+&lt;h3 id=&#34;21-fifo队列&#34;&gt;2.1. FIFO队列&lt;/h3&gt;
+&lt;p&gt;FIFO队列支持最基本的队列方法，例如插入元素、获取元素、获取队列长度等。另外，WorkQueue中的限速及延迟队列都基于Interface接口实现，其提供如下方法：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;代码路径：vendor/k8s.io/client-go/util/workqueue/queue.go&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;kd&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Interface&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;Add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{})&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;Len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;Get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;shutdown&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;Done&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{})&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;ShutDown&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;ShuttingDown&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;FIFO队列接口方法说明：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Add&lt;/strong&gt;：给队列添加元素（item），可以是任意类型元素。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Len&lt;/strong&gt;：返回当前队列的长度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Get&lt;/strong&gt;：获取队列头部的一个元素。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Done&lt;/strong&gt;：标记队列中该元素已被处理。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ShutDown&lt;/strong&gt;：关闭队列。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ShuttingDown&lt;/strong&gt;：查询队列是否正在关闭。
+FIFO队列数据结构如下：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;kd&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Type&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;queue&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;t&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;dirty&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;set&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;processing&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;set&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;cond&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sync&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Cond&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;shuttingDown&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;metrics&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;queueMetrics&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;unfinishedWorkUpdatePeriod&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Duration&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;clock&lt;/span&gt;                      &lt;span class=&#34;nx&#34;&gt;clock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Clock&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;FIFO队列数据结构中最主要的字段有queue、dirty和processing。其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;queue字段&lt;/strong&gt;是实际存储元素的地方，它是slice结构的，用于保证元素有序；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;dirty字段&lt;/strong&gt;非常关键，除了能保证去重，还能保证在处理一个元素之前哪怕其被添加了多次（并发情况下），但也只会被处理一次；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;processing字段&lt;/strong&gt;用于标记机制，标记一个元素是否正在被处理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;22-延迟队列&#34;&gt;2.2. 延迟队列&lt;/h3&gt;
+&lt;p&gt;迟队列，基于FIFO队列接口封装，在原有功能上增加了AddAfter方法，其原理是延迟一段时间后再将元素插入FIFO队列。延迟队列数据结构如下：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;代码路径：vendor/k8s.io/client-go/util/workqueue/delaying_queue.go&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;kd&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;DelayingInterface&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;Interface&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;AddAfter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;duration&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Duration&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;delayingType&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;Interface&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;clock&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;clock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Clock&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;stopCh&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;chan&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;struct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{}&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;stopOnce&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;sync&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Once&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;heartbeat&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;clock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Ticker&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;waitingForAddCh&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;chan&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;waitFor&lt;/span&gt;
+	&lt;span class=&#34;nx&#34;&gt;metrics&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;retryMetrics&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;AddAfter方法会插入一个item（元素）参数，并附带一个duration（延迟时间）参数，该duration参数用于指定元素延迟插入FIFO队列的时间。如果duration小于或等于0，会直接将元素插入FIFO队列中。
+delayingType结构中最主要的字段是waitingForAddCh，其默认初始大小为1000，通过AddAfter方法插入元素时，是非阻塞状态的，只有当插入的元素大于或等于1000时，延迟队列才会处于阻塞状态。waitingForAddCh字段中的数据通过goroutine运行的waitingLoop函数持久运行。&lt;/p&gt;
+&lt;h3 id=&#34;23-限速队列&#34;&gt;2.3. 限速队列&lt;/h3&gt;
+&lt;p&gt;限速队列，基于延迟队列和FIFO队列接口封装，限速队列接口（RateLimitingInterface）在原有功能上增加了AddRateLimited、Forget、NumRequeues方法。限速队列的重点不在于RateLimitingInterface接口，而在于它提供的4种限速算法接口（RateLimiter）。其原理是，限速队列利用延迟队列的特性，延迟某个元素的插入时间，达到限速目的。RateLimiter数据结构如下：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;代码路径：vendor/k8s.io/client-go/util/workqueue/default_rate_limiters.go&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;kd&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;RateLimiter&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;When&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{})&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Duration&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;Forget&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{})&lt;/span&gt;
+	&lt;span class=&#34;nf&#34;&gt;NumRequeues&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{})&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;限速算法每个方法说明如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;When&lt;/strong&gt;：获取指定元素应该等待的时间。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Forget&lt;/strong&gt;：释放指定元素，清空该元素的排队数。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NumRequeues&lt;/strong&gt;：获取指定元素的排队数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：这里有一个非常重要的概念——&lt;strong&gt;限速周期&lt;/strong&gt;，一个限速周期是指从执行AddRateLimited方法到执行完Forget方法之间的时间。如果该元素被Forget方法处理完，则清空排队数。下面会分别详解WorkQueue提供的4种限速算法，应对不同的场景，这4种限速算法分别如下。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;令牌桶算法（BucketRateLimiter）。&lt;/li&gt;
+&lt;li&gt;排队指数算法（ItemExponentialFailureRateLimiter）。&lt;/li&gt;
+&lt;li&gt;计数器算法（ItemFastSlowRateLimiter）。&lt;/li&gt;
+&lt;li&gt;混合模式（MaxOfRateLimiter），将多种限速算法混合使用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;231-令牌桶算法&#34;&gt;2.3.1. 令牌桶算法&lt;/h4&gt;
+&lt;p&gt;令牌桶算法是通过Go语言的第三方库golang.org/x/time/rate实现的。令牌桶算法内部实现了一个存放token（令牌）的“桶”，初始时“桶”是空的，token会以固定速率往“桶”里填充，直到将其填满为止，多余的token会被丢弃。每个元素都会从令牌桶得到一个token，只有得到token的元素才允许通过（accept），而没有得到token的元素处于等待状态。令牌桶算法通过控制发放token来达到限速目的。
+WorkQueue在默认的情况下会实例化令牌桶，代码示例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;nx&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;NewLimiter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;rate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Limit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在实例化rate.NewLimiter后，传入r和b两个参数，其中r参数表示每秒往“桶”里填充的token数量，b参数表示令牌桶的大小（即令牌桶最多存放的token数量）。我们假定r为10，b为100。假设在一个限速周期内插入了1000个元素，通过&lt;code&gt;r.Limiter.Reserve().Delay&lt;/code&gt;函数返回指定元素应该等待的时间，那么前b（即100）个元素会被立刻处理，而后面元素的延迟时间分别为item100/100ms、item101/200ms、item102/300ms、item103/400ms，以此类推。&lt;/p&gt;
+&lt;h4 id=&#34;232-排队指数算法&#34;&gt;2.3.2. 排队指数算法&lt;/h4&gt;
+&lt;p&gt;排队指数算法将相同元素的排队数作为指数，排队数增大，速率限制呈指数级增长，但其最大值不会超过maxDelay。元素的排队数统计是有限速周期的，一个限速周期是指从执行AddRateLimited方法到执行完Forget方法之间的时间。如果该元素被Forget方法处理完，则清空排队数。排队指数算法的核心实现代码示例如下：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;代码路径：vendor/k8s.io/client-go/util/workqueue/default_rate_limiters.go&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;nx&#34;&gt;exp&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;failures&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;failures&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;failures&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;backoff&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;float64&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;baseDelay&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Nanoseconds&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;Pow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;float64&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;exp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;backoff&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;MaxInt64&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;maxDelay&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该算法提供了3个主要字段：failures、baseDelay、maxDelay。其中，failures字段用于统计元素排队数，每当AddRateLimited方法插入新元素时，会为该字段加1；另外，baseDelay字段是最初的限速单位（默认为5ms），maxDelay字段是最大限速单位（默认为1000s）。限速队列利用延迟队列的特性，延迟多个相同元素的插入时间，达到限速目的。&lt;/p&gt;
+&lt;h4 id=&#34;233-计数器算法&#34;&gt;2.3.3. 计数器算法&lt;/h4&gt;
+&lt;p&gt;计数器算法是限速算法中最简单的一种，其原理是：限制一段时间内允许通过的元素数量，例如在1分钟内只允许通过100个元素，每插入一个元素，计数器自增1，当计数器数到100的阈值且还在限速周期内时，则不允许元素再通过。但WorkQueue在此基础上扩展了fast和slow速率。计数器算法提供了4个主要字段：failures、fastDelay、slowDelay及maxFastAttempts。其中，failures字段用于统计元素排队数，每当AddRateLimited方法插入新元素时，会为该字段加1；而fastDelay和slowDelay字段是用于定义fast、slow速率的；另外，maxFastAttempts字段用于控制从fast速率转换到slow速率。计数器算法核心实现的代码示例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;failures&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;failures&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;failures&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;maxFastAttempts&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;fastDelay&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;slowDelay&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;234-混合模式&#34;&gt;2.3.4. 混合模式&lt;/h4&gt;
+&lt;p&gt;混合模式是将多种限速算法混合使用，即多种限速算法同时生效。例如，同时使用排队指数算法和令牌桶算法。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>client-go EventBroadcaster事件管理器简介</title>
         <link>https://genfanh.github.io/p/client-go-eventbroadcaster/</link>
         <pubDate>Sat, 06 Feb 2021 17:53:39 +0800</pubDate>
